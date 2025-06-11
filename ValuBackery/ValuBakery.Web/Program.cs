@@ -1,17 +1,19 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using MudBlazor.Services;
 using ValuBakery.Bootstrap.Providers.Cofigurations;
 using ValuBakery.Bootstrap.Providers.Extensions;
 using ValuBakery.Web.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddPersistenceInfraestructure(builder.Configuration);
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
-
-builder.Services.AddPersistenceInfraestructure(builder.Configuration);
+builder.Services.AddMudServices();
 
 //Utils
 builder.Services.AddMapper();
@@ -20,6 +22,8 @@ builder.Services.AddMapper();
 builder.Services.ConfigureServices();
 
 var app = builder.Build();
+
+app.RunMigrations();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

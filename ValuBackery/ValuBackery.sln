@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValuBakery.Web", "ValuBakery.Web\ValuBakery.Web.csproj", "{E68B024A-3515-40D0-8936-1D3A5641CE40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValuBakery.Web", "ValuBakery.Web\ValuBakery.Web.csproj", "{E68B024A-3515-40D0-8936-1D3A5641CE40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValuBakery.Application", "ValuBakery.Services\ValuBakery.Application.csproj", "{0FF9B9A6-075C-44E8-918C-E9BD73DD3BE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValuBakery.Application", "ValuBakery.Services\ValuBakery.Application.csproj", "{0FF9B9A6-075C-44E8-918C-E9BD73DD3BE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValuBakery.Data", "ValuBakery.Data\ValuBakery.Data.csproj", "{7E81B831-0E39-4DF1-BE91-49C5969B7B41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValuBakery.Data", "ValuBakery.Data\ValuBakery.Data.csproj", "{7E81B831-0E39-4DF1-BE91-49C5969B7B41}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B98B4C8A-7458-4C3E-9D9A-6FC5B9451C8F}"
 EndProject
@@ -17,9 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Core", "2 - Core", "{1D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3- Infrastructure", "3- Infrastructure", "{E4195FB5-1A33-4E90-852A-260967733A66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValuBakery.Bootstrap", "ValuBakery.Bootstrap\ValuBakery.Bootstrap.csproj", "{A6915667-BA35-415C-B877-6CC427A5CDA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValuBakery.Bootstrap", "ValuBakery.Bootstrap\ValuBakery.Bootstrap.csproj", "{A6915667-BA35-415C-B877-6CC427A5CDA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValuBakery.Percistence", "ValuBakery.Percistence\ValuBakery.Percistence.csproj", "{EE2D3A6B-5F2E-4B37-AF25-7FDAE108BC35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValuBakery.Percistence", "ValuBakery.Percistence\ValuBakery.Percistence.csproj", "{EE2D3A6B-5F2E-4B37-AF25-7FDAE108BC35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

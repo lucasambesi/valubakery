@@ -2,8 +2,12 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<MudText Typo="Typo.h4" Color="Color.Primary">Welcome to ValuBakery 🎂</MudText>
 
-Welcome to your new app.
+<MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => clicked = !clicked)">
+    @(clicked ? "Clicked!" : "Click me")
+</MudButton>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+    private bool clicked = false;
+}
