@@ -1,0 +1,81 @@
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# ASP.NET
+*.db
+*.db-shm
+*.db-wal
+*.log
+*.sqlite
+*.sqlite3
+
+# Entity Framework Migrations (opcional: descomentá si querés ignorarlas)
+# Migrations/
+
+# Visual Studio Code
+.vscode/
+.vscode-test/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Logs
+*.log
+
+# Secrets
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# Publish
+wwwroot/dist/
+publish/
+*.publishsettings
+
+# Package management
+node_modules/
+npm-debug.log*
+yarn-error.log
+
+# Backup & temp files
+*.bak
+*.tmp
+*.temp
+*.swp
+*.DS_Store
+Thumbs.db
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# dotCover
+*.dotCover
+
+# NCrunch
+*.ncrunch*
+.*crunch*.local.xml
+
+# Coverage reports
+coverage/
+TestResults/
+*.coverage
+*.coveragexml
+
+# IDEs
+*.idea/
+*.vs/
+.vsconfig
+
+# Auto-generated
+Generated/
