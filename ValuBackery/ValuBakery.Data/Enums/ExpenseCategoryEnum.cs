@@ -1,6 +1,9 @@
 ﻿namespace ValuBakery.Data.Enums
 {
-    public class ExpenseCategoryEnum
+    public enum ExpenseCategoryEnum
     {
+        Resources,
+        Materials,
+        Tools
     }
 }

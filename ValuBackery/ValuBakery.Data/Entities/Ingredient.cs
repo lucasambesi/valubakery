@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ValuBakery.Data.Entities.Common;
+﻿using ValuBakery.Data.Entities.Common;
 using ValuBakery.Data.Enums;
 
 namespace ValuBakery.Data.Entities
@@ -16,7 +11,8 @@ namespace ValuBakery.Data.Entities
 
         public UnitEnum Unit { get; set; }
 
-        public decimal Cost { get; set; }
-    }
+        public decimal CostPerUnit { get; set; }
 
+        public bool IsDeleted { get; set; }
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using ValuBakery.Data.Entities.Common;
+using ValuBakery.Data.Enums;
 
 namespace ValuBakery.Data.Entities
 {
@@ -8,6 +9,6 @@ namespace ValuBakery.Data.Entities
         public DateTime Date { get; set; }
         public string Description { get; set; }
         public decimal Amount { get; set; }
-        public string Category { get; set; }
+        public ExpenseCategoryEnum Category { get; set; }
     }
 }

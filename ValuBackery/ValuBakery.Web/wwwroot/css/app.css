@@ -1,0 +1,10 @@
+﻿.mud-nav-link {
+    border-radius: 8px;
+    margin: 4px 8px;
+    padding: 10px;
+    transition: background-color 0.2s;
+}
+
+.mud-nav-link:hover {
+    background-color: rgba(239, 59, 58, 0.1); /* primary con opacidad */
+}

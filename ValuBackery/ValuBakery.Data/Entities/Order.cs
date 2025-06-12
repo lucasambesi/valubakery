@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ValuBakery.Data.Entities.Common;
+﻿using ValuBakery.Data.Entities.Common;
 using ValuBakery.Data.Enums;
 
 namespace ValuBakery.Data.Entities
@@ -14,10 +9,19 @@ namespace ValuBakery.Data.Entities
         public DateTime Date { get; set; }
 
         public int CustomerId { get; set; }
+
+        public string Description { get; set; }
+
+        public decimal CostPrice { get; set; }
+
+        public decimal SalePrice { get; set; }
+
+        public decimal Profit { get; set; }
+
         public Customer Customer { get; set; }
 
-        public List<OrderItem> Items { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
+
         public StatusEnum Status { get; set; }
     }
-
 }

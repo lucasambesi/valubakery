@@ -1,0 +1,30 @@
+﻿@using ValuBakery.Data.DTOs;
+@using ValuBakery.Data.Enums;
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Rounded.RemoveCircleOutline" Class="mr-3 mb-n1" />
+            Eliminar ingredientes
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTable T="RecipeIngredientDto" Items="@IngredientDtos" SelectedItems=@SelectedIngredientDtos
+                  SelectedItemsChanged="OnSelectedItemsChanged" 
+                  Hover="true" MultiSelection="@true" Height="400px" Elevation="0">
+            <HeaderContent>
+                <MudTh>Nombre</MudTh>
+                <MudTh>Cantidad</MudTh>
+                <MudTh>Ud</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Nombre">@context.Ingredient.Name</MudTd>
+                <MudTd DataLabel="Cantidad">@context.Quantity</MudTd>
+                <MudTd DataLabel="Ud">@context.GetConvertUnit()</MudTd>
+            </RowTemplate>
+        </MudTable>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Error" OnClick="Submit">Eliminar</MudButton>
+    </DialogActions>
+</MudDialog>

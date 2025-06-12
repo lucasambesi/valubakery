@@ -1,0 +1,30 @@
+﻿@using ValuBakery.Data.DTOs;
+@using ValuBakery.Data.Enums;
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.AddCircleOutline" Class="mr-3 mb-n1" />
+            Agregar ingredientes
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTable T="IngredientDto" Items="@IngredientDtos" SelectedItems=@SelectedIngredientDtos
+                  SelectedItemsChanged="OnSelectedItemsChanged" 
+                  Hover="true" MultiSelection="@true" Height="400px" Elevation="0">
+            <HeaderContent>
+                <MudTh>Nombre</MudTh>
+                <MudTh>Ud</MudTh>
+                <MudTh>Costo por unidad</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Nombre">@context.Name</MudTd>
+                <MudTd DataLabel="Ud">@context.Unit</MudTd>
+                <MudTd DataLabel="Nr">@context.CostPerUnit</MudTd>
+            </RowTemplate>
+        </MudTable>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Error" OnClick="Submit">Agregar</MudButton>
+    </DialogActions>
+</MudDialog>

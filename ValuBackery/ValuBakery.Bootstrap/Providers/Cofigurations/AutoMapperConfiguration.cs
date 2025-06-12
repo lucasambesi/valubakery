@@ -17,7 +17,7 @@ namespace ValuBakery.Bootstrap.Providers.Cofigurations
         {
             MapperConfiguration mappingConfig = new(mc =>
             {
-                mc.AddProfile(new UserMapping());
+                mc.AddProfile(new Mappings());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();

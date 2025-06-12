@@ -14,9 +14,15 @@ namespace ValuBakery.Bootstrap.Providers.Cofigurations
         {
             //Services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IIngredientService, IngredientService>();
+            services.AddScoped<IRecipeService, RecipeService>();
+            services.AddScoped<IRecipeIngredientService, RecipeIngredientService>();
 
             // Dao
             services.AddScoped<IUserDao, UserDao>();
+            services.AddScoped<IIngredientDao, IngredientDao>();
+            services.AddScoped<IRecipeDao, RecipeDao>();
+            services.AddScoped<IRecipeIngredientDao, RecipeIngredientDao>();
 
             return services;
         }

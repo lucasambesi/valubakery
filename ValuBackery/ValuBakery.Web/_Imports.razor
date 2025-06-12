@@ -11,4 +11,10 @@
 @using ValuBakery.Application.Services.Interfaces;
 @using ValuBakery.Web
 @using ValuBakery.Web.Shared
+@inject ISnackbar _snackbar
+@inject IDialogService _dialogService
 @inject IUserService _userService
+@inject IIngredientService _ingredientService
+@inject IRecipeService _recipeService
+@inject IRecipeIngredientService _recipeIngredientService
+@inject NavigationManager _navigationManager

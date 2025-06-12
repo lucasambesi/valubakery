@@ -1,0 +1,66 @@
+﻿@page "/recipes"
+
+@using MudBlazor
+@using ValuBakery.Data.DTOs;
+@inject ISnackbar Snackbar
+@inject NavigationManager _navigationManager
+
+<MudTable Items="@RecipeDtos" Dense="@false" Hover="@true" ReadOnly="@true" CanCancelEdit="@false"
+          @bind-SelectedItem="selectedItem" Filter="new Func<RecipeDto,bool>(FilterFunc)"
+          SortLabel="Ordenar por" CommitEditTooltip="Confirmar" CancelEditTooltip="Cancelar"
+          RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" Height="100%"
+          RowEditCommit="ItemHasBeenCommitted" IsEditRowSwitchingBlocked="@false"
+          ApplyButtonPosition="@TableApplyButtonPosition.End" EditButtonPosition="@TableEditButtonPosition.End"
+          EditTrigger="@TableEditTrigger.RowClick">
+    <ToolBarContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart">
+    <MudIconButton Icon="@Icons.Material.Outlined.AddBox"
+                   Color="Color.Primary"
+                   Title="Crear"
+                   OnClick="DialogCreate" />
+            <MudText Typo="Typo.h6">Recetas</MudText>
+        </MudStack>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <ColGroup>
+        <col style="width:10%;" />
+        <col style="width:40%;" />
+        <col style="width:25%;" />
+        <col style="width:25%;" />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel SortBy="new Func<RecipeDto, object>(x=>x.Id)">Nr</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<RecipeDto, object>(x=>x.Name)">Nombre</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<RecipeDto, object>(x=>x.Cost)">Costo</MudTableSortLabel></MudTh>
+        <MudTh>Acciones</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nr">@context.Id</MudTd>
+        <MudTd DataLabel="Nombre">@context.Name</MudTd>
+        <MudTd DataLabel="Costo">@context.Cost</MudTd>
+        <MudTd DataLabel="Acciones">
+            <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center" Justify="Justify.FlexStart">
+                <MudIconButton Title="Ver" Color="@Color.Primary"
+                               OnClick="@(() => _navigationManager.NavigateTo($"recipe/{@context.Id}"))" 
+                               Icon="@Icons.Material.Filled.Preview" />
+            </MudStack>
+        </MudTd>
+    </RowTemplate>
+    <RowEditingTemplate>
+        <MudTd DataLabel="Nr">@context.Id</MudTd>
+        <MudTd DataLabel="Name">
+            <MudTextField @bind-Value="context.Name" Required />
+        </MudTd>
+        <MudTd DataLabel="Cost">
+            <MudNumericField @bind-Value="context.Cost" Required Min="1" />
+        </MudTd>
+        <MudTd />
+    </RowEditingTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+    <EditButtonContent Context="button">
+        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled" />
+    </EditButtonContent>
+</MudTable>

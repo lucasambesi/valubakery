@@ -1,0 +1,87 @@
+﻿@page "/recipe/{Id:int}"
+
+@using MudBlazor
+@using ValuBakery.Data.DTOs;
+@inject ISnackbar Snackbar
+
+<MudPaper Style="margin:1%" Elevation="20">
+    <MudStack Row="true">
+        <MudImage Src="images/no_image.png" Width="200" Height="150" Alt="Sin imagen" Elevation="25" Class="rounded-lg ma-4"/>
+        <MudStack Spacing="2" Style="margin-top:0.8%" Justify="Justify.FlexStart" AlignItems="AlignItems.Start">
+            <MudText Typo="Typo.h5">
+                @RecipeDto.Name
+            </MudText>
+            <MudText Typo="Typo.body1">
+                @RecipeDto.Description
+            </MudText>
+        </MudStack>
+    </MudStack>
+</MudPaper>
+<MudPaper Style="margin:1%; padding:0%; background-color:transparent;" Elevation="0">
+    <MudGrid>
+        <MudItem xs="12" md="8">
+            <MudPaper Elevation="20" MinHeight="400px" Height="400px">
+                <MudTable T="RecipeIngredientDto" Items="@RecipeDto.Ingredients" Dense="@false" Hover="@true" ReadOnly="@false" CanCancelEdit="@true"
+                          @bind-SelectedItem="selectedItem" Filter="new Func<RecipeIngredientDto,bool>(FilterFunc)"
+                          SortLabel="Ordenar por" CommitEditTooltip="Confirmar" CancelEditTooltip="Cancelar"
+                          RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" Height="100%"
+                          RowEditCommit="ItemHasBeenCommitted" IsEditRowSwitchingBlocked="@false"
+                          ApplyButtonPosition="@TableApplyButtonPosition.End" EditButtonPosition="@TableEditButtonPosition.End"
+                          EditTrigger="@TableEditTrigger.RowClick">
+                    <ToolBarContent>
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3" Justify="Justify.FlexStart">
+                            <MudIconButton Icon="@Icons.Material.Outlined.AddBox" Color="Color.Primary" Title="Agregar" Size="Size.Small" OnClick="DialogAdd" />
+                            <MudIconButton Icon="@Icons.Material.Outlined.IndeterminateCheckBox" Color="Color.Primary"
+                                           Title="Eliminar" OnClick="DialogDelete" Size="Size.Small" />
+                            <MudText Typo="Typo.h6">Ingredientes</MudText>
+                        </MudStack>
+                        <MudSpacer />
+                        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                    </ToolBarContent>
+                    <ColGroup>
+                        <col style="width:35%;" />
+                        <col style="width:20%;" />
+                        <col style="width:15%;" />
+                        <col style="width:30%;" />
+                    </ColGroup>
+                    <HeaderContent>
+                        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<RecipeIngredientDto, object>(x=>x.Ingredient.Name)">Nombre</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortBy="new Func<RecipeIngredientDto, object>(x=>x.Id)">Costo</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortBy="new Func<RecipeIngredientDto, object>(x=>x.Ingredient.Unit)">Unidad de medidad</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortBy="new Func<RecipeIngredientDto, object>(x=>x.Quantity)">Cantidad</MudTableSortLabel></MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Nombre">@context.Ingredient.Name</MudTd>
+                        <MudTd DataLabel="Costo por unidad">@context.GetCost()</MudTd>
+                        <MudTd DataLabel="Unidad de medidad">@context.GetConvertUnit()</MudTd>
+                        <MudTd DataLabel="Unidad de medidad">@context.Quantity</MudTd>
+                    </RowTemplate>
+                    <RowEditingTemplate>
+                        <MudTd DataLabel="Name">
+                            <MudTextField Value="context.Ingredient.Name" ReadOnly="true" />
+                        </MudTd>
+                        <MudTd DataLabel="Cost">
+                            <MudTextField Value="context.GetCost()" ReadOnly="true" />
+                        </MudTd>
+                        <MudTd DataLabel="Unit">
+                            <MudTextField Value="context.GetConvertUnit()" ReadOnly="true" />
+                        </MudTd>
+                        <MudTd DataLabel="Cantidad">
+                            <MudNumericField @bind-Value="context.Quantity" Required Min="0" />
+                        </MudTd>
+                    </RowEditingTemplate>
+                    <PagerContent>
+                        <MudTablePager />
+                    </PagerContent>
+                    <EditButtonContent Context="button">
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled" />
+                    </EditButtonContent>
+                </MudTable>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudPaper Elevation="20" MinHeight="400px" Height="400px">
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudPaper>

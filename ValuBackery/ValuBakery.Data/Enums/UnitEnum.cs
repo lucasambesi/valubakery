@@ -2,6 +2,7 @@
 {
     public enum UnitEnum
     {
+        None = 0,
         Kg,
         Lt,
         Un,

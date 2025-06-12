@@ -22,7 +22,17 @@ namespace ValuBakery.Percistence.Contexts
         }
 
         public DbSet<User> Users { get; set; }
-
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<RecipeComponent> RecipeComponents { get; set; }
+        //public DbSet<Product> Products { get; set; }
+        //public DbSet<Material> Materials { get; set; }
+        //public DbSet<ProductMaterial> ProductMaterials { get; set; }
+        //public DbSet<Order> Orders { get; set; }
+        //public DbSet<OrderItem> OrderItems { get; set; }
+        //public DbSet<Customer> Customers { get; set; }
+        //public DbSet<Expense> Expenses { get; set; }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())
