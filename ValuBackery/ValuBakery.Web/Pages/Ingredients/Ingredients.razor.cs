@@ -81,7 +81,7 @@ namespace ValuBakery.Web.Pages.Ingredients
 
             var options = new DialogOptions
             {
-                CloseButton = false,
+                CloseButton = true,
                 MaxWidth = MaxWidth.Small,
                 FullWidth = true
             };

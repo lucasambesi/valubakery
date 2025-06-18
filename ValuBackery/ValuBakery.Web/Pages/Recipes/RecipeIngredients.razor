@@ -1,0 +1,94 @@
+﻿@using MudBlazor
+@using ValuBakery.Data.DTOs;
+@using ValuBakery.Web.Data;
+@inject ISnackbar Snackbar
+
+<MudPaper Elevation="0" Class="pa-0" Style="background-color: transparent;">
+    <MudTable T="RecipeComponentTable"
+              Items="@RecipeComponents"
+              Dense="true"
+              Hover="true"
+              ReadOnly="false"
+              CanCancelEdit="true"
+              @bind-SelectedItem="selectedItem"
+              Filter="new Func<RecipeComponentTable,bool>(FilterFunc)"
+              SortLabel="Ordenar por"
+              CommitEditTooltip="Confirmar"
+              CancelEditTooltip="Cancelar"
+              RowEditPreview="BackupItem"
+              RowEditCancel="ResetItemToOriginalValues"
+              Height="400px"
+              FixedHeader="true"
+              RowEditCommit="ItemHasBeenCommitted"
+              IsEditRowSwitchingBlocked="false"
+              ApplyButtonPosition="@TableApplyButtonPosition.End"
+              EditButtonPosition="@TableEditButtonPosition.End"
+              EditTrigger="@TableEditTrigger.RowClick"
+              Class="no-elevation">
+
+        <ToolBarContent>
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3" Justify="Justify.FlexStart">
+                <MudText Typo="Typo.h6">Ingredientes y recetas</MudText>
+            </MudStack>
+            <MudSpacer />
+            <MudTextField @bind-Value="searchString"
+                          Placeholder="Buscar"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search"
+                          IconSize="Size.Medium"
+                          Class="mt-0" />
+        </ToolBarContent>
+
+        <ColGroup>
+            <col style="width:5%;" />
+            <col style="width:35%;" />
+            <col style="width:20%;" />
+            <col style="width:20%;" />
+            <col style="width:15%;" />
+        </ColGroup>
+
+        <HeaderContent>
+            <MudTh>
+                <MudStack Row="true" Spacing="1">
+                    <MudIconButton Icon="@Icons.Material.Outlined.AddBox" Color="Color.Primary" Title="Agregar" Size="Size.Medium" OnClick="DialogAdd" />
+                    <MudIconButton Icon="@Icons.Material.Outlined.IndeterminateCheckBox" Color="Color.Primary" Title="Eliminar" OnClick="DialogDelete" Size="Size.Medium" />
+                </MudStack>
+            </MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<RecipeComponentTable, object>(x=>x.Name)">Nombre</MudTableSortLabel></MudTh>
+            <MudTh>Costo</MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<RecipeComponentTable, object>(x=>x.Quantity)">Cantidad</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<RecipeComponentTable, object>(x=>x.Unit)">Un</MudTableSortLabel></MudTh>
+        </HeaderContent>
+
+        <RowTemplate>
+            <MudTd>
+                <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Primary" Title="Ver" OnClick="@(() => ViewItem(context.Id, context.Type))" />
+            </MudTd>
+            <MudTd><MudText Style="@GetBoldStyle(context.Type)">@context.Name</MudText></MudTd>
+            <MudTd><MudText Style="@GetBoldStyle(context.Type)">$@context.GetCost().ToString("N2")</MudText></MudTd>
+            <MudTd><MudText Style="@GetBoldStyle(context.Type)">@context.Quantity.ToString(context.Quantity < 1 ? "N2" : "N0")</MudText></MudTd>
+            <MudTd><MudText Style="@GetBoldStyle(context.Type)">@context.GetConvertUnit()</MudText></MudTd>
+        </RowTemplate>
+
+        <RowEditingTemplate>
+            <MudTd />
+            <MudTd><MudTextField Value="context.Name" ReadOnly="true" /></MudTd>
+            <MudTd><MudTextField Value="context.GetCost()" ReadOnly="true" /></MudTd>
+            <MudTd><MudNumericField @bind-Value="context.Quantity" Required Min="0" /></MudTd>
+            <MudTd><MudTextField Value="context.GetConvertUnit()" ReadOnly="true" /></MudTd>
+        </RowEditingTemplate>
+
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+
+        <EditButtonContent Context="button">
+            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled" />
+        </EditButtonContent>
+    </MudTable>
+</MudPaper>
+
+@code {
+    private string GetBoldStyle(RecipeComponentType type)
+        => type == RecipeComponentType.Recipe ? "font-weight: bold;" : "";
+}

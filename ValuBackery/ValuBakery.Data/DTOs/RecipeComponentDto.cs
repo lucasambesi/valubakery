@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ValuBakery.Data.Entities;
+using ValuBakery.Data.Enums;
 
 namespace ValuBakery.Data.DTOs
 {
@@ -11,12 +12,19 @@ namespace ValuBakery.Data.DTOs
     {
         public int Id { get; set; }
 
-        public int ParentRecipeId { get; set; }
-        public RecipeDto ParentRecipe { get; set; }
+        public int ParentRecipeVariantId { get; set; }
+        public RecipeVariantDto ParentRecipeVariant { get; set; }
 
-        public int ChildRecipeId { get; set; }
-        public RecipeDto ChildRecipe { get; set; }
+        public int ChildRecipeVariantId { get; set; }
+        public RecipeVariantDto ChildRecipeVariant { get; set; }
 
         public decimal Quantity { get; set; }
+
+        public string? ChildRecipeName { get; set; }
+
+        public decimal GetCost()
+        {
+           return ChildRecipeVariant.GetCost() * Quantity;
+        }
     }
 }

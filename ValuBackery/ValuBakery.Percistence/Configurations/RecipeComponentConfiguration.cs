@@ -10,14 +10,14 @@ namespace ValuBakery.Percistence.Configurations
         {
             builder.HasKey(rc => rc.Id);
 
-            builder.HasOne(rc => rc.ParentRecipe)
+            builder.HasOne(rc => rc.ParentRecipeVariant)
                    .WithMany(r => r.Components)
-                   .HasForeignKey(rc => rc.ParentRecipeId)
+                   .HasForeignKey(rc => rc.ParentRecipeVariantId)
                    .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(rc => rc.ChildRecipe)
+            builder.HasOne(rc => rc.ChildRecipeVariant)
                    .WithMany(r => r.UsedIn)
-                   .HasForeignKey(rc => rc.ChildRecipeId)
+                   .HasForeignKey(rc => rc.ChildRecipeVariantId)
                    .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(rc => rc.Quantity).HasColumnType("decimal(10,2)");

@@ -15,7 +15,7 @@ namespace ValuBakery.Percistence.Configurations
     //    {
     //        builder.HasKey(e => e.Id);
     //        builder.Property(e => e.Date).IsRequired();
-    //        builder.Property(e => e.Description).HasMaxLength(300);
+    //        builder.Property(e => e.Portions).HasMaxLength(300);
     //        builder.Property(e => e.Amount).HasColumnType("decimal(10,2)");
     //    }
     //}

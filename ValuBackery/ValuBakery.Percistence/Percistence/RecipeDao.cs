@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using ValuBakery.Data.DTOs;
 using ValuBakery.Data.Entities;
 using ValuBakery.Percistence.Contexts;
+using ValuBakery.Percistence.Percistence.Interfaces;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace ValuBakery.Percistence.Percistence
 {
@@ -17,39 +19,46 @@ namespace ValuBakery.Percistence.Percistence
             _mapper = mapper;
         }
 
-        public async Task<RecipeDto?> GetByIdAsync(int id)
+        public async Task<int> AddAsync(RecipeDto dto)
         {
-            var entity = await _dbContext.Recipes
-                .Where(r => !r.IsDeleted)
-                .Include(r => r.Ingredients)
-                .ThenInclude(x => x.Ingredient)
-                .Include(r => r.Components)
-                .FirstOrDefaultAsync(r => r.Id == id);
+            var entity = _mapper.Map<Recipe>(dto);
+            _dbContext.Recipe.Add(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity.Id;
+        }
 
-            return _mapper.Map<RecipeDto>(entity);
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var entity = await _dbContext.Recipe.FindAsync(id);
+            if (entity is null || entity.IsDeleted) return false;
+
+            entity.IsDeleted = true;
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
 
         public async Task<List<RecipeDto>> GetAllAsync()
         {
-            var entities = await _dbContext.Recipes
+            var entities = await _dbContext.Recipe
                 .Where(r => !r.IsDeleted)
                 .ToListAsync();
 
             return _mapper.Map<List<RecipeDto>>(entities);
         }
 
-        public async Task<int> AddAsync(RecipeDto dto)
+        public async Task<RecipeDto?> GetByIdAsync(int id)
         {
-            var entity = _mapper.Map<Recipe>(dto);
-            _dbContext.Recipes.Add(entity);
-            await _dbContext.SaveChangesAsync();
-            return entity.Id;
+            var entity = await _dbContext.Recipe
+                .Include(rc => rc.Variants)
+                .FirstOrDefaultAsync(r => r.Id == id);
+
+            return _mapper.Map<RecipeDto>(entity);
         }
 
         public async Task<bool> UpdateAsync(RecipeDto dto)
         {
-            var entity = await _dbContext.Recipes.FindAsync(dto.Id);
-            if (entity is null || entity.IsDeleted) return false;
+            var entity = await _dbContext.Recipe.FindAsync(dto.Id);
+            if (entity is null) return false;
 
             _mapper.Map(dto, entity);
 
@@ -58,16 +67,5 @@ namespace ValuBakery.Percistence.Percistence
 
             return true;
         }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var entity = await _dbContext.Recipes.FindAsync(id);
-            if (entity is null || entity.IsDeleted) return false;
-
-            entity.IsDeleted = true;
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
     }
-
 }

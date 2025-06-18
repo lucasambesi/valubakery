@@ -10,11 +10,11 @@ namespace ValuBakery.Data.Entities
     {
         public int Id { get; set; }
 
-        public int ParentRecipeId { get; set; }
-        public Recipe ParentRecipe { get; set; }
+        public int ParentRecipeVariantId { get; set; }
+        public RecipeVariant ParentRecipeVariant { get; set; }
 
-        public int ChildRecipeId { get; set; }
-        public Recipe ChildRecipe { get; set; }
+        public int ChildRecipeVariantId { get; set; }
+        public RecipeVariant ChildRecipeVariant { get; set; }
 
         public decimal Quantity { get; set; }
     }

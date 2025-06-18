@@ -10,9 +10,9 @@ namespace ValuBakery.Percistence.Configurations
         {
             builder.HasKey(ri => ri.Id);
 
-            builder.HasOne(ri => ri.Recipe)
+            builder.HasOne(ri => ri.RecipeVariant)
                    .WithMany(r => r.Ingredients)
-                   .HasForeignKey(ri => ri.RecipeId);
+                   .HasForeignKey(ri => ri.RecipeVariantId);
 
             builder.HasOne(ri => ri.Ingredient)
                    .WithMany()

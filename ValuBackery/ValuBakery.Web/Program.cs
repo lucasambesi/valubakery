@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor.Services;
+using System.Globalization;
 using ValuBakery.Bootstrap.Providers.Cofigurations;
 using ValuBakery.Bootstrap.Providers.Extensions;
 using ValuBakery.Web.Data;
@@ -12,7 +13,6 @@ builder.Services.AddPersistenceInfraestructure(builder.Configuration);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddMudServices();
 
 //Utils

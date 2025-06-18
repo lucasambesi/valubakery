@@ -1,6 +1,4 @@
-﻿using ValuBakery.Data.Entities;
-
-namespace ValuBakery.Data.DTOs
+﻿namespace ValuBakery.Data.DTOs
 {
     public class RecipeDto
     {
@@ -8,16 +6,10 @@ namespace ValuBakery.Data.DTOs
 
         public string Name { get; set; }
 
-        public string Description { get; set; } = string.Empty;
-
-        public decimal Cost { get; set; }
-
-        public List<RecipeIngredientDto> Ingredients { get; set; }
-
-        public List<RecipeComponentDto> Components { get; set; } = new();
-
-        public List<RecipeComponentDto> UsedIn { get; set; } = new();
+        public string Description { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public List<RecipeVariantDto> Variants { get; set; } = new();
     }
 }

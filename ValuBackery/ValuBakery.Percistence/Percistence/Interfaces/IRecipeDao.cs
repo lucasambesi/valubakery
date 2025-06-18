@@ -1,6 +1,6 @@
 ﻿using ValuBakery.Data.DTOs;
 
-namespace ValuBakery.Percistence.Percistence
+namespace ValuBakery.Percistence.Percistence.Interfaces
 {
     public interface IRecipeDao
     {

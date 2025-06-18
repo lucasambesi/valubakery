@@ -22,7 +22,8 @@ namespace ValuBakery.Percistence.Contexts
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Recipe> Recipe { get; set; }
+        public DbSet<RecipeVariant> RecipeVariant { get; set; }
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<RecipeComponent> RecipeComponents { get; set; }

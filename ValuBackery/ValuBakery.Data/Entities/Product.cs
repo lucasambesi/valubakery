@@ -16,7 +16,7 @@ namespace ValuBakery.Data.Entities
 
         public decimal RecipeAmount { get; set; }
         
-        public Recipe Recipe { get; set; }
+        public RecipeVariant Recipe { get; set; }
         
         public List<ProductMaterial> ProductMaterials { get; set; }
     }

@@ -70,23 +70,23 @@ namespace ValuBakery.Percistence.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
                 });
 
             modelBuilder.Entity("ValuBakery.Data.Entities.RecipeComponent", b =>
@@ -97,10 +97,10 @@ namespace ValuBakery.Percistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ChildRecipeId")
+                    b.Property<int>("ChildRecipeVariantId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ParentRecipeId")
+                    b.Property<int>("ParentRecipeVariantId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
@@ -108,9 +108,9 @@ namespace ValuBakery.Percistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChildRecipeId");
+                    b.HasIndex("ChildRecipeVariantId");
 
-                    b.HasIndex("ParentRecipeId");
+                    b.HasIndex("ParentRecipeVariantId");
 
                     b.ToTable("RecipeComponents");
                 });
@@ -132,7 +132,7 @@ namespace ValuBakery.Percistence.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<int>("RecipeId")
+                    b.Property<int>("RecipeVariantId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -142,9 +142,46 @@ namespace ValuBakery.Percistence.Migrations
 
                     b.HasIndex("IngredientId");
 
-                    b.HasIndex("RecipeId");
+                    b.HasIndex("RecipeVariantId");
 
                     b.ToTable("RecipeIngredients");
+                });
+
+            modelBuilder.Entity("ValuBakery.Data.Entities.RecipeVariant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Portions")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("RecipeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("RecipeVariant", (string)null);
                 });
 
             modelBuilder.Entity("ValuBakery.Data.Entities.User", b =>
@@ -187,21 +224,21 @@ namespace ValuBakery.Percistence.Migrations
 
             modelBuilder.Entity("ValuBakery.Data.Entities.RecipeComponent", b =>
                 {
-                    b.HasOne("ValuBakery.Data.Entities.Recipe", "ChildRecipe")
+                    b.HasOne("ValuBakery.Data.Entities.RecipeVariant", "ChildRecipeVariant")
                         .WithMany("UsedIn")
-                        .HasForeignKey("ChildRecipeId")
+                        .HasForeignKey("ChildRecipeVariantId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ValuBakery.Data.Entities.Recipe", "ParentRecipe")
+                    b.HasOne("ValuBakery.Data.Entities.RecipeVariant", "ParentRecipeVariant")
                         .WithMany("Components")
-                        .HasForeignKey("ParentRecipeId")
+                        .HasForeignKey("ParentRecipeVariantId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("ChildRecipe");
+                    b.Navigation("ChildRecipeVariant");
 
-                    b.Navigation("ParentRecipe");
+                    b.Navigation("ParentRecipeVariant");
                 });
 
             modelBuilder.Entity("ValuBakery.Data.Entities.RecipeIngredient", b =>
@@ -212,18 +249,34 @@ namespace ValuBakery.Percistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ValuBakery.Data.Entities.Recipe", "Recipe")
+                    b.HasOne("ValuBakery.Data.Entities.RecipeVariant", "RecipeVariant")
                         .WithMany("Ingredients")
-                        .HasForeignKey("RecipeId")
+                        .HasForeignKey("RecipeVariantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Ingredient");
 
+                    b.Navigation("RecipeVariant");
+                });
+
+            modelBuilder.Entity("ValuBakery.Data.Entities.RecipeVariant", b =>
+                {
+                    b.HasOne("ValuBakery.Data.Entities.Recipe", "Recipe")
+                        .WithMany("Variants")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Recipe");
                 });
 
             modelBuilder.Entity("ValuBakery.Data.Entities.Recipe", b =>
+                {
+                    b.Navigation("Variants");
+                });
+
+            modelBuilder.Entity("ValuBakery.Data.Entities.RecipeVariant", b =>
                 {
                     b.Navigation("Components");
 

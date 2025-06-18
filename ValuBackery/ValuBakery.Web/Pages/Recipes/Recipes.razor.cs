@@ -75,12 +75,32 @@ namespace ValuBakery.Web.Pages.Recipes
 
             var options = new DialogOptions
             {
-                CloseButton = false,
+                CloseButton = true,
                 MaxWidth = MaxWidth.Small,
                 FullWidth = true
             };
 
             _dialogService.Show<CreateRecipe>("CreateRecipe", parameters, options);
+        }
+
+        private void ViewRecipe(int id)
+        {
+            var parameters = new DialogParameters
+            {
+                { nameof(Recipe.Id), id }
+            };
+
+            var options = new DialogOptions
+            {
+                FullWidth = true,
+                MaxWidth = MaxWidth.Medium,
+                DisableBackdropClick = true,
+                Position = DialogPosition.Center,
+                NoHeader = false,
+                CloseButton = true
+            };
+
+            _dialogService.Show<Recipe>("", parameters, options);
         }
         #endregion
     }

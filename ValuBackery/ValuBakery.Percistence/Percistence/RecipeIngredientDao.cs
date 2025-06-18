@@ -40,7 +40,7 @@ namespace ValuBakery.Percistence.Percistence
         {
             var items = await _dbContext.RecipeIngredients
                 .Include(x => x.Ingredient)
-                .Where(r => r.RecipeId == recipeId)
+                .Where(r => r.RecipeVariantId == recipeId)
                 .ToListAsync();
 
             return _mapper.Map<List<RecipeIngredientDto>>(items);

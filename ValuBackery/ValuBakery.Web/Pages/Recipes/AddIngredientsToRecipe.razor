@@ -9,20 +9,36 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudTable T="IngredientDto" Items="@IngredientDtos" SelectedItems=@SelectedIngredientDtos
-                  SelectedItemsChanged="OnSelectedItemsChanged" 
-                  Hover="true" MultiSelection="@true" Height="400px" Elevation="0">
-            <HeaderContent>
-                <MudTh>Nombre</MudTh>
-                <MudTh>Ud</MudTh>
-                <MudTh>Costo por unidad</MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Nombre">@context.Name</MudTd>
-                <MudTd DataLabel="Ud">@context.Unit</MudTd>
-                <MudTd DataLabel="Nr">@context.CostPerUnit</MudTd>
-            </RowTemplate>
-        </MudTable>
+        <MudTabs Elevation="0" ApplyEffectsToContainer="true" Centered="true">
+            <MudTabPanel Text="Ingredientes">
+                <MudTable T="IngredientDto" Items="@IngredientDtos" SelectedItems=@SelectedIngredientDtos
+                          SelectedItemsChanged="OnSelectedItemsChanged" 
+                          Hover="true" MultiSelection="@true" Height="400px" Elevation="0">
+                    <HeaderContent>
+                        <MudTh>Nombre</MudTh>
+                        <MudTh>Ud</MudTh>
+                        <MudTh>Costo por unidad</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Nombre">@context.Name</MudTd>
+                        <MudTd DataLabel="Ud">@context.Unit</MudTd>
+                        <MudTd DataLabel="Nr">@context.CostPerUnit</MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudTabPanel>
+            <MudTabPanel Text="Recetas">
+                <MudTable T="RecipeVariantDto" Items="@RecipeDtos" SelectedItems=@SelectedRecipeDtos
+                          SelectedItemsChanged="OnSelectedItemsChanged" 
+                          Hover="true" MultiSelection="@true" Height="400px" Elevation="0">
+                    <HeaderContent>
+                        <MudTh>Nombre</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Nombre">@($"{context.Recipe.Name} {context.Name}")</MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudTabPanel>
+        </MudTabs>
     </DialogContent>
     <DialogActions>
         <MudButton Color="Color.Error" OnClick="Submit">Agregar</MudButton>

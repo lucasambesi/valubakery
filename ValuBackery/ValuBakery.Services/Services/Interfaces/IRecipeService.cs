@@ -10,5 +10,4 @@ namespace ValuBakery.Application.Services.Interfaces
         Task<bool> UpdateAsync(RecipeDto dto);
         Task<bool> DeleteAsync(int id);
     }
-
 }

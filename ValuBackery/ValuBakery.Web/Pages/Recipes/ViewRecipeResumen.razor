@@ -1,0 +1,124 @@
+﻿@using ValuBakery.Data.Enums;
+@if (RecipeDto != null)
+{  
+    <MudDialog>
+        <TitleContent>
+            <MudText Typo="Typo.h6">
+                @RecipeDto.Name
+            </MudText>
+        </TitleContent>
+        <DialogContent>
+ 
+                <MudGrid Spacing="3">
+                    <MudItem xs="12">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                            <MudText Typo="Typo.body1">
+                                Porciones:
+                            </MudText>
+                            <MudText Typo="Typo.body1" Align="Align.End">
+                                @RecipeDto.Portions
+                            </MudText>
+                        </MudStack>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                            <MudText Typo="Typo.body1">
+                                Costo:
+                            </MudText>
+                            <MudText Typo="Typo.body1" Align="Align.End">
+                                @RecipeDto.GetCost().ToString("N2")
+                            </MudText>
+                        </MudStack>
+                    </MudItem>
+                    <MudDivider Absolute/>
+                    <MudItem xs="12">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                            <MudText Typo="Typo.body1" Style="font-weight: bold;">
+                                Ingredientes:
+                            </MudText>
+                        </MudStack>
+                    </MudItem>
+             
+                    @if (RecipeDto?.Ingredients.Count > 0)
+                    {
+                        @foreach (var ingredient in RecipeDto?.Ingredients)
+                        {
+                            <MudItem xs="12">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                                    <MudText Typo="Typo.body1">
+                                        @(ingredient.Ingredient.Name)
+                                    </MudText>
+                                    <MudText Typo="Typo.body1" Align="Align.End">
+                                        @($"{ingredient.Quantity} {ingredient.GetConvertUnit()}")
+                                    </MudText>
+                                </MudStack>
+                            </MudItem>
+                        }
+                    }
+                    else
+                    {
+                        <MudText Typo="Typo.body1" Align="Align.End">
+                            @($"La receta todavía no tiene ingredientes asociados.")
+                        </MudText>
+                    }
+
+                    @if (RecipeDto?.Components.Count > 0)
+                    {
+                        <MudDivider DividerType="DividerType.Inset" />
+
+                        <MudItem xs="12">
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                                <MudText Typo="Typo.body1" Style="font-weight: bold;">
+                                    Contiene:
+                                </MudText>
+                            </MudStack>
+                        </MudItem>
+
+                        @foreach (var component in RecipeDto?.Components)
+                        {
+                            <MudItem xs="12">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                                    <MudText Typo="Typo.body1">
+                                        @(component.ChildRecipeVariant.Name)
+                                    </MudText>
+                                    <MudText Typo="Typo.body1" Align="Align.End">
+                                        @($"{component.Quantity} {UnitEnum.Ud}")
+                                    </MudText>
+                                </MudStack>
+                            </MudItem>
+                        }
+                    }
+
+                    @if (RecipeDto?.UsedIn.Count > 0)
+                    {
+                        <MudDivider Absolute/>
+
+                        <MudItem xs="12">
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                                <MudText Typo="Typo.body1" Style="font-weight: bold;">
+                                    Usada en:
+                                </MudText>
+                            </MudStack>
+                        </MudItem>
+
+                        @foreach (var component in RecipeDto?.UsedIn)
+                        {
+                            <MudItem xs="12">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                                    <MudText Typo="Typo.body1">
+                                        @(component.ParentRecipeVariant.Name)
+                                    </MudText>
+                                    <MudText Typo="Typo.body1" Align="Align.End">
+                                        @($"{component.Quantity} {UnitEnum.Ud}")
+                                    </MudText>
+                                </MudStack>
+                            </MudItem>
+                        }
+                    }
+                </MudGrid>
+
+        </DialogContent>
+        <DialogActions>
+        </DialogActions>
+    </MudDialog>
+}

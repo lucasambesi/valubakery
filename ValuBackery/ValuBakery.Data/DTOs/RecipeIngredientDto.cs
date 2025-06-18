@@ -7,8 +7,8 @@ namespace ValuBakery.Data.DTOs
     {
         public int Id { get; set; }
 
-        public int RecipeId { get; set; }
-        public RecipeDto Recipe { get; set; }
+        public int RecipeVariantId { get; set; }
+        public RecipeVariantDto RecipeVariant { get; set; }
 
         public int IngredientId { get; set; }
 
@@ -24,7 +24,7 @@ namespace ValuBakery.Data.DTOs
                 case UnitEnum.Lt:
                     return Quantity * Ingredient.CostPerUnit / 1000;
                 case UnitEnum.Grs:
-                case UnitEnum.Un:
+                case UnitEnum.Ud:
                 case UnitEnum.Mls:
                     return Quantity * Ingredient.CostPerUnit;
                 default:
@@ -42,8 +42,8 @@ namespace ValuBakery.Data.DTOs
                 case UnitEnum.Lt:
                 case UnitEnum.Mls:
                     return UnitEnum.Mls;
-                case UnitEnum.Un:
-                    return UnitEnum.Un;
+                case UnitEnum.Ud:
+                    return UnitEnum.Ud;
                 default:
                     return UnitEnum.None;
             }

@@ -13,159 +13,77 @@ namespace ValuBakery.Web.Pages.Recipes
         public int Id { get; set; }
 
         [Parameter]
-        public RecipeDto RecipeDto { get; set; } = new RecipeDto();
+        public RecipeVariantDto? RecipeVariantDto { get; set; }
 
-        private RecipeIngredientDto selectedItem = null;
-        private RecipeIngredientDto RecipeIngredientDtoBeforeEdit;
-        private string searchString = "";
-        private List<string> editEvents = new();
+        public RecipeDto? RecipeDto { get; set; }
 
+        private bool showFullIngredients = false;
+        private bool showFullComponents = false;
+        private string ingredientsText { get; set; }
+        private int maxLengthIngredients = 120;
+        private string componentsText { get; set; }
+        private int maxLengthComponents = 50;
+        private Guid dialogRenderKey = Guid.NewGuid();
         protected override async Task OnInitializedAsync()
         {
             if (Id != default)
             {
                 RecipeDto = await _recipeService.GetByIdAsync(Id);
+
+                if (RecipeDto != null)
+                {
+                    RecipeVariantDto = await _recipeVariantService.GetByIdAsync(RecipeDto.Variants.First().Id);
+                    
+                }
             }
         }
 
-        #region Ingredients table
-        private void AddEditionEvent(string message)
+        protected override async Task OnParametersSetAsync()
         {
-            editEvents.Add(message);
+            ingredientsText = RecipeVariantDto?.GetIngredients();
+            componentsText = RecipeVariantDto?.GetComponents();
+            RecipeVariantDto?.SetCost();
+        }
+
+        private void ToggleIngredients()
+        {
+            showFullIngredients = !showFullIngredients;
             StateHasChanged();
         }
 
-        private void BackupItem(object RecipeIngredientDto)
+        private void ToggleComponents()
         {
-            RecipeIngredientDtoBeforeEdit = new()
-            {
-                Id = ((RecipeIngredientDto)RecipeIngredientDto).Id,
-                Quantity = ((RecipeIngredientDto)RecipeIngredientDto).Quantity,
-                RecipeId = ((RecipeIngredientDto)RecipeIngredientDto).RecipeId,
-                IngredientId = ((RecipeIngredientDto)RecipeIngredientDto).IngredientId,
-            };
+            showFullComponents = !showFullComponents;
+            StateHasChanged(); 
         }
 
-        private async void ItemHasBeenCommitted(object recipeIngredientDto)
+        private async Task OnIngredientsChanged()
         {
-            var dto = (RecipeIngredientDto)recipeIngredientDto;
-
-            try
+            if (RecipeVariantDto != null)
             {
-                await _recipeIngredientService.UpdateAsync(dto);
-                //AddEditionEvent($"Fila editada: Cambios en {dto.Ingredient.Name} guardados");
-            }
-            catch (Exception ex)
-            {
-                Snackbar.Add("Error al guardar: " + ex.Message, Severity.Error);
-            }
-        }
+                RecipeVariantDto.SetCost();
+                ingredientsText = RecipeVariantDto?.GetIngredients();
+                componentsText = RecipeVariantDto?.GetComponents();
 
-
-        private void ResetItemToOriginalValues(object RecipeIngredientDto)
-        {
-            ((RecipeIngredientDto)RecipeIngredientDto).Id = RecipeIngredientDtoBeforeEdit.Id;
-            ((RecipeIngredientDto)RecipeIngredientDto).Quantity = RecipeIngredientDtoBeforeEdit.Quantity;
-            ((RecipeIngredientDto)RecipeIngredientDto).RecipeId = RecipeIngredientDtoBeforeEdit.RecipeId;
-            ((RecipeIngredientDto)RecipeIngredientDto).IngredientId = RecipeIngredientDtoBeforeEdit.IngredientId;
-        }
-
-        private bool FilterFunc(RecipeIngredientDto RecipeIngredientDto)
-        {
-            if (string.IsNullOrWhiteSpace(searchString))
-                return true;
-            if (RecipeIngredientDto.Ingredient.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            return false;
-        }
-        #endregion
-
-        #region Dialog
-        private void DialogAdd()
-        {
-            var parameters = new DialogParameters
-            {
-                { nameof(AddIngredientsToRecipe.RecipeDto), RecipeDto },
-                { nameof(AddIngredientsToRecipe.OnCreateData), 
-                    EventCallback.Factory.Create<List<int>>(this, DialogAddEvent) }
-            };
-
-            var options = new DialogOptions
-            {
-                CloseButton = false,
-                MaxWidth = MaxWidth.Small,
-                FullWidth = true
-            };
-
-            _dialogService.Show<AddIngredientsToRecipe>("AddIngredientsToRecipe", parameters, options);
-        }
-        private void DialogDelete()
-        {
-            var parameters = new DialogParameters
-            {
-                { nameof(DeleteIngredientsToRecipe.RecipeDto), RecipeDto },
-                { nameof(DeleteIngredientsToRecipe.OnDeleteData),
-                    EventCallback.Factory.Create<List<int>>(this, DialogDeleteEvent) }
-            };
-
-            var options = new DialogOptions
-            {
-                CloseButton = false,
-                MaxWidth = MaxWidth.Small,
-                FullWidth = true
-            };
-
-            _dialogService.Show<DeleteIngredientsToRecipe>("DeleteIngredientsToRecipe", parameters, options);
-        }
-
-        public async Task DialogAddEvent(List<int> ids)
-        {
-            try
-            {
-                List<RecipeIngredientDto> ingredientDtos = new();
-
-                foreach (var item in ids)
-                {
-                    var newIngredient = await _recipeIngredientService.GetByIdAsync(item);
-
-                    if (newIngredient != null)
-                    {
-                        ingredientDtos.Add(newIngredient);
-                    }
-                }
-
-                RecipeDto.Ingredients.AddRange(ingredientDtos);
-                StateHasChanged();
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task DialogDeleteEvent(List<int> ids)
-        {
-            try
-            {
-                List<RecipeIngredientDto> ingredientDtos = new();
-
-                foreach (var item in ids)
-                {
-                    var newIngredient = RecipeDto.Ingredients.FirstOrDefault(x => x.Id == item);
-
-                    if (newIngredient != null)
-                    {
-                        RecipeDto.Ingredients.Remove(newIngredient);
-                    }
-                }
+                dialogRenderKey = Guid.NewGuid();
 
                 StateHasChanged();
             }
-            catch
-            {
-                throw;
-            }
         }
-        #endregion
+
+
+        private MarkupString GetShortOrFull(string? content, bool expanded, int maxLength, out bool isTruncated)
+        {
+            isTruncated = false;
+
+            if (string.IsNullOrWhiteSpace(content))
+                return (MarkupString)"";
+
+            if (expanded || content.Length <= maxLength)
+                return (MarkupString)content;
+
+            isTruncated = true;
+            return (MarkupString)(content.Substring(0, maxLength) + "...");
+        }
     }
 }

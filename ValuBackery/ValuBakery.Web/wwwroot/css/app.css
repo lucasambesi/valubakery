@@ -8,3 +8,40 @@
 .mud-nav-link:hover {
     background-color: rgba(239, 59, 58, 0.1); /* primary con opacidad */
 }
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #FFF9F0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Fredoka', cursive;
+}
+.fancy-title {
+    font-family: 'Fredoka', cursive;
+    color: #F277BA;
+}
+.card-pop {
+    transition: transform 0.3s ease;
+}
+
+.card-pop:hover {
+    transform: scale(1.03);
+}
+
+.no-elevation {
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+.fixed-dialog {
+    width: 900px !important;
+    height: 600px !important;
+    max-height: 600px !important;
+    overflow: hidden !important;
+    border-radius: 16px;
+}
+
+.dialog-body-fixed {
+    overflow: hidden !important;
+    height: 100%;
+}

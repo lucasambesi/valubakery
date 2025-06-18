@@ -11,9 +11,9 @@ namespace ValuBakery.Percistence.Configurations
     //        builder.HasKey(p => p.Id);
     //        builder.Property(p => p.Name).IsRequired().HasMaxLength(200);
 
-    //        builder.HasOne(p => p.Recipe)
+    //        builder.HasOne(p => p.RecipeVariant)
     //               .WithMany()
-    //               .HasForeignKey(p => p.RecipeId);
+    //               .HasForeignKey(p => p.RecipeVariantId);
 
     //        builder.HasMany(p => p.ProductMaterials)
     //               .WithOne(pm => pm.Product)

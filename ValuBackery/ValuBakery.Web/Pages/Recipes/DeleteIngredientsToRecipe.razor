@@ -9,20 +9,36 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudTable T="RecipeIngredientDto" Items="@IngredientDtos" SelectedItems=@SelectedIngredientDtos
-                  SelectedItemsChanged="OnSelectedItemsChanged" 
-                  Hover="true" MultiSelection="@true" Height="400px" Elevation="0">
-            <HeaderContent>
-                <MudTh>Nombre</MudTh>
-                <MudTh>Cantidad</MudTh>
-                <MudTh>Ud</MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Nombre">@context.Ingredient.Name</MudTd>
-                <MudTd DataLabel="Cantidad">@context.Quantity</MudTd>
-                <MudTd DataLabel="Ud">@context.GetConvertUnit()</MudTd>
-            </RowTemplate>
-        </MudTable>
+        <MudTabs Elevation="0" ApplyEffectsToContainer="true" Centered="true">
+            <MudTabPanel Text="Ingredientes">
+                <MudTable T="RecipeIngredientDto" Items="@IngredientDtos" SelectedItems=@SelectedIngredientDtos
+                          SelectedItemsChanged="OnSelectedItemsChanged" 
+                          Hover="true" MultiSelection="@true" Height="400px" Elevation="0">
+                    <HeaderContent>
+                        <MudTh>Nombre</MudTh>
+                        <MudTh>Cantidad</MudTh>
+                        <MudTh>Ud</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Nombre">@context.Ingredient.Name</MudTd>
+                        <MudTd DataLabel="Cantidad">@context.Quantity</MudTd>
+                        <MudTd DataLabel="Ud">@context.GetConvertUnit()</MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudTabPanel>
+            <MudTabPanel Text="Recetas">
+                <MudTable T="RecipeVariantDto" Items="@RecipeDtos" SelectedItems=@SelectedRecipeDtos
+                          SelectedItemsChanged="OnSelectedItemsChanged"
+                          Hover="true" MultiSelection="@true" Height="400px" Elevation="0">
+                    <HeaderContent>
+                        <MudTh>Nombre</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Nombre">@context.GetName()</MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudTabPanel>
+        </MudTabs>
     </DialogContent>
     <DialogActions>
         <MudButton Color="Color.Error" OnClick="Submit">Eliminar</MudButton>

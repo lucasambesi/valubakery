@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using ValuBakery.Data.DTOs;
+using ValuBakery.Web.Data;
 
 namespace ValuBakery.Web.Pages.Recipes
 {
@@ -9,8 +10,7 @@ namespace ValuBakery.Web.Pages.Recipes
         [CascadingParameter]
         MudDialogInstance? MudDialog { get; set; }
 
-        [Parameter]
-        public RecipeDto RecipeDto { get; set; } = new RecipeDto();
+        public CreateRecipeModel CreateRecipeModel { get; set; } = new CreateRecipeModel();
 
         private void Cancel() => MudDialog.Cancel();
 
@@ -18,11 +18,24 @@ namespace ValuBakery.Web.Pages.Recipes
         {
             try
             {
+                RecipeDto RecipeDto = new RecipeDto()
+                {
+                    Name = CreateRecipeModel.Name,
+                    Description = CreateRecipeModel.Description,
+                    Variants = new List<RecipeVariantDto>()
+                    {
+                        new RecipeVariantDto()
+                        {
+                            Portions = CreateRecipeModel.Portions,
+                            Name = CreateRecipeModel.Size,
+                        }
+                    }
+                };
+
                 var id = await _recipeService.AddAsync(RecipeDto);
                 if (id > 0)
                 {
                     MudDialog?.Close(DialogResult.Ok(true));
-                    _navigationManager.NavigateTo($"/recipe/{id}");
                 }
                 else
                 {

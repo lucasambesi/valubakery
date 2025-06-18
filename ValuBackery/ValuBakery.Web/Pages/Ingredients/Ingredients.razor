@@ -3,6 +3,9 @@
 @using MudBlazor
 @using ValuBakery.Data.DTOs;
 @inject ISnackbar Snackbar
+
+<PageTitle>Ingredientes</PageTitle>
+
 <MudTable Items="@IngredientDtos" Dense="@false" Hover="@true" ReadOnly="@false" CanCancelEdit="@true"
           @bind-SelectedItem="selectedItem" Filter="new Func<IngredientDto,bool>(FilterFunc)"
           SortLabel="Ordenar por" CommitEditTooltip="Confirmar" CancelEditTooltip="Cancelar"
@@ -11,12 +14,9 @@
           ApplyButtonPosition="@TableApplyButtonPosition.End" EditButtonPosition="@TableEditButtonPosition.End" 
           EditTrigger="@TableEditTrigger.RowClick">
     <ToolBarContent>
-        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart">
-            <MudIconButton Icon="@Icons.Material.Outlined.AddBox" Color="Color.Primary" Title="Crear" OnClick="DialogCreate" />
-            <MudText Typo="Typo.h6">Ingredientes</MudText>
-        </MudStack>
-        <MudSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudText Typo="Typo.h6">Ingredientes</MudText>        
+            <MudSpacer />
+            <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <ColGroup>
         <col style="width:10%;" />
@@ -26,7 +26,7 @@
         <col style="width:40%;" />
     </ColGroup>
     <HeaderContent>
-        <MudTh><MudTableSortLabel SortBy="new Func<IngredientDto, object>(x=>x.Id)">Nr</MudTableSortLabel></MudTh>
+        <MudTh><MudIconButton Icon="@Icons.Material.Outlined.AddBox" Color="Color.Primary" Title="Crear" OnClick="DialogCreate" /></MudTh>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<IngredientDto, object>(x=>x.Name)">Nombre</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortBy="new Func<IngredientDto, object>(x=>x.CostPerUnit)">Costo por unidad</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortBy="new Func<IngredientDto, object>(x=>x.Unit)">Unidad de medidad</MudTableSortLabel></MudTh>
@@ -35,7 +35,7 @@
     <RowTemplate>
         <MudTd DataLabel="Nr">@context.Id</MudTd>
         <MudTd DataLabel="Nombre">@context.Name</MudTd>
-        <MudTd DataLabel="Costo por unidad">@context.CostPerUnit</MudTd>
+        <MudTd DataLabel="Costo por unidad">@context.CostPerUnit.ToString("N2")</MudTd>
         <MudTd DataLabel="Unidad de medidad">@context.Unit</MudTd>
         <MudTd DataLabel="Ultima actualización">@context.UpdatedAt</MudTd>
     </RowTemplate>

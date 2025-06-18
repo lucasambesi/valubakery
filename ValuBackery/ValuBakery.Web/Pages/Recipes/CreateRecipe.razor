@@ -8,10 +8,16 @@
     <DialogContent>
         <MudGrid Spacing="3">
             <MudItem xs="12">
-                <MudTextField @bind-Value="@RecipeDto.Name" Label="Nombre" Variant="Variant.Outlined"/>
+                <MudTextField @bind-Value="@CreateRecipeModel.Name" Label="Nombre" Variant="Variant.Outlined" />
             </MudItem>
             <MudItem xs="12">
-                <MudTextField Lines="3" @bind-Value="@RecipeDto.Description" Label="Descripción" Variant="Variant.Outlined" />
+                <MudTextField Lines="3" @bind-Value="@CreateRecipeModel.Description" Label="Descripción" Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="6">
+                <MudTextField @bind-Value="@CreateRecipeModel.Size" Label="Tamaño" Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="6">
+                <MudTextField @bind-Value="@CreateRecipeModel.Portions" Label="Pociones" Variant="Variant.Outlined" />
             </MudItem>
         </MudGrid>
     </DialogContent>
