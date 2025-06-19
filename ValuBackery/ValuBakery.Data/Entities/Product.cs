@@ -12,11 +12,11 @@ namespace ValuBakery.Data.Entities
 
         public decimal ApplyProfitToMaterials { get; set; }
 
-        public int RecipeId { get; set; }
-
         public decimal RecipeAmount { get; set; }
+
+        public int RecipeVariantId { get; set; }
         
-        public RecipeVariant Recipe { get; set; }
+        public RecipeVariant RecipeVariant { get; set; }
         
         public List<ProductMaterial> ProductMaterials { get; set; }
     }

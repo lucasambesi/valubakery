@@ -1,9 +1,9 @@
 ﻿using ValuBakery.Data.Entities.Common;
 using ValuBakery.Data.Enums;
 
-namespace ValuBakery.Data.Entities
+namespace ValuBakery.Data.DTOs
 {
-    public class Material : AuditableBaseEntity
+    public class MaterialDto : AuditableBaseEntity
     {
         public int Id { get; set; }
 

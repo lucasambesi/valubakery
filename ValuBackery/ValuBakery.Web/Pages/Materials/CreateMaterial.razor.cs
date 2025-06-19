@@ -3,9 +3,9 @@ using MudBlazor;
 using ValuBakery.Data.DTOs;
 using ValuBakery.Data.Enums;
 
-namespace ValuBakery.Web.Pages.Ingredients
+namespace ValuBakery.Web.Pages.Materials
 {
-    public partial class CreateIngredient
+    public partial class CreateMaterial
     {
         [CascadingParameter]
         MudDialogInstance? MudDialog { get; set; }
@@ -14,13 +14,13 @@ namespace ValuBakery.Web.Pages.Ingredients
         public EventCallback<int> OnCreateData { get; set; }
 
         [Parameter]
-        public IngredientDto IngredientDto { get; set; } = new IngredientDto() { Unit = UnitEnum.Kg};
+        public MaterialDto MaterialDto { get; set; } = new MaterialDto() { Unit = UnitMaterialEnum.Ud };
 
         private void Cancel() => MudDialog.Cancel();
 
         private async Task Submit()
         {
-            if (string.IsNullOrWhiteSpace(IngredientDto.Name))
+            if (string.IsNullOrWhiteSpace(MaterialDto.Name))
             {
                 _snackbar.Add("El nombre es obligatorio", Severity.Warning);
                 return;
@@ -28,7 +28,7 @@ namespace ValuBakery.Web.Pages.Ingredients
 
             try
             {
-                var id = await _ingredientService.AddAsync(IngredientDto);
+                var id = await _materialService.AddAsync(MaterialDto);
                 if (id > 0)
                 {
                     MudDialog?.Close(DialogResult.Ok(true));
@@ -39,7 +39,7 @@ namespace ValuBakery.Web.Pages.Ingredients
                     _snackbar.Add("Error al crear", Severity.Error);
                 }
 
-                _snackbar.Add("Ingrediente creado", Severity.Success);
+                _snackbar.Add("Material creado", Severity.Success);
             }
             catch
             {
@@ -47,7 +47,7 @@ namespace ValuBakery.Web.Pages.Ingredients
             }
             finally
             {
-                MudDialog.Close(DialogResult.Ok(IngredientDto.Id));
+                MudDialog.Close(DialogResult.Ok(MaterialDto.Id));
                 StateHasChanged();
             }
         }

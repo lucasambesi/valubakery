@@ -16,6 +16,12 @@ namespace ValuBakery.Web.Pages.Recipes
 
         private async Task Submit()
         {
+            if (string.IsNullOrWhiteSpace(CreateRecipeModel.Name))
+            {
+                _snackbar.Add("El nombre es obligatorio", Severity.Warning);
+                return;
+            }
+
             try
             {
                 RecipeDto RecipeDto = new RecipeDto()

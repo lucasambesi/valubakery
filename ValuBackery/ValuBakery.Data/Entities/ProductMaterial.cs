@@ -21,5 +21,4 @@ namespace ValuBakery.Data.Entities
 
         public decimal Quantity { get; set; }  // e.g. 1 box, 0.5 ribbon
     }
-
 }
