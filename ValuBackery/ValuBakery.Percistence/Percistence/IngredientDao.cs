@@ -51,8 +51,8 @@ namespace ValuBakery.Percistence.Percistence
                 throw new ArgumentNullException(nameof(dto));
 
             var entity = await _dbContext.Ingredients.FindAsync(dto.Id);
-            if (entity is null)
-                return false;
+            
+            if (entity is null) return false;
 
             _mapper.Map(dto, entity);
             _dbContext.Entry(entity).State = EntityState.Modified;

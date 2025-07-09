@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MudBlazor;
-using System.ComponentModel;
 using ValuBakery.Data.DTOs;
-using ValuBakery.Data.Entities;
 using ValuBakery.Data.Enums;
 using ValuBakery.Web.Data;
 using ValuBakery.Web.Pages.Ingredients;
@@ -23,7 +20,6 @@ namespace ValuBakery.Web.Pages.Recipes
 
         [Parameter]
         public EventCallback OnChanged { get; set; }
-
 
         public List<RecipeComponentTable> RecipeComponents { get; set; } = new List<RecipeComponentTable>();
 
@@ -251,12 +247,17 @@ namespace ValuBakery.Web.Pages.Recipes
                             var ingredient = RecipeDto.Ingredients.FirstOrDefault(x => x.Id == id);
                             if (ingredient != null)
                             {
-                                var recipeComp = RecipeComponents.FirstOrDefault(x => x.Id == id && x.Type == type);
-                                if (recipeComp != null)
+                                var success = await _recipeIngredientService.DeleteAsync(ingredient.Id);
+
+                                if (success)
                                 {
-                                    RecipeComponents.Remove(recipeComp);
+                                    var recipeComp = RecipeComponents.FirstOrDefault(x => x.Id == id && x.Type == type);
+                                    if (recipeComp != null)
+                                    {
+                                        RecipeComponents.Remove(recipeComp);
+                                    }
+                                    RecipeDto.Ingredients.Remove(ingredient);
                                 }
-                                RecipeDto.Ingredients.Remove(ingredient);
                             }
                             break;
                         case RecipeComponentType.Recipe:
@@ -264,13 +265,18 @@ namespace ValuBakery.Web.Pages.Recipes
 
                             if (recipeEntity != null)
                             {
-                                var recipeComp = RecipeComponents.FirstOrDefault(x => x.Id == recipeEntity.Id && x.Type == type);
-                                if (recipeComp != null)
-                                {
-                                    RecipeComponents.Remove(recipeComp);
-                                }
+                                var success = await _recipeComponentService.DeleteAsync(RecipeDto.Id, id);
 
-                                RecipeDto.Components.Remove(recipeEntity);
+                                if (success)
+                                {
+                                    var recipeComp = RecipeComponents.FirstOrDefault(x => x.Id == recipeEntity.Id && x.Type == type);
+                                    if (recipeComp != null)
+                                    {
+                                        RecipeComponents.Remove(recipeComp);
+                                    }
+
+                                    RecipeDto.Components.Remove(recipeEntity);
+                                }
                             }
                             break;
                     }

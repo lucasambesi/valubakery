@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using ValuBakery.Data.DTOs;
+using ValuBakery.Percistence.Percistence;
 using ValuBakery.Web.Pages.Ingredients;
 
 namespace ValuBakery.Web.Pages.Recipes
@@ -71,6 +72,7 @@ namespace ValuBakery.Web.Pages.Recipes
         {
             var parameters = new DialogParameters
             {
+                { nameof(CreateIngredient.OnCreateData), EventCallback.Factory.Create<int>(this, CreateDialogEvent) }
             };
 
             var options = new DialogOptions
@@ -81,6 +83,30 @@ namespace ValuBakery.Web.Pages.Recipes
             };
 
             _dialogService.Show<CreateRecipe>("CreateRecipe", parameters, options);
+        }
+
+        public async Task CreateDialogEvent(int id)
+        {
+            try
+            {
+                var entity = await _recipeService.GetByIdAsync(id);
+
+                if (entity != null)
+                {
+                    var item = entity;
+
+                    if (item != null)
+                    {
+                        RecipeDtos.Insert(0, item);
+                    }
+
+                    StateHasChanged();
+                }
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         private void ViewRecipe(int id)

@@ -14,6 +14,7 @@ namespace ValuBakery.Data.Entities
         public Ingredient Ingredient { get; set; }
 
         public decimal Quantity { get; set; }
-    }
 
+        public bool IsDeleted { get; set; }
+    }
 }

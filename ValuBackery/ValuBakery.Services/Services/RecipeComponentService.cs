@@ -30,7 +30,20 @@ namespace ValuBakery.Application.Services
 
         public async Task<int> AddAsync(RecipeComponentDto dto)
         {
-            return await _dao.AddAsync(dto);
+            var entity = await _dao.GetByRecipesIdAsync(dto.ParentRecipeVariantId, dto.ChildRecipeVariantId);
+
+            if (entity != null)
+            {
+                dto.Id = entity.Id;
+                dto.IsDeleted = false;
+
+                await _dao.UpdateAsync(dto);
+                return entity.Id;
+            }
+            else
+            {
+                return await _dao.AddAsync(dto);
+            }
         }
 
         public async Task<List<RecipeComponentDto>> GetByRecipeIdAsync(int parentRecipeId)

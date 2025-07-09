@@ -35,6 +35,15 @@ namespace ValuBakery.Percistence.Percistence
             return _mapper.Map<RecipeComponentDto>(entity);
         }
 
+        public async Task<RecipeComponentDto> GetByRecipesIdAsync(int parentId, int childId)
+        {
+            var item = await _context.RecipeComponents
+                .Where(rc => rc.ParentRecipeVariantId == parentId && childId == rc.ChildRecipeVariantId)
+                .FirstOrDefaultAsync();
+
+            return _mapper.Map<RecipeComponentDto>(item);
+        }
+
         public async Task<List<RecipeComponentDto>> GetByRecipeIdAsync(int parentRecipeId)
         {
             var items = await _context.RecipeComponents
@@ -54,15 +63,15 @@ namespace ValuBakery.Percistence.Percistence
 
         public async Task<bool> DeleteAsync(int parentRecipeId, int childRecipeId)
         {
-            var trackedEntity = await _context.RecipeComponents
+            var entity = await _context.RecipeComponents
+                .AsTracking()
                 .FirstOrDefaultAsync(rc => rc.ParentRecipeVariantId == parentRecipeId && rc.ChildRecipeVariantId == childRecipeId);
 
-            if (trackedEntity is null) return false;
+            if (entity is null) return false;
 
-            _context.Entry(trackedEntity).State = EntityState.Detached;
-            _context.RecipeComponents.Attach(trackedEntity);
-            _context.RecipeComponents.Remove(trackedEntity);
+            entity.IsDeleted = true;
 
+            _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return true;
         }
@@ -72,7 +81,8 @@ namespace ValuBakery.Percistence.Percistence
             var entity = await _context.RecipeComponents.FindAsync(dto.Id);
             if (entity is null) return false;
 
-            _mapper.Map(dto, entity);
+            entity.Quantity = dto.Quantity;
+            entity.IsDeleted = dto.IsDeleted;
 
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();

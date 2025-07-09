@@ -25,7 +25,7 @@ namespace ValuBakery.Data.DTOs
 
         public string GetName()
         {
-           return Recipe?.Name + " " + Name;
+            return Recipe?.Name + " " + Name;
         }
 
         public decimal GetCost()
@@ -64,7 +64,8 @@ namespace ValuBakery.Data.DTOs
             }
 
             return result;
-        }
+        } 
+
         public string GetComponents()
         {
             var result = string.Empty;

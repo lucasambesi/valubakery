@@ -1,5 +1,6 @@
 ﻿@using MudBlazor
 @using ValuBakery.Data.DTOs;
+@using ValuBakery.Web.Helpers;
 @inject ISnackbar Snackbar
 
 @if (RecipeVariantDto == null)
@@ -44,7 +45,7 @@ else
                     @if (!string.IsNullOrEmpty(ingredientsText))
                     {
                         <MudText Typo="Typo.body2">
-                            @GetShortOrFull(ingredientsText, showFullIngredients,maxLengthIngredients, out var compTruncated)
+                            @StringHelper.GetShortOrFull(ingredientsText, showFullIngredients,maxLengthIngredients, out var compTruncated)
                             @if (ingredientsText?.Length > maxLengthIngredients)
                             {
                                 <MudLink @onclick="ToggleIngredients" Typo="Typo.caption"
@@ -57,7 +58,7 @@ else
                     @if (!string.IsNullOrEmpty(componentsText))
                     {
                         <MudText Typo="Typo.body2">
-                            @GetShortOrFull(componentsText, showFullComponents,maxLengthComponents, out var compTruncated)
+                            @StringHelper.GetShortOrFull(componentsText, showFullComponents,maxLengthComponents, out var compTruncated)
                             @if (componentsText?.Length > maxLengthComponents)
                             {
                                 <MudLink @onclick="ToggleComponents" Typo="Typo.caption"

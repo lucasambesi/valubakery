@@ -22,6 +22,8 @@ namespace ValuBakery.Data.DTOs
 
         public string? ChildRecipeName { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public decimal GetCost()
         {
            return ChildRecipeVariant.GetCost() * Quantity;

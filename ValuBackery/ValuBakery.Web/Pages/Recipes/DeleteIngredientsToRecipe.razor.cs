@@ -55,25 +55,14 @@ namespace ValuBakery.Web.Pages.Recipes
 
                 foreach (var ingredientDto in SelectedIngredientDtos)
                 {
-                    var success = await _recipeIngredientService.DeleteAsync(ingredientDto.Id);
-                    if (success)
-                    {
-                        deletedIds.Add(ingredientDto.Id);
-                        componentMap[ingredientDto.Id] = RecipeComponentType.Ingredient;
-                    }
+                    deletedIds.Add(ingredientDto.Id);
+                    componentMap[ingredientDto.Id] = RecipeComponentType.Ingredient;
                 }
 
                 foreach (var recipeDto in SelectedRecipeDtos)
                 {
-                    var success = await _recipeComponentService.DeleteAsync(
-                        parentRecipeId: RecipeDto.Id,
-                        childRecipeId: recipeDto.Id);
-
-                    if (success)
-                    {
-                        componentMap[recipeDto.Id] = RecipeComponentType.Recipe;
-                        deletedIds.Add(recipeDto.Id);
-                    }
+                    componentMap[recipeDto.Id] = RecipeComponentType.Recipe;
+                    deletedIds.Add(recipeDto.Id);
                 }
 
                 await OnDeleteData.InvokeAsync(componentMap);

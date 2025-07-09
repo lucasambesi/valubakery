@@ -8,16 +8,18 @@ namespace ValuBakery.Data.Entities
         
         public string Name { get; set; }
 
-        public decimal Profit { get; set; }
+        public string Description { get; set; }
+
+        public decimal ApplyProfitToRecipes { get; set; }
 
         public decimal ApplyProfitToMaterials { get; set; }
 
-        public decimal RecipeAmount { get; set; }
-
         public int RecipeVariantId { get; set; }
         
-        public RecipeVariant RecipeVariant { get; set; }
+        public List<ProductRecipeVariant> ProductRecipeVariants { get; set; }
         
         public List<ProductMaterial> ProductMaterials { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
     }
 }

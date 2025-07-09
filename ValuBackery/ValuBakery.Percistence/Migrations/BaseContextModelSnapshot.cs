@@ -97,6 +97,122 @@ namespace ValuBakery.Percistence.Migrations
                     b.ToTable("Materials");
                 });
 
+            modelBuilder.Entity("ValuBakery.Data.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("ApplyProfitToMaterials")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("ApplyProfitToRecipes")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int>("RecipeVariantId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("ValuBakery.Data.Entities.ProductMaterial", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaterialId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductMaterial");
+                });
+
+            modelBuilder.Entity("ValuBakery.Data.Entities.ProductRecipeVariant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<int>("RecipeVariantId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("RecipeVariantId");
+
+                    b.ToTable("ProductRecipeVariant");
+                });
+
             modelBuilder.Entity("ValuBakery.Data.Entities.Recipe", b =>
                 {
                     b.Property<int>("Id")
@@ -109,7 +225,6 @@ namespace ValuBakery.Percistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
@@ -140,6 +255,9 @@ namespace ValuBakery.Percistence.Migrations
                     b.Property<int>("ChildRecipeVariantId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ParentRecipeVariantId")
                         .HasColumnType("int");
 
@@ -168,6 +286,9 @@ namespace ValuBakery.Percistence.Migrations
 
                     b.Property<int>("IngredientId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(10,2)");
@@ -262,6 +383,44 @@ namespace ValuBakery.Percistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ValuBakery.Data.Entities.ProductMaterial", b =>
+                {
+                    b.HasOne("ValuBakery.Data.Entities.Material", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ValuBakery.Data.Entities.Product", "Product")
+                        .WithMany("ProductMaterials")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Material");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ValuBakery.Data.Entities.ProductRecipeVariant", b =>
+                {
+                    b.HasOne("ValuBakery.Data.Entities.Product", "Product")
+                        .WithMany("ProductRecipeVariants")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ValuBakery.Data.Entities.RecipeVariant", "RecipeVariant")
+                        .WithMany()
+                        .HasForeignKey("RecipeVariantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("RecipeVariant");
+                });
+
             modelBuilder.Entity("ValuBakery.Data.Entities.RecipeComponent", b =>
                 {
                     b.HasOne("ValuBakery.Data.Entities.RecipeVariant", "ChildRecipeVariant")
@@ -309,6 +468,13 @@ namespace ValuBakery.Percistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Recipe");
+                });
+
+            modelBuilder.Entity("ValuBakery.Data.Entities.Product", b =>
+                {
+                    b.Navigation("ProductMaterials");
+
+                    b.Navigation("ProductRecipeVariants");
                 });
 
             modelBuilder.Entity("ValuBakery.Data.Entities.Recipe", b =>

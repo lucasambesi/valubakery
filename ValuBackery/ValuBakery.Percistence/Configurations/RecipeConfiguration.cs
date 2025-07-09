@@ -22,7 +22,8 @@ namespace ValuBakery.Percistence.Configurations
                 .HasMaxLength(100);
 
             builder.Property(r => r.Description)
-                .HasMaxLength(250);
+                .HasMaxLength(250)
+                .IsRequired(false);
 
             builder.Property(r => r.IsDeleted)
                 .IsRequired();

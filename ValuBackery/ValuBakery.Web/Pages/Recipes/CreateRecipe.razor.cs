@@ -14,6 +14,9 @@ namespace ValuBakery.Web.Pages.Recipes
 
         private void Cancel() => MudDialog.Cancel();
 
+        [Parameter]
+        public EventCallback<int> OnCreateData { get; set; }
+
         private async Task Submit()
         {
             if (string.IsNullOrWhiteSpace(CreateRecipeModel.Name))
@@ -42,6 +45,7 @@ namespace ValuBakery.Web.Pages.Recipes
                 if (id > 0)
                 {
                     MudDialog?.Close(DialogResult.Ok(true));
+                    await OnCreateData.InvokeAsync(id);
                 }
                 else
                 {

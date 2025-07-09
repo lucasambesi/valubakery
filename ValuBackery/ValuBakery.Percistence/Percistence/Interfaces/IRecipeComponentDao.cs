@@ -6,6 +6,7 @@ namespace ValuBakery.Percistence.Percistence.Interfaces
     {
         Task<RecipeComponentDto?> GetByIdAsync(int id);
         Task<int> AddAsync(RecipeComponentDto dto);
+        Task<RecipeComponentDto> GetByRecipesIdAsync(int parentId, int childId);
         Task<List<RecipeComponentDto>> GetByRecipeIdAsync(int parentRecipeId);
         Task<bool> DeleteAsync(int parentRecipeId, int childRecipeId);
         Task<bool> UpdateAsync(RecipeComponentDto dto);

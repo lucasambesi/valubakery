@@ -1,0 +1,72 @@
+﻿@using ValuBakery.Web.Helpers;
+@if (ProductDto == null)
+{
+    <MudPaper Height="400px" Style="margin:1%" Elevation="20">
+
+    </MudPaper>
+}
+else
+{
+     <MudDialog Class="fixed-dialog" @key="dialogRenderKey">
+        <TitleContent>
+            <MudStack Row="true" AlignItems="AlignItems.Start" Spacing="4">
+                <MudImage Src="images/brownie.jpg"
+                      ObjectFit="ObjectFit.Fill"
+                      Width="150" Height="150"
+                      Alt="Sin imagen"
+                      Elevation="4"
+                      Class="rounded-lg" />
+
+                <MudStack Justify="Justify.SpaceBetween" AlignItems="AlignItems.Start" Spacing="2">
+                    <MudText Typo="Typo.h5" Class="fancy-title">
+                        @($"{ProductDto.Name}")
+                    </MudText>
+                    @if (!string.IsNullOrEmpty(ProductDto.Description))
+                    {
+                        <MudText Typo="Typo.body2">
+                            @StringHelper.GetShortOrFull(ProductDto.Description, showFullDescription,maxLengthDescription, out var compTruncated)
+                            @if (ProductDto.Description?.Length > maxLengthDescription)
+                            {
+                                <MudLink @onclick="ToggleDescription" Typo="Typo.caption"
+                                    Class="cursor-pointer" Style="color:#E91E63;">
+                                    @(showFullDescription ? "Ver menos" : "Ver más")
+                                </MudLink>
+                            }
+                        </MudText>
+                    }
+                    <MudText Typo="Typo.body2">
+                        @((MarkupString)$"<strong>Ganancia recetas:</strong> {ProductDto?.ApplyProfitToRecipes}%, <strong>materiales:</strong> {ProductDto?.ApplyProfitToMaterials}%")
+                    </MudText>
+                    @if (!string.IsNullOrEmpty(componentsText))
+                    {
+                        <MudText Typo="Typo.body2">
+                            @StringHelper.GetShortOrFull(componentsText, showFullComponents, maxLengthComponents, out var compTruncated)
+                            @if (componentsText.Length > maxLengthComponents)
+                            {
+                                <MudLink @onclick="ToggleDescription" Typo="Typo.caption"
+                                    Class="cursor-pointer" Style="color:#E91E63;">
+                                    @(showFullComponents ? "Ver menos" : "Ver más")
+                                </MudLink>
+                            }
+                        </MudText>
+                    }
+                </MudStack>
+
+                <MudSpacer />
+
+                <MudText Typo="Typo.h6" Style="margin-right:5%">$@ProductDto?.Total.ToString("N2")</MudText>
+            </MudStack>
+        </TitleContent>
+        <DialogContent>
+            <MudPaper Class="no-elevation pa-0" Style="background-color: transparent;">
+                <MudGrid>
+                    <MudItem xs="12">
+                        <CascadingValue Value="ProductDto" IsFixed="false">
+                            <ProductComponents OnChanged="OnComponentsChanged" />
+                        </CascadingValue>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        </DialogContent>
+    </MudDialog>
+}

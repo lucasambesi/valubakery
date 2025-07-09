@@ -15,7 +15,20 @@ namespace ValuBakery.Application.Services
 
         public async Task<int> AddAsync(RecipeIngredientDto dto)
         {
-            return await _dao.AddAsync(dto);
+            var entity = await _dao.GetByRecipeIdAndIngredienIdAsync(dto.RecipeVariantId, dto.IngredientId);
+
+            if (entity != null)
+            {
+                dto.Id = entity.Id;
+                dto.IsDeleted = false;
+
+                await _dao.UpdateAsync(dto);
+                return entity.Id;
+            }
+            else
+            {
+                return await _dao.AddAsync(dto);
+            }
         }
 
         public async Task<bool> UpdateAsync(RecipeIngredientDto dto)

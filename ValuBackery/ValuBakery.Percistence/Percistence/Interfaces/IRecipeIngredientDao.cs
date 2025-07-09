@@ -8,6 +8,8 @@ namespace ValuBakery.Percistence.Percistence.Interfaces
 
         Task<RecipeIngredientDto> GetByIdAsync(int id);
 
+        Task<RecipeIngredientDto> GetByRecipeIdAndIngredienIdAsync(int recipeId, int ingredientId);
+
         Task<List<RecipeIngredientDto>> GetByRecipeIdAsync(int recipeId);
 
         Task<bool> UpdateAsync(RecipeIngredientDto dto);

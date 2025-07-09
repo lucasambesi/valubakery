@@ -8,6 +8,7 @@ namespace ValuBakery.Data.DTOs
         public int Id { get; set; }
 
         public int RecipeVariantId { get; set; }
+
         public RecipeVariantDto RecipeVariant { get; set; }
 
         public int IngredientId { get; set; }
@@ -15,6 +16,8 @@ namespace ValuBakery.Data.DTOs
         public IngredientDto Ingredient { get; set; }
 
         public decimal Quantity { get; set; }
+
+        public bool IsDeleted { get; set; }
 
         public decimal GetCost()
         {

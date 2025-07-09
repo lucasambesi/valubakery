@@ -2,7 +2,7 @@
 <MudDialog>
     <TitleContent>
         <MudText Typo="Typo.h6">
-            <MudIcon Icon="@Icons.Material.Filled.AddCircleOutline" Class="mr-3 mb-n1" />
+            <MudIcon Icon="@Icons.Material.Filled.AddCircleOutline" />
             Nuevo ingrediente
         </MudText>
     </TitleContent>
@@ -12,7 +12,9 @@
                 <MudTextField @bind-Value="@IngredientDto.Name" Label="Nombre" Variant="Variant.Outlined"/>
             </MudItem>
             <MudItem xs="12">
-                <MudTextField @bind-Value="@IngredientDto.CostPerUnit" Label="Costo por unidad" Variant="Variant.Outlined" />
+                <MudTextField @bind-Value="@IngredientDto.CostPerUnit" Label="Costo por unidad" Variant="Variant.Outlined"
+                              Adornment="Adornment.End" AdornmentAriaLabel="Calcular"
+                              AdornmentIcon=@Icons.Material.Outlined.Calculate OnAdornmentClick="OpenCalculateDialog" />
             </MudItem>
             <MudItem xs="12">
                 <MudSelect T="UnitEnum" Label="Unidad de medida" Variant="Variant.Outlined"
@@ -34,7 +36,6 @@
         </MudGrid>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Error" OnClick="@(() => Submit())">Crear</MudButton>
+        <MudButton Color="Color.Primary" OnClick="@(() => Submit())">Crear</MudButton>
     </DialogActions>
 </MudDialog>

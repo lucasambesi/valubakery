@@ -17,6 +17,10 @@ namespace ValuBakery.Application.Mappings
 
             CreateMap<RecipeComponentDto, RecipeComponent>();
             CreateMap<RecipeIngredientDto, RecipeIngredient>();
+
+            CreateMap<ProductDto, Product>();
+            CreateMap<ProductMaterialDto, ProductMaterial>();
+            CreateMap<ProductRecipeVariantDto, ProductRecipeVariant>();
             #endregion
 
             #region Dtos
@@ -27,6 +31,9 @@ namespace ValuBakery.Application.Mappings
             CreateMap<RecipeVariant, RecipeVariantDto>();
             CreateMap<RecipeComponent, RecipeComponentDto>();
             CreateMap<RecipeIngredient, RecipeIngredientDto>();
+            CreateMap<Product, ProductDto>();
+            CreateMap<ProductMaterial, ProductMaterialDto>();
+            CreateMap<ProductRecipeVariant, ProductRecipeVariantDto>();
             #endregion
         }
     }

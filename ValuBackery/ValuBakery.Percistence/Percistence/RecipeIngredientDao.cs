@@ -4,6 +4,7 @@ using ValuBakery.Data.DTOs;
 using ValuBakery.Data.Entities;
 using ValuBakery.Percistence.Contexts;
 using ValuBakery.Percistence.Percistence.Interfaces;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace ValuBakery.Percistence.Percistence
 {
@@ -35,6 +36,14 @@ namespace ValuBakery.Percistence.Percistence
             return _mapper.Map<RecipeIngredientDto>(entity);
         }
 
+        public async Task<RecipeIngredientDto> GetByRecipeIdAndIngredienIdAsync(int recipeId, int ingredientId)
+        {
+            var item = await _dbContext.RecipeIngredients
+                .Where(rc => rc.RecipeVariantId == recipeId && ingredientId == rc.IngredientId)
+                .FirstOrDefaultAsync();
+
+            return _mapper.Map<RecipeIngredientDto>(item);
+        }
 
         public async Task<List<RecipeIngredientDto>> GetByRecipeIdAsync(int recipeId)
         {
@@ -51,7 +60,8 @@ namespace ValuBakery.Percistence.Percistence
             var entity = await _dbContext.RecipeIngredients.FindAsync(dto.Id);
             if (entity is null) return false;
 
-            _mapper.Map(dto, entity);
+            entity.Quantity = dto.Quantity;
+            entity.IsDeleted = dto.IsDeleted;
 
             _dbContext.Entry(entity).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
@@ -61,8 +71,11 @@ namespace ValuBakery.Percistence.Percistence
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var entity = await _dbContext.RecipeIngredients.FindAsync(id);
+            var entity = await _dbContext.RecipeIngredients.AsTracking().FirstOrDefaultAsync(x => x.Id == id);
+
             if (entity == null) return false;
+
+            entity.IsDeleted = true;
 
             _dbContext.RecipeIngredients.Remove(entity);
             await _dbContext.SaveChangesAsync();

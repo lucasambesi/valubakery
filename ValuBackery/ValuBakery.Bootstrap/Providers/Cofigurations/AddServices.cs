@@ -20,6 +20,9 @@ namespace ValuBakery.Bootstrap.Providers.Cofigurations
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IRecipeIngredientService, RecipeIngredientService>();
             services.AddScoped<IRecipeComponentService, RecipeComponentService>();
+            services.AddScoped<IProductMaterialService, ProductMaterialService>();
+            services.AddScoped<IProductRecipeVariantService, ProductRecipeVariantService>();
+            services.AddScoped<IProductService, ProductService>();
 
             // Dao
             services.AddScoped<IUserDao, UserDao>();
@@ -29,6 +32,9 @@ namespace ValuBakery.Bootstrap.Providers.Cofigurations
             services.AddScoped<IRecipeVariantDao, RecipeVariantDao>();
             services.AddScoped<IRecipeIngredientDao, RecipeIngredientDao>();
             services.AddScoped<IRecipeComponentDao, RecipeComponentDao>();
+            services.AddScoped<IProductMaterialDao, ProductMaterialDao>();
+            services.AddScoped<IProductRecipeVariantDao, ProductRecipeVariantDao>();
+            services.AddScoped<IProductDao, ProductDao>();
 
             return services;
         }

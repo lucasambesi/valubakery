@@ -19,6 +19,8 @@ namespace ValuBakery.Data.Entities
 
         public Material Material { get; set; }
 
-        public decimal Quantity { get; set; }  // e.g. 1 box, 0.5 ribbon
+        public decimal Quantity { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
     }
 }

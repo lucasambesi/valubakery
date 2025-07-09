@@ -17,5 +17,7 @@ namespace ValuBakery.Data.Entities
         public RecipeVariant ChildRecipeVariant { get; set; }
 
         public decimal Quantity { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

@@ -62,7 +62,6 @@ namespace ValuBakery.Percistence.Percistence
             return true;
         }
 
-
         public async Task DeleteAsync(int id)
         {
             var entity = await _dbContext.Materials.FindAsync(id);

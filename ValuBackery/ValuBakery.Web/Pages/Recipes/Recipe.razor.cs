@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using MudBlazor;
 using ValuBakery.Data.DTOs;
-using ValuBakery.Percistence.Percistence;
-using ValuBakery.Web.Pages.Ingredients;
-
 namespace ValuBakery.Web.Pages.Recipes
 {
     public partial class Recipe
@@ -69,21 +64,6 @@ namespace ValuBakery.Web.Pages.Recipes
 
                 StateHasChanged();
             }
-        }
-
-
-        private MarkupString GetShortOrFull(string? content, bool expanded, int maxLength, out bool isTruncated)
-        {
-            isTruncated = false;
-
-            if (string.IsNullOrWhiteSpace(content))
-                return (MarkupString)"";
-
-            if (expanded || content.Length <= maxLength)
-                return (MarkupString)content;
-
-            isTruncated = true;
-            return (MarkupString)(content.Substring(0, maxLength) + "...");
         }
     }
 }

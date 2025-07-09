@@ -1,5 +1,4 @@
-﻿using ValuBakery.Data.Entities;
-using ValuBakery.Data.Enums;
+﻿using ValuBakery.Data.Enums;
 
 namespace ValuBakery.Web.Data
 {

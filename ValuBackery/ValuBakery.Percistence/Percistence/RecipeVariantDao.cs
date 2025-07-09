@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ValuBakery.Data.DTOs;
 using ValuBakery.Data.Entities;
 using ValuBakery.Percistence.Contexts;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace ValuBakery.Percistence.Percistence
 {
@@ -21,9 +22,9 @@ namespace ValuBakery.Percistence.Percistence
         {
             var recipe = await _dbContext.RecipeVariant
                 .Include(r => r.Recipe)
-                .Include(r => r.Ingredients)
+                .Include(r => r.Ingredients.Where(x => !x.IsDeleted))
                     .ThenInclude(ri => ri.Ingredient)
-                .Include(r => r.Components)
+                .Include(r => r.Components.Where(x => !x.IsDeleted))
                     .ThenInclude(rc => rc.ChildRecipeVariant)
                 .Include(r => r.UsedIn)
                     .ThenInclude(uc => uc.ParentRecipeVariant)
@@ -63,9 +64,9 @@ namespace ValuBakery.Percistence.Percistence
                     // Cargar receta hija completa si no está completamente cargada
                     var childRecipe = await _dbContext.RecipeVariant
                         .Include(r => r.Recipe)
-                        .Include(r => r.Ingredients)
+                        .Include(r => r.Ingredients.Where(x => !x.IsDeleted))
                             .ThenInclude(ri => ri.Ingredient)
-                        .Include(r => r.Components)
+                        .Include(r => r.Components.Where(x => !x.IsDeleted))
                             .ThenInclude(c => c.ChildRecipeVariant)
                         .FirstOrDefaultAsync(r => r.Id == comp.ChildRecipeVariant.Id && !r.IsDeleted);
 
@@ -94,7 +95,7 @@ namespace ValuBakery.Percistence.Percistence
         {
             var entities = await _dbContext.RecipeVariant
                 .Include(r => r.Recipe)
-                .Include(r => r.Components)
+                .Include(r => r.Components.Where(x => !x.IsDeleted))
                 .Include(r => r.UsedIn)
                 .Where(r => !r.IsDeleted)
                 .ToListAsync();
