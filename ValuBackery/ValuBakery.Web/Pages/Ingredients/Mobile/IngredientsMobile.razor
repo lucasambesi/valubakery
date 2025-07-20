@@ -1,0 +1,68 @@
+﻿@using ValuBakery.Data.DTOs
+@using ValuBakery.Web.Pages.Common
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+@inherits ValuBakery.Web.Pages.Ingredients.IngredientsBase
+
+@if (isLoading)
+{
+    <Overlay />
+}
+else if (filteredIngredients.Any())
+{
+        <MudPaper Square="true" Elevation="0" Class="sticky-header px-3 pt-3 pb-1" Style="background-color:#FDF6ED; border-color:transparent">
+            <MudTextField @bind-Value="search"
+                      Placeholder="Buscar ingrediente..."
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      Variant="Variant.Outlined"
+                      DisableUnderLine="true"
+                      Clearable="true"
+                      Class="search-input"
+                      Margin="Margin.Dense"
+                      Style="width: 100%;" />
+        </MudPaper>
+
+        <MudContainer MaxWidth="MaxWidth.False" Class="px-2 pt-3 pb-6">
+            @foreach (var item in filteredIngredients)
+            {
+                <MudPaper Elevation="0"
+                @onclick="@(() => ViewIngredient(item))"
+                  Class="ingredient-card slide-fade-in hover-elevate pa-3 d-flex align-center mb-2 clickable"
+                  Style="border-radius:20px; margin-bottom:0.8rem">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="w-100">
+
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                            <MudAvatar Icon="@Icons.Material.Filled.FoodBank"
+                               Color="@GetColor(item.Unit.ToString())"
+                               Size="Size.Medium" />
+                            <MudStack Spacing="0">
+                            <MudText Typo="Typo.subtitle2" Class="fw-bold truncate-name">@item.Name</MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                    $@item.CostPerUnit.ToString("N2")
+                                </MudText>
+                            </MudStack>
+                        </MudStack>
+
+                        <MudChip Color="@GetColor(item.Unit.ToString())"
+                         Variant="Variant.Outlined"
+                         Size="Size.Small">
+                            @item.Unit
+                        </MudChip>
+                    </MudStack>
+                </MudPaper>
+            }
+        </MudContainer>
+
+}
+else
+{
+    <MudText Class="pa-4 text-center text-secondary">No se encontraron ingredientes</MudText>
+}
+
+<MudTooltip Text="Agregar ingrediente">
+    <MudFab Icon="@Icons.Material.Filled.Add"
+        Color="Color.Secondary"
+        Style="position: fixed; bottom: 16px; right: 16px; z-index: 20;"
+        OnClick="DialogCreate" />
+</MudTooltip>

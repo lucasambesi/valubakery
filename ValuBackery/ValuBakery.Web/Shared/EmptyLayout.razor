@@ -1,0 +1,53 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="@ValuBakeryTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    @Body
+</MudLayout>
+
+@code {
+    private MudTheme ValuBakeryTheme = new MudTheme()
+        {
+            Palette = new Palette()
+            {
+                Primary = "#F277BA",     // Rosa principal
+                Secondary = "#FFBCBC",   // Melón pastel
+                Background = "#FDF6ED",  // Beige claro
+                TextPrimary = "#4A4A4A", // Gris oscuro
+
+                Success = "#B2F2BB",     // Verde menta pastel
+                Info = "#AEE6F9",        // Celeste pastel
+                Warning = "#FFE9A0",     // Amarillo claro
+                Error = "#FF9F9F"        // Rojo rosado pastel
+            },
+            Typography = new Typography()
+            {
+                Default = new Default()
+                {
+                    FontFamily = new[] { "Poppins", "sans-serif" },
+                },
+                H1 = new H1()
+                {
+                    FontFamily = new[] { "Fredoka", "cursive" },
+                    FontWeight = 700,
+                    FontSize = "3rem"
+                },
+                H2 = new H2()
+                {
+                    FontFamily = new[] { "Fredoka", "cursive" },
+                    FontWeight = 600,
+                    FontSize = "2.2rem"
+                }
+            }
+        };
+
+    bool _drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}

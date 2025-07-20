@@ -54,27 +54,12 @@ namespace ValuBakery.Web.Pages.Products
                 {
                     deletedIds.Add(materialDto.Id);
                     componentMap[materialDto.Id] = ProductComponentType.Material;
-                    //var success = await _productMaterialService.DeleteAsync(materialDto.Id);
-                    //if (success)
-                    //{
-                    //    materialDto.IsDeleted = true;
-                    //    deletedIds.Add(materialDto.Id);
-                    //    componentMap[materialDto.Id] = ProductComponentType.Material;
-                    //}
                 }
 
                 foreach (var recipeDto in SelectedRecipeDtos)
                 {
                     componentMap[recipeDto.Id] = ProductComponentType.Recipe;
                     deletedIds.Add(recipeDto.Id);
-                    //var success = await _productRecipeVariantService.DeleteAsync(recipeDto.Id);
-
-                    //if (success)
-                    //{
-                    //    recipeDto.IsDeleted = true;
-                    //    componentMap[recipeDto.Id] = ProductComponentType.Recipe;
-                    //    deletedIds.Add(recipeDto.Id);
-                    //}
                 }
 
                 await OnDeleteData.InvokeAsync(componentMap);

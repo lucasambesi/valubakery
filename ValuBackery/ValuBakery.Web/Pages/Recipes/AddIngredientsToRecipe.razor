@@ -5,7 +5,7 @@
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Filled.AddCircleOutline" Class="mr-3 mb-n1" />
-            Agregar ingredientes
+            Agregar ingredientes y recetas
         </MudText>
     </TitleContent>
     <DialogContent>
@@ -16,13 +16,13 @@
                           Hover="true" MultiSelection="@true" Height="400px" Elevation="0">
                     <HeaderContent>
                         <MudTh>Nombre</MudTh>
-                        <MudTh>Ud</MudTh>
                         <MudTh>Costo por unidad</MudTh>
+                        <MudTh>Ud</MudTh>
                     </HeaderContent>
                     <RowTemplate>
                         <MudTd DataLabel="Nombre">@context.Name</MudTd>
+                        <MudTd DataLabel="Costo" Style="text-align:right">$@context.CostPerUnit</MudTd>
                         <MudTd DataLabel="Ud">@context.Unit</MudTd>
-                        <MudTd DataLabel="Nr">@context.CostPerUnit</MudTd>
                     </RowTemplate>
                 </MudTable>
             </MudTabPanel>
@@ -41,6 +41,6 @@
         </MudTabs>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Error" OnClick="Submit">Agregar</MudButton>
+        <MudButton Color="Color.Secondary" OnClick="Submit">Agregar</MudButton>
     </DialogActions>
 </MudDialog>

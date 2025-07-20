@@ -1,0 +1,9 @@
+﻿.light-overlay {
+    background-color: rgba(240, 240, 240, 0.7); /* gris suave con transparencia */
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1300;
+}

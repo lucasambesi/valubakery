@@ -1,0 +1,74 @@
+﻿@inherits ValuBakery.Web.Pages.Recipes.RecipesBase
+
+@using MudBlazor
+@using ValuBakery.Data.DTOs;
+@using ValuBakery.Web.Pages.Common
+@inject NavigationManager _navigationManager
+
+<MudPaper Square="true" Elevation="0" Class="sticky-header px-3 pt-3 pb-1" Style="background-color:#FDF6ED; border-color:transparent">
+    <MudTextField @bind-Value="search"
+                  Placeholder="Buscar receta..."
+                  Adornment="Adornment.Start"
+                  AdornmentIcon="@Icons.Material.Filled.Search"
+                  Variant="Variant.Outlined"
+                  DisableUnderLine="true"
+                  Clearable="true"
+                  Class="search-input"
+                  Margin="Margin.Dense"
+                  Style="width: 100%;" />
+</MudPaper>
+
+@if (isLoading)
+{
+    <Overlay />
+}
+else if (filteredRecipes.Any())
+{
+    <MudContainer MaxWidth="MaxWidth.False" Class="px-2 pt-3 pb-6">
+        @foreach (var item in filteredRecipes)
+        {
+            <MudPaper Elevation="0"
+              @onclick="@(() => ViewRecipe(item.Id, true))"
+              Class="ingredient-card slide-fade-in hover-elevate pa-3 d-flex align-center mb-2 clickable"
+              Style="border-radius:20px; margin-bottom:0.8rem">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="w-100">
+
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                        <MudAvatar Icon="@Icons.Material.Filled.FoodBank"
+                           Color="@GetColor(string.Empty)"
+                           Size="Size.Medium">
+                            <MudImage Src="images/brownie.jpg" Alt="Brownie"></MudImage>
+                    </MudAvatar>
+                        <MudStack Spacing="0">
+                            <MudText Typo="Typo.subtitle2" Class="fw-bold truncate-name">@item.Name</MudText>
+                            @if (!string.IsNullOrEmpty(item.Description))
+                            {                            
+                                <MudText Typo="Typo.caption" Class="text-truncate" Style="max-width: 250px;" Color="Color.Default">
+                                    @item.Description
+                                </MudText>
+                            }
+                            else
+                            {
+                                <MudText Typo="Typo.caption" Class="text-truncate" Style="max-width: 350px;" Color="Color.Default">
+                                    @item.GetVariants()
+                                </MudText>
+                            }
+                        </MudStack>
+                    </MudStack>
+                </MudStack>
+            </MudPaper>
+        }
+    </MudContainer>
+
+}
+else
+{
+    <MudText Class="pa-4 text-center text-secondary">No se encontraron recetas</MudText>
+}
+
+<MudTooltip Text="Agregar receta">
+    <MudFab Icon="@Icons.Material.Filled.Add"
+            Color="Color.Secondary"
+            Style="position: fixed; bottom: 16px; right: 16px; z-index: 20;"
+            OnClick="DialogCreate" />
+</MudTooltip>

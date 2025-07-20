@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 using ValuBakery.Data.DTOs;
 using ValuBakery.Data.Enums;
 using ValuBakery.Web.Data;
+using ValuBakery.Web.Pages.Common;
 using ValuBakery.Web.Pages.Ingredients;
 
 namespace ValuBakery.Web.Pages.Recipes
@@ -26,6 +28,8 @@ namespace ValuBakery.Web.Pages.Recipes
         protected override async Task OnInitializedAsync()
         {
             if (RecipeDto == null) return;
+
+            RecipeComponents.Clear();
 
             RecipeComponents.AddRange(RecipeDto.Ingredients
                 .Select(ingredient =>
@@ -69,6 +73,19 @@ namespace ValuBakery.Web.Pages.Recipes
                 Id = ((RecipeComponentTable)RecipeIngredientDto).Id,
                 Quantity = ((RecipeComponentTable)RecipeIngredientDto).Quantity,
             };
+        }
+
+        private async Task HandleKeyDown(KeyboardEventArgs e, RecipeComponentTable context)
+        {
+            if (e.Key == "Enter")
+            {
+                await Task.Yield();
+                ItemHasBeenCommitted(context);
+            }
+            if (e.Key == "Escape")
+            {
+                ResetItemToOriginalValues(context);
+            }
         }
 
         private async void ItemHasBeenCommitted(object recipeIngredientDto)
@@ -145,6 +162,7 @@ namespace ValuBakery.Web.Pages.Recipes
             var options = new DialogOptions
             {
                 CloseButton = true,
+                CloseOnEscapeKey = true,
                 MaxWidth = MaxWidth.Small,
                 FullWidth = true
             };
@@ -164,6 +182,7 @@ namespace ValuBakery.Web.Pages.Recipes
             var options = new DialogOptions
             {
                 CloseButton = true,
+                CloseOnEscapeKey = true,
                 MaxWidth = MaxWidth.Small,
                 FullWidth = true
             };
@@ -317,6 +336,7 @@ namespace ValuBakery.Web.Pages.Recipes
             var options = new DialogOptions
             {
                 CloseButton = true,
+                CloseOnEscapeKey = true,
                 MaxWidth = MaxWidth.Small,
                 FullWidth = true
             };
@@ -336,13 +356,45 @@ namespace ValuBakery.Web.Pages.Recipes
             var options = new DialogOptions
             {
                 CloseButton = true,
-                MaxWidth = MaxWidth.Medium,
+                CloseOnEscapeKey = true,
+                MaxWidth = MaxWidth.Small,
                 FullWidth = true
             };
 
             _dialogService.Show<ViewRecipeResumen>("ViewRecipeResumen", parameters, options);
         }
 
+        private void OpenCalculateDialog(RecipeComponentTable context)
+        {
+            var parameters = new DialogParameters
+            {
+                {nameof(CalculatePortions.Title), "Calcular porciones" },
+                {nameof(CalculatePortions.FirstField), context.Name },
+                {nameof(CalculatePortions.SecondField), RecipeDto.GetName() },
+                {nameof(CalculatePortions.RecipeComponentTable), context },
+                { nameof(CalculatePortions.OnChanged),
+                    EventCallback.Factory.Create<CalculatePortionsResult>(this, DialogCalculateEvent) }
+            };
+
+            var options = new DialogOptions
+            {
+                CloseButton = true,
+                CloseOnEscapeKey = true,
+                MaxWidth = MaxWidth.Small,
+                FullWidth = true
+            };
+
+            _dialogService.Show<CalculatePortions>("CalculatePortions", parameters, options);
+        }
+
+        private void DialogCalculateEvent(CalculatePortionsResult result)
+        {
+            if (result.Portions > 0)
+            {
+                var recipe = RecipeComponents.Where(x => x.Id == result.Component.Id).First();
+                recipe.Quantity = result.Portions;
+            }
+        }
         #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 using ValuBakery.Data.DTOs;
 using ValuBakery.Data.Enums;
@@ -71,6 +72,7 @@ namespace ValuBakery.Web.Pages.Ingredients
             {
                 CloseButton = true,
                 MaxWidth = MaxWidth.Small,
+                CloseOnEscapeKey = true,
                 FullWidth = true
             };
 
@@ -82,6 +84,23 @@ namespace ValuBakery.Web.Pages.Ingredients
             if(total > 0)
             {
                 IngredientDto.CostPerUnit = total;
+            }
+        }
+
+        private void CapitalizeName()
+        {
+            if (!string.IsNullOrWhiteSpace(IngredientDto.Name))
+            {
+                var name = IngredientDto.Name.Trim();
+                IngredientDto.Name = char.ToUpper(name[0]) + name[1..];
+            }
+        }
+
+        private async Task HandleEnterKey(KeyboardEventArgs e)
+        {
+            if (e.Key == "Enter")
+            {
+                await Submit();
             }
         }
     }

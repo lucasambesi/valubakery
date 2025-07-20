@@ -1,0 +1,48 @@
+﻿<MudDialog Class="px-3 pb-1">
+    <TitleContent>
+        <MudStack Row="true" Justify="Justify.FlexStart" AlignItems="AlignItems.Center">
+            <MudText Typo="Typo.h6" Align="Align.Center" Class="fw-bold">
+                Editar receta
+            </MudText>
+        </MudStack>
+    </TitleContent>
+
+    <DialogContent>
+        <MudGrid Spacing="2">
+            <MudItem xs="12">
+                <MudTextField @bind-Value="@CreateRecipeModel.Name"
+                              Label="Nombre"
+                              Variant="Variant.Outlined"
+                              Immediate="true"
+                              OnKeyDown="HandleEnterKey"
+                              MaxLength="100"
+                              OnBlur="() => CapitalizeName()" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudTextField Lines="3"
+                              @bind-Value="CreateRecipeModel.Description"
+                              Label="Descripción"
+                              Variant="Variant.Outlined"
+                              OnKeyDown="HandleEnterKey"                              
+                              Immediate="true"
+                              MaxLength="150"
+                              OnBlur="() => CreateRecipeModel.Description = CreateRecipeModel.Description?.Trim()" />
+
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudSwitch @bind-Value="(CreateRecipeModel.IsActive)" 
+                    ThumbIcon="@(CreateRecipeModel.IsActive==true ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)" 
+                    ThumbIconColor="@(CreateRecipeModel.IsActive==true ? Color.Success : Color.Error)">
+                    Activa
+                </MudSwitch>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Submit">Editar</MudButton>
+    </DialogActions>
+
+</MudDialog>

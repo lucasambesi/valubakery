@@ -1,0 +1,51 @@
+﻿@page "/login"
+@layout MainLayout
+@attribute [AllowAnonymous]
+
+<style>
+    .appbar{
+        height: 70px;
+        margin: 0 auto;
+        margin-top: 2%;
+        box-shadow: none;
+    }
+</style>
+
+<MudContainer MaxWidth="MaxWidth.ExtraSmall" Class="d-flex align-center" 
+              Style="height: 100vh; overflow-x: hidden;">
+    <MudPaper Elevation="25" Class="pa-8" Style="width: 500px;">
+        <div class="d-flex flex-column mud-width-full">
+            <EditForm Model="@_authModel" OnValidSubmit="SubmitAsync">
+                <MudGrid>
+                    <MudItem xs="12">
+                            <MudText Typo="Typo.h4" Style="font-weight: 600;">
+                                Inicia sesión
+                            </MudText>
+                    </MudItem>
+                    
+                    <MudItem xs="12">
+                        <MudTextField T="string" Label="Usuario" Variant="Variant.Outlined"
+                                        @bind-Value="_authModel.UserName" />
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudTextField Label="Contraseña" Variant="Variant.Outlined"
+                                        @bind-Value="_authModel.Password" 
+                                        InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility" />
+                    </MudItem>
+                    <MudCardContent>
+                        <MudItem xs="12" Class="d-flex justify-center">
+                            <MudButton ButtonType="ButtonType.Submit"
+                                        Variant="Variant.Filled"
+                                        Color="Color.Primary"
+                                        Size="Size.Large"
+                                        Style="width: 100%;">
+                                Ingresar
+                            </MudButton>
+                        </MudItem>
+                    </MudCardContent>
+                </MudGrid>
+            </EditForm>
+        </div>
+    </MudPaper>
+</MudContainer>

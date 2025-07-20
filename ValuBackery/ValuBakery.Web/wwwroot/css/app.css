@@ -1,4 +1,8 @@
-﻿.mud-nav-link {
+﻿html {
+    scroll-behavior: smooth;
+}
+
+.mud-nav-link {
     border-radius: 8px;
     margin: 4px 8px;
     padding: 10px;
@@ -44,4 +48,111 @@ h1, h2, h3, h4, h5, h6 {
 .dialog-body-fixed {
     overflow: hidden !important;
     height: 100%;
+}
+
+.search-input input {
+    border-radius: 12px;
+    background-color: #ffffff;
+    padding: 10px 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.ingredient-card {
+    transition: transform 0.3s ease;
+}
+
+.ingredient-card:hover {
+    transform: scale(1.03);
+}
+
+.search-input input {
+    border-radius: 12px;
+    background-color: #ffffff;
+    padding: 10px 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.fade-in {
+    animation: fade-in 0.25s ease-in-out;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+@keyframes slideFadeIn {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+        box-shadow: var(--mud-elevation-0);
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+        box-shadow: var(--mud-elevation-2);
+    }
+}
+
+.slide-fade-in {
+    animation: slideFadeIn 0.5s ease-out forwards;
+}
+
+/* Elevación suave al pasar el dedo (hover en desktop) */
+.hover-elevate {
+    transition: box-shadow 0.3s ease;
+}
+
+.hover-elevate:hover {
+    box-shadow: var(--mud-elevation-6);
+}
+
+.sticky-header {
+    position: sticky;
+    top: 56px;
+    z-index: 100;
+    background-color: #FDF6ED;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.mud-avatar:hover {
+    box-shadow: 0 0 0 3px rgba(242, 119, 186, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+
+.clickable {
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.clickable:hover {
+    transform: scale(1.01);
+}
+
+.truncate-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+    display: block;
+}
+.mud-expand-panel .mud-expand-panel-header {
+    padding: 0 !important;
+}
+
+.mud-expand-panel .mud-expand-panel-content {
+    padding: 0 !important;
+}
+
+.dialog-receta .mud-dialog-title {
+    padding-bottom: 0px;
 }

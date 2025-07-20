@@ -7,7 +7,9 @@
 <MudLayout>
     <MudAppBar Color="Color.Primary" Elevation="4">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="DrawerToggle" />
-        <MudText Typo="Typo.h6" Class="ml-2">Valu Bakery 🎂</MudText>
+        <MudText Typo="Typo.h6" Class="ml-2">Valu Bakery</MudText>
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" />
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen">
         <NavMenu/>
@@ -24,10 +26,15 @@
         {
             Palette = new Palette()
             {
-                Primary = "#F277BA",   // rosa
-                Secondary = "#FFE178", // amarillo pastel
-                Background = "#FDF6ED",
-                TextPrimary = "#4A4A4A",
+                Primary = "#F277BA",     // Rosa principal
+                Secondary = "#FFBCBC",   // Melón pastel
+                Background = "#FDF6ED",  // Beige claro
+                TextPrimary = "#4A4A4A", // Gris oscuro
+
+                Success = "#B2F2BB",     // Verde menta pastel
+                Info = "#AEE6F9",        // Celeste pastel
+                Warning = "#FFE9A0",     // Amarillo claro
+                Error = "#FF9F9F"        // Rojo rosado pastel
             },
             Typography = new Typography()
             {

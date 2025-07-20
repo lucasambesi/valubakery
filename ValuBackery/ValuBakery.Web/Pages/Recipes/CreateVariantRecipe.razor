@@ -1,0 +1,48 @@
+﻿<MudDialog Class="px-3 pb-1">
+    <TitleContent>
+        <MudStack Row="true" Justify="Justify.FlexStart" AlignItems="AlignItems.Center">
+            <MudText Typo="Typo.h6" Align="Align.Center" Class="fw-bold">
+                Nueva variante
+            </MudText>
+        </MudStack>
+    </TitleContent>
+
+    <DialogContent>
+        <MudGrid Spacing="3">
+            <MudItem xs="6">
+                <MudSelect T="string"
+                           @bind-Value="CreateRecipeModel.Size"
+                           Label="Tamaño"
+                           Variant="Variant.Outlined"
+                           Immediate="true"
+                           OnKeyDown="HandleEnterKey"
+                           OnBlur="() => CreateRecipeModel.Size = CreateRecipeModel.Size?.Trim()">
+                    @foreach (var option in SizeOptions)
+                    {
+                        <MudSelectItem Value="@option.Key">@option.Value</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+
+            <MudItem xs="6">
+                <MudSelect T="string"
+                           @bind-Value="CreateRecipeModel.Portions"
+                           Label="Porciones"
+                           Variant="Variant.Outlined"
+                           Immediate="true"
+                           OnKeyDown="HandleEnterKey"
+                           OnBlur="() => CreateRecipeModel.Portions = CreateRecipeModel.Portions?.Trim()">
+                    @foreach (var option in PortionOptions)
+                    {
+                        <MudSelectItem Value="@option.Key">@option.Value</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Submit">Crear</MudButton>
+    </DialogActions>
+
+</MudDialog>

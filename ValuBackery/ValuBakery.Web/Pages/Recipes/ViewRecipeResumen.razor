@@ -1,124 +1,171 @@
-﻿@using ValuBakery.Data.Enums;
-@if (RecipeDto != null)
-{  
-    <MudDialog>
+﻿@using ValuBakery.Data.DTOs;
+@using ValuBakery.Data.Enums
+@using ValuBakery.Web.Pages.Common
+
+@if (isLoading)
+{
+    <Overlay />
+}
+else if (RecipeDto != null)
+{
+    <MudDialog Class="px-3 pb-1 scrollable-dialog-content" >
         <TitleContent>
-            <MudText Typo="Typo.h6">
-                @RecipeDto.Name
-            </MudText>
+            <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center" Justify="Justify.FlexStart">
+                <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                    <MudIcon Icon="@Icons.Material.Filled.MenuBook" Color="Color.Primary" />
+                    <MudText Typo="Typo.h6" Class="fw-bold">@RecipeDto.GetName()</MudText>
+                </MudHidden>
+                <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                    <MudIcon Size="Size.Medium" Icon="@Icons.Material.Filled.MenuBook"Color="Color.Primary" />
+                    <MudText Typo="Typo.body1" Class="fw-bold" >@RecipeDto.GetName()</MudText>
+                </MudHidden>
+            </MudStack>
         </TitleContent>
+
         <DialogContent>
- 
-                <MudGrid Spacing="3">
-                    <MudItem xs="12">
-                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                            <MudText Typo="Typo.body1">
-                                Porciones:
-                            </MudText>
-                            <MudText Typo="Typo.body1" Align="Align.End">
-                                @RecipeDto.Portions
-                            </MudText>
-                        </MudStack>
-                    </MudItem>
-                    <MudItem xs="12">
-                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                            <MudText Typo="Typo.body1">
-                                Costo:
-                            </MudText>
-                            <MudText Typo="Typo.body1" Align="Align.End">
-                                @RecipeDto.GetCost().ToString("N2")
-                            </MudText>
-                        </MudStack>
-                    </MudItem>
-                    <MudDivider Absolute/>
-                    <MudItem xs="12">
-                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                            <MudText Typo="Typo.body1" Style="font-weight: bold;">
-                                Ingredientes:
-                            </MudText>
-                        </MudStack>
-                    </MudItem>
-             
-                    @if (RecipeDto?.Ingredients.Count > 0)
-                    {
-                        @foreach (var ingredient in RecipeDto?.Ingredients)
+            <MudGrid Spacing="1" Style="margin-bottom:1rem">
+                <MudItem xs="12">
+                    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                            <MudText Typo="Typo.subtitle1"><strong>Porciones:</strong></MudText>
+                            <MudText Typo="Typo.subtitle1">@RecipeDto.Portions</MudText>
+                        </MudHidden>
+                        <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                            <MudText Typo="Typo.body2"><strong>Porciones:</strong></MudText>
+                            <MudText Typo="Typo.body2">@RecipeDto.Portions</MudText>
+                        </MudHidden>
+                    </MudStack>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                            <MudText Typo="Typo.subtitle1"><strong>Costo total:</strong></MudText>
+                            <MudText Typo="Typo.subtitle1">$@RecipeDto.GetCost().ToString("N2")</MudText>
+                        </MudHidden>
+                        <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                            <MudText Typo="Typo.body2"><strong>Costo total:</strong></MudText>
+                            <MudText Typo="Typo.body2">$@RecipeDto.GetCost().ToString("N2")</MudText>
+                        </MudHidden>
+                    </MudStack>
+                </MudItem>
+
+                @* INGREDIENTES *@
+                <MudItem xs="12" Class="mt-4">
+                    <MudDivider />
+                    <MudStack Row AlignItems="AlignItems.Center" Spacing="2" Style="margin-top:1.3rem">
+                        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                            <MudIcon Icon="@Icons.Material.Filled.Restaurant" Color="Color.Secondary" />
+                            <MudText Typo="Typo.subtitle1"><strong>Ingredientes</strong></MudText>
+                        </MudHidden>
+                        <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                            <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Restaurant" Color="Color.Secondary" />
+                            <MudText Typo="Typo.body2"><strong>Ingredientes</strong></MudText>
+                        </MudHidden>
+                    </MudStack>
+                </MudItem>
+
+                @if (RecipeDto.Ingredients?.Count > 0)
+                {
+                        @foreach (var ingredient in RecipeDto.Ingredients)
                         {
                             <MudItem xs="12">
-                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                                    <MudText Typo="Typo.body1">
-                                        @(ingredient.Ingredient.Name)
-                                    </MudText>
-                                    <MudText Typo="Typo.body1" Align="Align.End">
-                                        @($"{ingredient.Quantity} {ingredient.GetConvertUnit()}")
-                                    </MudText>
+                                <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                                    <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                                        <MudText>@ingredient.Ingredient.Name</MudText>
+                                        <MudText>@($"{ingredient.Quantity} {ingredient.GetConvertUnit()}")</MudText>
+                                    </MudHidden>
+                                    <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                                        <MudText Typo="Typo.caption">@ingredient.Ingredient.Name</MudText>
+                                        <MudText Typo="Typo.caption">@($"{ingredient.Quantity} {ingredient.GetConvertUnit()}")</MudText>
+                                    </MudHidden>
                                 </MudStack>
                             </MudItem>
                         }
-                    }
-                    else
-                    {
-                        <MudText Typo="Typo.body1" Align="Align.End">
-                            @($"La receta todavía no tiene ingredientes asociados.")
-                        </MudText>
-                    }
+                    
+                }
+                else
+                {
+                    <MudItem xs="12">
+                        <MudText>No hay ingredientes asociados.</MudText>
+                    </MudItem>
+                }
 
-                    @if (RecipeDto?.Components.Count > 0)
-                    {
-                        <MudDivider DividerType="DividerType.Inset" />
+                @* COMPONENTES (HIJOS) *@
+                @if (RecipeDto.Components?.Count > 0)
+                {
+                    <MudItem xs="12" Class="mt-4">
+                        <MudDivider />
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="2" Style="margin-top:1.3rem">
+                            <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                                <MudIcon Icon="@Icons.Material.Filled.Inventory2" Color="Color.Tertiary" />
+                                <MudText Typo="Typo.subtitle1"><strong>Contiene otras recetas</strong></MudText>
+                            </MudHidden>
+                            <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                                <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Inventory2" Color="Color.Tertiary" />
+                                <MudText Typo="Typo.body2"><strong>Contiene otras recetas</strong></MudText>
+                            </MudHidden>
+                        </MudStack>
+                    </MudItem>
 
+                    @foreach (var component in RecipeDto.Components)
+                    {
                         <MudItem xs="12">
-                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                                <MudText Typo="Typo.body1" Style="font-weight: bold;">
-                                    Contiene:
-                                </MudText>
+                            <MudStack Row Justify="Justify.SpaceBetween">
+                                <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                                    <MudText>@component.ChildRecipeVariant.GetName()</MudText>
+                                    <MudText>@($"{component.Quantity} {UnitEnum.Ud}")</MudText>
+                                </MudHidden>
+                                <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                                    <MudText Typo="Typo.caption">@component.ChildRecipeVariant.GetName()</MudText>
+                                    <MudText Typo="Typo.caption">@($"{component.Quantity} {UnitEnum.Ud}")</MudText>
+                                </MudHidden>
                             </MudStack>
                         </MudItem>
-
-                        @foreach (var component in RecipeDto?.Components)
-                        {
-                            <MudItem xs="12">
-                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                                    <MudText Typo="Typo.body1">
-                                        @(component.ChildRecipeVariant.Name)
-                                    </MudText>
-                                    <MudText Typo="Typo.body1" Align="Align.End">
-                                        @($"{component.Quantity} {UnitEnum.Ud}")
-                                    </MudText>
-                                </MudStack>
-                            </MudItem>
-                        }
                     }
+                }
 
-                    @if (RecipeDto?.UsedIn.Count > 0)
+                @* USADA EN (PADRES) *@
+                @if (RecipeDto.UsedIn?.Count > 0)
+                {
+                    <MudItem xs="12" Class="mt-4">
+                        <MudDivider />
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="2" Style="margin-top:1.3rem">
+                            <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                                <MudIcon Icon="@Icons.Material.Filled.MergeType" Color="Color.Info" />
+                                <MudText Typo="Typo.subtitle1"><strong>Usada en otras recetas</strong></MudText>
+                            </MudHidden>
+                            <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                                <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.MergeType" Color="Color.Info" />
+                                <MudText Typo="Typo.body2"><strong>Usada en otras recetas</strong></MudText>
+                            </MudHidden>
+                        </MudStack>
+                    </MudItem>
+
+                    @foreach (var parent in RecipeDto.UsedIn)
                     {
-                        <MudDivider Absolute/>
-
                         <MudItem xs="12">
-                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                                <MudText Typo="Typo.body1" Style="font-weight: bold;">
-                                    Usada en:
-                                </MudText>
+                            <MudStack Row Justify="Justify.SpaceBetween">
+                                <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                                    <MudText>@parent.ParentRecipeVariant.GetName()</MudText>
+                                    <MudText>@($"{parent.Quantity} {UnitEnum.Ud}")</MudText>
+                                </MudHidden>
+                                <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                                    <MudText Typo="Typo.caption">@parent.ParentRecipeVariant.GetName()</MudText>
+                                    <MudText Typo="Typo.caption">@($"{parent.Quantity} {UnitEnum.Ud}")</MudText>
+                                </MudHidden>
                             </MudStack>
                         </MudItem>
-
-                        @foreach (var component in RecipeDto?.UsedIn)
-                        {
-                            <MudItem xs="12">
-                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                                    <MudText Typo="Typo.body1">
-                                        @(component.ParentRecipeVariant.Name)
-                                    </MudText>
-                                    <MudText Typo="Typo.body1" Align="Align.End">
-                                        @($"{component.Quantity} {UnitEnum.Ud}")
-                                    </MudText>
-                                </MudStack>
-                            </MudItem>
-                        }
                     }
-                </MudGrid>
+                }
 
+            </MudGrid>
         </DialogContent>
-        <DialogActions>
-        </DialogActions>
+
     </MudDialog>
+}
+else{
+    <MudText>
+        No se encontro la receta
+    </MudText>
 }

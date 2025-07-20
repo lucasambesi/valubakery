@@ -1,0 +1,108 @@
+﻿@using MudBlazor
+@using ValuBakery.Data.DTOs
+@using ValuBakery.Web.Pages.Common
+@inject IDialogService DialogService
+
+@if (isLoading)
+{
+    <Overlay />
+}
+else if (RecipeDto == null || RecipeVariantDto == null)
+{
+    <MudText Color="Color.Secondary" Class="pa-4">No se encontró la receta</MudText>
+}
+else
+{
+    <MudDialog Class="rounded-lg dialog-receta" @key="dialogRenderKey">
+        <TitleContent>
+            <MudStack Row="true" AlignItems="AlignItems.Start" Spacing="2" Class="pb-2">
+                <MudTooltip Text="@RecipeDto?.Name">
+                    <MudAvatar Size="Size.Large"
+                           Image="images/brownie.jpg"
+                           Class="ma-1"
+                           Alt="@RecipeDto?.Name" />
+                </MudTooltip>
+
+                <MudStack Spacing="0">
+                    <MudTooltip Text="@RecipeDto?.Name">
+                        <MudText Typo="Typo.subtitle1" Class="fancy-title fw-bold">
+                            @(Truncate($"{RecipeDto?.Name}", 25))
+                        </MudText>
+                    </MudTooltip>
+                    <MudStack Row="true" Spacing="0" AlignItems="AlignItems.Start" Justify="Justify.FlexStart" Style="padding:0">
+                        <MudText Typo="Typo.subtitle2" Class="fw-bold" Color="Color.Secondary">@RecipeVariantDto?.Name</MudText>
+                         <MudMenu Style="padding-left:0px!important">
+                            <ActivatorContent>
+                                <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown"
+                                     Size="Size.Small"
+                                     Color="Color.Secondary" />
+                            </ActivatorContent>
+                            <ChildContent>
+                                <MudMenuItem>Agregar</MudMenuItem>
+                                <MudMenuItem>Editar</MudMenuItem>
+                                @foreach (var variant in RecipeDto.Variants)
+                                {
+                                    <MudMenuItem>
+                                        @variant.Name
+                                    </MudMenuItem>
+                                }
+                            </ChildContent>
+                        </MudMenu>
+                    </MudStack>
+                </MudStack>
+            </MudStack>
+        </TitleContent>
+
+        <DialogContent>
+            <MudStack Spacing="1" Style="padding:0px">
+                <MudText Typo="Typo.body2">@RecipeDto.Description</MudText>
+                <MudExpansionPanels Elevation="0" MultiExpansion="true" DisableBorders="true" Class="mt-1 full-height-panels">
+                    <MudExpansionPanel IsInitiallyExpanded=@infoInitialExpanded Style="padding:0px!important">
+                        <TitleContent>
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                <MudIcon Icon="@Icons.Material.Outlined.Info" Class="fw-bold" Color="Color.Info" Size="Size.Small" />
+                                <MudText Typo="Typo.subtitle2" Class="nested fw-bold">Información general</MudText>
+                            </MudStack>
+                        </TitleContent>
+                        <ChildContent>
+                            <MudStack Spacing="2">
+                                <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                                    <MudText Typo="Typo.body2" Class="fw-bold">Porciones:</MudText>
+                                    <MudText Typo="Typo.body2">@RecipeVariantDto?.Portions</MudText>
+                                </MudStack>
+                                <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                                    <MudText Typo="Typo.body2" Class="fw-bold">Costo:</MudText>
+                                    <MudText Typo="Typo.body2">$@RecipeVariantDto?.Cost.ToString("N2")</MudText>
+                                </MudStack>
+                            </MudStack>
+                        </ChildContent>
+                    </MudExpansionPanel>
+
+                    <MudExpansionPanel IsInitiallyExpanded=@ingredientesInitialExpanded>
+                        <TitleContent>
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                <MudIcon Icon="@Icons.Material.Filled.Restaurant" Color="Color.Primary" Size="Size.Small" />
+                                <MudText Typo="Typo.subtitle2" Class="nested fw-bold">Ingredientes</MudText>
+                            </MudStack>
+                        </TitleContent>
+                        <ChildContent>
+                            <RecipeIngredientsMobile Ingredients="@RecipeVariantDto.Ingredients" OnChanged="OnIngredientsChanged" />
+                        </ChildContent>
+                    </MudExpansionPanel>
+
+                    <MudExpansionPanel IsInitiallyExpanded=@recipesInitialExpanded>
+                        <TitleContent>
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                <MudIcon Icon="@Icons.Material.Filled.MenuBook" Color="Color.Secondary" Size="Size.Small" />
+                                <MudText Typo="Typo.subtitle2" Class="nested fw-bold">Recetas</MudText>
+                            </MudStack>
+                        </TitleContent>
+                        <ChildContent>
+                           <MudText Typo="Typo.caption" Color="Color.Dark" Class="pa-2">Próximamente</MudText>
+                        </ChildContent>
+                    </MudExpansionPanel>
+                </MudExpansionPanels>
+            </MudStack>
+        </DialogContent>
+    </MudDialog>
+}

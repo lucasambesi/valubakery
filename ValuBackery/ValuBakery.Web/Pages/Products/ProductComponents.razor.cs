@@ -164,6 +164,7 @@ namespace ValuBakery.Web.Pages.Products
             var options = new DialogOptions
             {
                 CloseButton = true,
+                CloseOnEscapeKey = true,
                 MaxWidth = MaxWidth.Small,
                 FullWidth = true
             };
@@ -183,6 +184,7 @@ namespace ValuBakery.Web.Pages.Products
             var options = new DialogOptions
             {
                 CloseButton = true,
+                CloseOnEscapeKey = true,
                 MaxWidth = MaxWidth.Small,
                 FullWidth = true
             };
@@ -338,6 +340,7 @@ namespace ValuBakery.Web.Pages.Products
             var options = new DialogOptions
             {
                 CloseButton = true,
+                CloseOnEscapeKey = true,
                 MaxWidth = MaxWidth.Small,
                 FullWidth = true
             };
@@ -357,6 +360,7 @@ namespace ValuBakery.Web.Pages.Products
             var options = new DialogOptions
             {
                 CloseButton = true,
+                CloseOnEscapeKey = true,
                 MaxWidth = MaxWidth.Medium,
                 FullWidth = true
             };

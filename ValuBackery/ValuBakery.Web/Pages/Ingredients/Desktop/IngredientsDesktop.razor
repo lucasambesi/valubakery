@@ -1,0 +1,88 @@
+﻿@using ValuBakery.Data.DTOs;
+@using ValuBakery.Web.Pages.Common
+@inherits ValuBakery.Web.Pages.Ingredients.IngredientsBase
+
+@if (isLoading)
+{
+    <Overlay />
+}
+else
+{    
+    <MudTable Class="ingredient-table" Items="@IngredientDtos" Dense="false" Breakpoint="Breakpoint.None" Hover="@true" ReadOnly="false" CanCancelEdit="@true"
+              @bind-SelectedItem="selectedItem" Filter="new Func<IngredientDto,bool>(FilterFunc)"
+              SortLabel="Ordenar por" CommitEditTooltip="Confirmar" CancelEditTooltip="Cancelar"
+              RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues"
+              RowEditCommit="ItemHasBeenCommitted" IsEditRowSwitchingBlocked="@false"
+              Height="100" FixedHeader="true"
+              ApplyButtonPosition="@TableApplyButtonPosition.End" EditButtonPosition="@TableEditButtonPosition.End"
+              EditTrigger="@TableEditTrigger.RowClick">
+        <ToolBarContent>
+                <MudText Class="fw-bold" Typo="Typo.h6">Ingredientes</MudText>
+                <MudSpacer />
+                <MudTextField @bind-Value="searchString" Clearable="true" Placeholder="Search" 
+                Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" 
+                IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <ColGroup>
+            <col style="width:10%;" />
+            <col style="width:25%;" />
+            <col style="width:20%;" />
+            <col style="width:20%;" />
+            <col style="width:25%;" />
+        </ColGroup>
+        <HeaderContent>
+                <MudTh ><MudIconButton Icon="@Icons.Material.Outlined.AddBox" Color="Color.Primary" Title="Crear" OnClick="DialogCreate" /></MudTh>
+                <MudTh>
+                    <MudIcon Icon="@Icons.Material.Filled.LocalDining" Class="me-1" Style="text-align:start" />
+                    <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<IngredientDto, object>(x=>x.Name)">Nombre</MudTableSortLabel>
+                </MudTh>
+            <MudTh Style="text-align:center">
+                <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Class="me-1" />
+                    <MudTableSortLabel SortBy="new Func<IngredientDto, object>(x=>x.CostPerUnit)">
+                        Costo
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh Style="text-align:center">
+                    <MudIcon Icon="@Icons.Material.Filled.Scale" Class="me-1" />
+                    <MudTableSortLabel SortBy="new Func<IngredientDto, object>(x=>x.Unit)">Unidad</MudTableSortLabel>
+                </MudTh>
+                <MudTh Style="text-align:center">
+                    <MudIcon Icon="@Icons.Material.Filled.Update" Class="me-1" />
+                    <MudTableSortLabel SortBy="new Func<IngredientDto, object>(x=>x.UpdatedAt)">Modificado</MudTableSortLabel>
+                </MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Acciones">
+                <MudIconButton Title="Ver" Color="Color.Primary" Icon="@Icons.Material.Filled.Preview"
+                               OnClick="() => ViewIngredient(context)" />
+            </MudTd>
+            <MudTd DataLabel="Nombre" Style="text-align:start">
+                @context.Name
+            </MudTd>
+            <MudTd DataLabel="Costo por unidad" Style="text-align:center">$@context.CostPerUnit.ToString("N2")</MudTd>
+            <MudTd DataLabel="Unidad" Style="text-align:center">@context.Unit</MudTd>
+            <MudTd DataLabel="Ultima actualización" Style="text-align:center">@context.UpdatedAt</MudTd>
+        </RowTemplate>
+        <RowEditingTemplate>
+            <MudTd DataLabel="Acciones"></MudTd>
+            <MudTd DataLabel="Name">
+                <MudTextField @bind-Value="context.Name" Required />
+            </MudTd>
+            <MudTd DataLabel="CostPerUnit">
+                <MudNumericField @bind-Value="context.CostPerUnit" Required Min="1" />
+            </MudTd>
+            <MudTd DataLabel="Unit">
+                <MudTextField @bind-Value="context.Unit" Required ReadOnly="true" Disabled="true" />
+            </MudTd>
+            <MudTd DataLabel="Ultima actualización">
+                <MudTextField @bind-Value="context.UpdatedAt" ReadOnly="true" Disabled="true"/>
+            </MudTd>
+        </RowEditingTemplate>
+        <PagerContent>
+                <MudTablePager />
+        </PagerContent>
+        <EditButtonContent Context="button">
+            <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled" />
+        </EditButtonContent>
+    </MudTable>
+}

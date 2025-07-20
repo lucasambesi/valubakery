@@ -1,63 +1,16 @@
 ﻿@page "/ingredients"
 
-@using MudBlazor
-@using ValuBakery.Data.DTOs;
-@inject ISnackbar Snackbar
+@using ValuBakery.Web.Pages.Ingredients.Desktop
+@using ValuBakery.Web.Pages.Ingredients.Mobile
 
 <PageTitle>Ingredientes</PageTitle>
 
-<MudTable Items="@IngredientDtos" Dense="@false" Hover="@true" ReadOnly="@false" CanCancelEdit="@true"
-          @bind-SelectedItem="selectedItem" Filter="new Func<IngredientDto,bool>(FilterFunc)"
-          SortLabel="Ordenar por" CommitEditTooltip="Confirmar" CancelEditTooltip="Cancelar"
-          RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" Height="100%"
-          RowEditCommit="ItemHasBeenCommitted" IsEditRowSwitchingBlocked="@false"
-          ApplyButtonPosition="@TableApplyButtonPosition.End" EditButtonPosition="@TableEditButtonPosition.End" 
-          EditTrigger="@TableEditTrigger.RowClick">
-    <ToolBarContent>
-            <MudText Typo="Typo.h6">Ingredientes</MudText>        
-            <MudSpacer />
-            <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-    </ToolBarContent>
-    <ColGroup>
-        <col style="width:10%;" />
-        <col style="width:35%;" />
-        <col style="width:20%;" />
-        <col style="width:15%;" />
-        <col style="width:40%;" />
-    </ColGroup>
-    <HeaderContent>
-        <MudTh><MudIconButton Icon="@Icons.Material.Outlined.AddBox" Color="Color.Primary" Title="Crear" OnClick="DialogCreate" /></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<IngredientDto, object>(x=>x.Name)">Nombre</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<IngredientDto, object>(x=>x.CostPerUnit)">Costo por unidad</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<IngredientDto, object>(x=>x.Unit)">Unidad de medidad</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<IngredientDto, object>(x=>x.UpdatedAt)">Ultima actualización</MudTableSortLabel></MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Nr">@context.Id</MudTd>
-        <MudTd DataLabel="Nombre">@context.Name</MudTd>
-        <MudTd DataLabel="Costo por unidad">@context.CostPerUnit.ToString("N2")</MudTd>
-        <MudTd DataLabel="Unidad de medidad">@context.Unit</MudTd>
-        <MudTd DataLabel="Ultima actualización">@context.UpdatedAt</MudTd>
-    </RowTemplate>
-    <RowEditingTemplate>
-        <MudTd DataLabel="Nr">@context.Id</MudTd>
-        <MudTd DataLabel="Name">
-            <MudTextField @bind-Value="context.Name" Required />
-        </MudTd>
-        <MudTd DataLabel="CostPerUnit">
-            <MudNumericField @bind-Value="context.CostPerUnit" Required Min="1" />
-        </MudTd>
-        <MudTd DataLabel="Unit">
-            <MudTextField @bind-Value="context.Unit" Required ReadOnly="true" />
-        </MudTd>
-        <MudTd DataLabel="Ultima actualización">
-            <MudTextField @bind-Value="context.UpdatedAt" ReadOnly="true" />
-        </MudTd>
-    </RowEditingTemplate>
-    <PagerContent>
-        <MudTablePager />
-    </PagerContent>
-    <EditButtonContent Context="button">
-        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled" />
-    </EditButtonContent>
-</MudTable>
+<MudBreakpointProvider OnBreakpointChanged="OnBreakpointChanged">
+    
+    <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+        <IngredientsDesktop />
+    </MudHidden>
+    <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+        <IngredientsMobile />
+    </MudHidden>
+</MudBreakpointProvider>

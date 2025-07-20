@@ -26,8 +26,10 @@ namespace ValuBakery.Percistence.Percistence
                     .ThenInclude(ri => ri.Ingredient)
                 .Include(r => r.Components.Where(x => !x.IsDeleted))
                     .ThenInclude(rc => rc.ChildRecipeVariant)
+                        .ThenInclude(uc => uc.Recipe)
                 .Include(r => r.UsedIn)
                     .ThenInclude(uc => uc.ParentRecipeVariant)
+                        .ThenInclude(uc => uc.Recipe)
                 .FirstOrDefaultAsync(r => r.Id == id && !r.IsDeleted);
 
             if (recipe == null)

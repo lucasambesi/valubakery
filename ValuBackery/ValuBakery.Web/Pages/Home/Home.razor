@@ -1,0 +1,88 @@
+﻿@page "/"
+@using MudBlazor
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="dashboard-page">
+
+    <!-- Título -->
+    <MudText Typo="Typo.h4" Class="fancy-title mb-4" Align="Align.Center">
+        Dashboard general
+    </MudText>
+
+    <!-- Estadísticas -->
+    <MudGrid Gutter="3" Justify="Justify.Center">
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="stat-card">
+                <MudStack Spacing="1" AlignItems="AlignItems.Center">
+                    <MudIcon Icon="@Icons.Material.Filled.ReceiptLong" Color="Color.Primary" Size="Size.Large" />
+                    <MudText Typo="Typo.subtitle1">Recetas</MudText>
+                    <MudText Typo="Typo.h6">@TotalRecipes</MudText>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="stat-card">
+                <MudStack Spacing="1" AlignItems="AlignItems.Center">
+                    <MudIcon Icon="@Icons.Material.Filled.LocalDining" Color="Color.Primary" Size="Size.Large" />
+                    <MudText Typo="Typo.subtitle1">Ingredientes</MudText>
+                    <MudText Typo="Typo.h6">@TotalIngredients</MudText>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="stat-card">
+                <MudStack Spacing="1" AlignItems="AlignItems.Center">
+                    <MudIcon Icon="@Icons.Material.Filled.MenuBook" Color="Color.Primary" Size="Size.Large" />
+                    <MudText Typo="Typo.subtitle1">Variantes activas</MudText>
+                    <MudText Typo="Typo.h6">@TotalVariants</MudText>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Accesos rápidos -->
+    <MudPaper Class="pa-4 mt-6 quick-actions">
+        <MudGrid AlignItems="AliAlignItemsgn.Center" Justify="Justify.Center">
+            <MudItem xs="12" sm="4">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" FullWidth="true">
+                    Nueva receta
+                </MudButton>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.LocalDining" FullWidth="true">
+                    Ver ingredientes
+                </MudButton>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudButton Variant="Variant.Outlined" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.MenuBook" FullWidth="true">
+                    Catálogo
+                </MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+    <!-- Últimas recetas -->
+    <MudPaper Class="mt-8 pa-4">
+        <MudText Typo="Typo.h6" Class="mb-2">Últimas recetas modificadas</MudText>
+
+        <MudList Dense="true">
+            @foreach (var receta in UltimasRecetas)
+            {
+                <MudListItem Class="mb-3">
+                    <MudStack>
+                        <MudText Typo="Typo.body1">@receta.Name</MudText>
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">
+                            Actualizado el @receta.UpdatedAt.ToShortDateString()
+                        </MudText>
+                    </MudStack>
+                </MudListItem>
+            }
+        </MudList>
+    </MudPaper>
+
+</MudContainer>
+
+@code {
+    
+}

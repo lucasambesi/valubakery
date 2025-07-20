@@ -17,5 +17,21 @@ namespace ValuBakery.Web.Pages.Ingredients
         public IngredientDto IngredientDto { get; set; } = new IngredientDto() { Unit = UnitEnum.Kg };
 
         private void Cancel() => MudDialog.Cancel();
+
+        private void OpenEditDialog()
+        {
+            var parameters = new DialogParameters
+            {
+                { nameof(EditIngredient.IngredientDto), IngredientDto }
+            };
+
+            var options = new DialogOptions { 
+                CloseButton = false,
+                CloseOnEscapeKey = true,
+                FullWidth = true, 
+                MaxWidth = MaxWidth.Medium };
+
+            _dialogService.Show<EditIngredient>("Editar Ingrediente", parameters, options);
+        }
     }
 }

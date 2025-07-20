@@ -1,54 +1,15 @@
 ﻿@page "/recipes"
-
-@using MudBlazor
-@using ValuBakery.Data.DTOs;
-@inject ISnackbar Snackbar
-@inject NavigationManager _navigationManager
+@using ValuBakery.Web.Pages.Recipes.Desktop
+@using ValuBakery.Web.Pages.Recipes.Mobile
 
 <PageTitle>Recetas</PageTitle>
 
-<MudTable Items="@RecipeDtos" Dense="false" Hover="true" ReadOnly="true"
-          @bind-SelectedItem="selectedItem" Filter="FilterFunc" SortLabel="Ordenar por"
-          Height="100%" IsEditRowSwitchingBlocked="false" RowEditCommit="ItemHasBeenCommitted">
-
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">Recetas</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="Buscar receta..." Adornment="Adornment.Start"
-                        AdornmentIcon="@Icons.Material.Filled.Search" Class="mt-0 w-50" />
-    </ToolBarContent>
-
-    <ColGroup>
-        <col style="width:10%;" />
-        <col style="width:10%;" />
-        <col style="width:40%;" />
-        <col style="width:40%;" />
-    </ColGroup>
-
-    <HeaderContent>
-        <MudHidden Breakpoint="Breakpoint.MdAndDown">
-            <MudTh><MudIconButton Icon="@Icons.Material.Outlined.AddBox" Color="Color.Primary" Title="Crear" OnClick="DialogCreate" /></MudTh>
-            <MudTh><MudTableSortLabel T="RecipeDto" SortBy="x => x.Id">Nr</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel T="RecipeDto" InitialDirection="SortDirection.Ascending" SortBy="x => x.Name">Nombre</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel T="RecipeDto" SortBy="x => x.Description">Descripcion</MudTableSortLabel></MudTh>
-        </MudHidden>
-    </HeaderContent>
-
-    <RowTemplate>
-        <MudTd DataLabel="Acciones">
-            <MudIconButton Title="Ver" Color="Color.Primary" Icon="@Icons.Material.Filled.Preview"
-                           OnClick="() => ViewRecipe(context.Id)" />
-        </MudTd>
-        <MudTd DataLabel="Nr">@context.Id</MudTd>
-        <MudTd DataLabel="Nombre">
-            <MudText Typo="Typo.subtitle1" Class="font-weight-bold">@context.Name</MudText>
-        </MudTd>
-        <MudTd DataLabel="Tamaño">
-            <MudText Typo="Typo.body2">@context.Description</MudText>
-        </MudTd>
-    </RowTemplate>
-
-    <PagerContent>
-        <MudTablePager />
-    </PagerContent>
-</MudTable>
+<MudBreakpointProvider OnBreakpointChanged="OnBreakpointChanged">
+    
+    <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+        <RecipesDesktop />
+    </MudHidden>
+    <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+        <RecipesMobile />
+    </MudHidden>
+</MudBreakpointProvider>

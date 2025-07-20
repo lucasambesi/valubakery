@@ -76,6 +76,7 @@ namespace ValuBakery.Web.Pages.Products
             var options = new DialogOptions
             {
                 CloseButton = true,
+                CloseOnEscapeKey = true,
                 MaxWidth = MaxWidth.Small,
                 FullWidth = true
             };
@@ -93,8 +94,9 @@ namespace ValuBakery.Web.Pages.Products
             var options = new DialogOptions
             {
                 FullWidth = true,
+                CloseOnEscapeKey = true,
                 MaxWidth = MaxWidth.Medium,
-                DisableBackdropClick = true,
+                DisableBackdropClick = false,
                 Position = DialogPosition.Center,
                 NoHeader = false,
                 CloseButton = true

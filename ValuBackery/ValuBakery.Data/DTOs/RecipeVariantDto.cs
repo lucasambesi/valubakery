@@ -13,6 +13,8 @@ namespace ValuBakery.Data.DTOs
 
         public decimal Cost { get; set; }
 
+        public int RecipeId { get; set; }
+
         public RecipeDto Recipe { get; set; }
 
         public List<RecipeIngredientDto> Ingredients { get; set; }
@@ -74,7 +76,7 @@ namespace ValuBakery.Data.DTOs
             if (Components?.Count > 0)
             {
                 var recetas = Components
-                    .Select(c => $"{c.ChildRecipeVariant?.Name} x{c.Quantity.ToString("N0")} {UnitEnum.Ud}")
+                    .Select(c => $"{c.ChildRecipeVariant?.GetName()} x{c.Quantity.ToString("N2")} {UnitEnum.Ud}")
                     .ToList();
 
                 parts.Add($"<strong>Recetas:</strong> {string.Join(", ", recetas)}.");

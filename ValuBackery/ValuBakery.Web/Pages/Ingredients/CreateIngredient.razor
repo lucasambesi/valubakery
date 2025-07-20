@@ -1,33 +1,52 @@
-﻿@using ValuBakery.Data.Enums;
-<MudDialog>
+﻿@using ValuBakery.Data.Enums
+<MudDialog Class="px-3 pb-1">
+
     <TitleContent>
-        <MudText Typo="Typo.h6">
-            <MudIcon Icon="@Icons.Material.Filled.AddCircleOutline" />
-            Nuevo ingrediente
-        </MudText>
+        <MudStack Row="true" Justify="Justify.FlexStart" AlignItems="AlignItems.Center">
+            <MudText Typo="Typo.h6" Align="Align.Center" Class="fw-bold">
+                Nuevo ingrediente
+            </MudText>
+        </MudStack>
     </TitleContent>
+
     <DialogContent>
         <MudGrid Spacing="3">
             <MudItem xs="12">
-                <MudTextField @bind-Value="@IngredientDto.Name" Label="Nombre" Variant="Variant.Outlined"/>
+                <MudTextField @bind-Value="@IngredientDto.Name"
+                              Label="Nombre"
+                              Variant="Variant.Outlined"
+                              Immediate="true"
+                              OnKeyDown="HandleEnterKey"
+                              MaxLength="150"
+                              OnBlur="() => CapitalizeName()" />
             </MudItem>
+
             <MudItem xs="12">
-                <MudTextField @bind-Value="@IngredientDto.CostPerUnit" Label="Costo por unidad" Variant="Variant.Outlined"
-                              Adornment="Adornment.End" AdornmentAriaLabel="Calcular"
-                              AdornmentIcon=@Icons.Material.Outlined.Calculate OnAdornmentClick="OpenCalculateDialog" />
+                <MudTextField @bind-Value="@IngredientDto.CostPerUnit"
+                              Label="Costo por unidad"
+                              Variant="Variant.Outlined"
+                              Adornment="Adornment.End"
+                              AdornmentAriaLabel="Calcular"
+                              AdornmentIcon="@Icons.Material.Outlined.Calculate"
+                              OnAdornmentClick="OpenCalculateDialog"
+                              InputType="InputType.Number"
+                              Immediate="true"
+                              OnKeyDown="HandleEnterKey" />
             </MudItem>
+
             <MudItem xs="12">
-                <MudSelect T="UnitEnum" Label="Unidad de medida" Variant="Variant.Outlined"
-                   LockScroll="true"
-                   MultiSelection="false" @bind-Value=@IngredientDto.Unit>
+                <MudSelect T="UnitEnum"
+                           Label="Unidad de medida"
+                           Variant="Variant.Outlined"
+                           LockScroll="true"
+                           MultiSelection="false"
+                           @bind-Value="@IngredientDto.Unit">
                     @foreach (UnitEnum unit in Enum.GetValues(typeof(UnitEnum)))
                     {
-                        if(unit != UnitEnum.None)
-                        {                            
+                        if (unit != UnitEnum.None && unit != UnitEnum.Grs && unit != UnitEnum.Mls)
+                        {
                             <MudSelectItem T="UnitEnum" Value="@unit">
-                                <MudText>
-                                    @unit
-                                </MudText>
+                                @unit
                             </MudSelectItem>
                         }
                     }
@@ -35,7 +54,8 @@
             </MudItem>
         </MudGrid>
     </DialogContent>
+
     <DialogActions>
-        <MudButton Color="Color.Primary" OnClick="@(() => Submit())">Crear</MudButton>
+        <MudButton Color="Color.Secondary" OnClick="Submit">Crear</MudButton>
     </DialogActions>
 </MudDialog>

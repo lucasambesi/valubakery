@@ -40,6 +40,7 @@ namespace ValuBakery.Percistence.Percistence
         public async Task<List<RecipeDto>> GetAllAsync()
         {
             var entities = await _dbContext.Recipe
+                .Include(x => x.Variants)
                 .Where(r => !r.IsDeleted)
                 .ToListAsync();
 

@@ -1,43 +1,49 @@
 ﻿@using MudBlazor
 @using ValuBakery.Data.DTOs;
 @using ValuBakery.Web.Helpers;
+@using ValuBakery.Web.Pages.Common
 @inject ISnackbar Snackbar
 
-@if (RecipeVariantDto == null)
+@if (isLoading)
 {
-    <MudPaper Height="400px" Style="margin:1%" Elevation="20">
-
-    </MudPaper>
+    <Overlay />
 }
 else
 {
     <MudDialog Class="fixed-dialog" @key="dialogRenderKey">
         <TitleContent>
             <MudStack Row="true" AlignItems="AlignItems.Start" Spacing="4">
-                <MudImage Src="images/brownie.jpg"
-                      ObjectFit="ObjectFit.Fill"
-                      Width="150" Height="150"
-                      Alt="Sin imagen"
-                      Elevation="4"
-                      Class="rounded-lg" />
-
+                <MudTooltip Text=@RecipeDto?.Name>
+                    <MudImage Src="images/brownie.jpg"
+                          ObjectFit="ObjectFit.Fill"
+                          Width="150" Height="150"
+                          Alt=@RecipeDto?.Name
+                          Elevation="4"
+                          Class="rounded-lg ma-2" />
+                </MudTooltip>
                 <MudStack Justify="Justify.SpaceBetween" AlignItems="AlignItems.Start" Spacing="2">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Start" Justify="Justify.FlexStart" Style="padding:0">
-                        <MudText Typo="Typo.h5" Class="fancy-title">
-                            @($"{RecipeDto?.Name} {RecipeVariantDto.Name}")
-                        </MudText>
+                        <MudTooltip Text=@RecipeDto?.Name>
+                            <MudText Typo="Typo.h6" Class="fancy-title">
+                                @(Truncate($"{RecipeDto?.Name}",  33) + $" {RecipeVariantDto?.Name}")
+                            </MudText>
+                        </MudTooltip>
+
                         <MudMenu Style="padding-left:0px!important">
                             <ActivatorContent>
-                                <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown" Class="mr-3 mb-n1" Color="Color.Primary" />
+                                <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown"
+                                     Class="mr-3 mb-n1"
+                                     Color="Color.Primary" />
                             </ActivatorContent>
                             <ChildContent>
+                                <MudMenuItem OnClick="@DialogCreate">Agregar</MudMenuItem>
+                                <MudMenuItem OnClick="@DialogEdit">Editar</MudMenuItem>
                                 @foreach (var variant in RecipeDto.Variants)
                                 {
-                                    <MudMenuItem>
+                                    <MudMenuItem OnClick="@(() => ChangeVariant(variant))">
                                         @variant.Name
                                     </MudMenuItem>
                                 }
-                                <MudMenuItem>Agregar</MudMenuItem>
                             </ChildContent>
                         </MudMenu>
                     </MudStack>
@@ -49,8 +55,8 @@ else
                             @if (ingredientsText?.Length > maxLengthIngredients)
                             {
                                 <MudLink @onclick="ToggleIngredients" Typo="Typo.caption"
-                             Class="cursor-pointer" Style="color:#E91E63;">
-                                    @(showFullIngredients ? "Ver menos" : "Ver más")
+                                    Class="cursor-pointer" Style="color:#E91E63;">
+                                    @(showFullIngredients ? " Ver menos" : " Ver más")
                                 </MudLink>
                             }
                         </MudText>
@@ -62,8 +68,8 @@ else
                             @if (componentsText?.Length > maxLengthComponents)
                             {
                                 <MudLink @onclick="ToggleComponents" Typo="Typo.caption"
-                             Class="cursor-pointer" Style="color:#E91E63;">
-                                    @(showFullComponents ? "Ver menos" : "Ver más")
+                                    Class="cursor-pointer" Style="color:#E91E63;">
+                                    @(showFullComponents ? " Ver menos" : " Ver más")
                                 </MudLink>
                             }
                         </MudText>
@@ -80,7 +86,7 @@ else
                 <MudGrid>
                     <MudItem xs="12">
                         <CascadingValue Value="RecipeVariantDto" IsFixed="false">
-                            <RecipeIngredients OnChanged="OnIngredientsChanged" />
+                            <RecipeIngredients @key="RecipeVariantDto?.Id" OnChanged="OnIngredientsChanged" />
                         </CascadingValue>
                     </MudItem>
                 </MudGrid>

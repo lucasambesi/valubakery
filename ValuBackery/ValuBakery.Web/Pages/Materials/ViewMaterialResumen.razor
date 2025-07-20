@@ -1,44 +1,76 @@
 ﻿@using ValuBakery.Data.Enums;
-<MudDialog>
+@using MudBlazor
+
+<MudDialog Class="px-3">
     <TitleContent>
-        <MudText Typo="Typo.h6">
-            Material
-        </MudText>
+        <MudStack Row="true" Justify="Justify.FlexStart" AlignItems="AlignItems.Center">
+            <MudText Typo="Typo.h6" Class="ms-1 fw-bold">Detalle</MudText>
+        </MudStack>
     </TitleContent>
+
     <DialogContent>
-        <MudGrid Spacing="3">
-            <MudItem xs="12">
-                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                    <MudText Typo="Typo.body1">
-                        Nombre:
-                    </MudText>
-                    <MudText Typo="Typo.body1" Align="Align.End">
+        <MudStack Spacing="3">
+            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+                    <MudIcon Icon="@Icons.Material.Outlined.Inventory2" Color="Color.Primary" />
+                    <MudText Typo="Typo.body1" Class="fw-semibold">Nombre</MudText>
+                </MudStack>
+                <MudTooltip Text="@MaterialDto.Name">
+                    <MudText Typo="Typo.body1" Align="Align.Right" Class="text-truncate" Style="max-width: 150px;">
                         @MaterialDto.Name
                     </MudText>
+                </MudTooltip>
+
+            </MudStack>
+
+            <MudDivider />
+
+            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+                    <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Color="Color.Secondary" />
+                    <MudText Typo="Typo.body1" Class="fw-semibold">Costo</MudText>
                 </MudStack>
-            </MudItem>
-            <MudItem xs="12">
-                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                    <MudText Typo="Typo.body1">
-                        Costo:
-                    </MudText>
-                    <MudText Typo="Typo.body1" Align="Align.End">
-                        @MaterialDto.CostPerUnit
-                    </MudText>
+                <MudText Typo="Typo.body1" Align="Align.Right">$@MaterialDto.CostPerUnit.ToString("N2")</MudText>
+            </MudStack>
+
+            <MudDivider />
+
+            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+                    <MudIcon Icon="@Icons.Material.Filled.Scale" Color="Color.Tertiary" />
+                    <MudText Typo="Typo.body1" Class="fw-semibold">Unidad</MudText>
                 </MudStack>
-            </MudItem>
-            <MudItem xs="12">
-                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                    <MudText Typo="Typo.body1">
-                        Tipo de Unidad:
-                    </MudText>
-                    <MudText Typo="Typo.body1" Align="Align.End">
-                        @MaterialDto.Unit
-                    </MudText>
+                <MudChip Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small">
+                    @MaterialDto.Unit
+                </MudChip>
+            </MudStack>
+
+            <MudDivider />
+
+            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="@((MaterialDto.IsDeleted ? Color.Error : Color.Success))" />
+                    <MudText Typo="Typo.body1" Class="fw-semibold">Estado</MudText>
                 </MudStack>
-            </MudItem>
-        </MudGrid>
+                <MudText Typo="Typo.body2" Class="@((MaterialDto.IsDeleted ? "text-error" : "text-success"))">
+                    @(MaterialDto.IsDeleted ? "Inactivo" : "Activo")
+                </MudText>
+            </MudStack>
+
+            <MudDivider />
+
+            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+                    <MudIcon Icon="@Icons.Material.Filled.Schedule" Color="Color.Info" />
+                    <MudText Typo="Typo.body1" Class="fw-semibold">Modificado</MudText>
+                </MudStack>
+                <MudText Typo="Typo.body2" Align="Align.Right" Class="text-secondary">
+                    @MaterialDto.UpdatedAt.ToString("dd/MM/yyyy HH:mm")
+                </MudText>
+            </MudStack>
+        </MudStack>
     </DialogContent>
+
     <DialogActions>
     </DialogActions>
 </MudDialog>
