@@ -1,0 +1,93 @@
+﻿<PageTitle>Inicio</PageTitle>
+
+<MudContainer>
+    <MudGrid>
+
+        @for (int a = 0; a < 6; a++)
+        {
+            <MudItem md="4">
+                <MudCard Class="card-pop m-3 p-4 text-center shadow-lg" Style="background-color: #FFF1F9; border-radius: 18px;">
+                    <MudText Typo="Typo.h5" Class="fancy-title">NEW YORK CHEESECAKE</MudText>
+                    <MudText Typo="Typo.h6" Class="mt-2">$25.000 / $45.000</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">16CM - 6 a 8 porciones</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">20CM - 12 a 16 porciones</MudText>
+                    <MudDivider Class="my-2" />
+                    <MudText Typo="Typo.body2">
+                        Base crocante de galletitas, mucho relleno suave y cremoso de queso, coronado con frutos rojos frescos.
+                    </MudText>
+                </MudCard>
+            </MudItem>
+        }
+        <MudItem md="12">
+            <MudCard Class="card-pop p-4 mx-2 my-3 text-center shadow-lg" Style="border-radius: 24px; background-color: #FFF1F9;">
+                <MudText Typo="Typo.h5" Class="fancy-title mb-2" Style="color:#D28FD4;">BROWNIES</MudText>
+
+                @* Dulce de leche y crema *@
+                <MudText Typo="Typo.h6" Class="fancy-title mb-2" Style="color:#D28FD4;">DULCE DE LECHE Y CREMA</MudText>
+                <MudText Typo="Typo.h6" Class="font-weight-bold" Color="Color.Primary">$18.000 / $30.000</MudText>
+                <MudText Typo="Typo.caption" Class="mb-1">16CM - 6 a 8 porciones</MudText>
+                <MudText Typo="Typo.caption" Class="mb-3">20CM - 12 a 16 porciones</MudText>
+                <MudText Typo="Typo.body2" Class="mt-2">Base húmeda de brownie, muuuucho dulce de leche y crema chantilly!</MudText>
+
+                @* Dulce de leche, crema y merengue *@
+                <MudText Typo="Typo.h6" Class="fancy-title mt-4 mb-2" Style="color:#D28FD4;">DULCE DE LECHE, CREMA Y MERENGUE</MudText>
+                <MudText Typo="Typo.h6" Class="font-weight-bold" Color="Color.Primary">$22.000 / $36.000</MudText>
+                <MudText Typo="Typo.caption" Class="mb-1">16CM - 6 a 8 porciones</MudText>
+                <MudText Typo="Typo.caption" Class="mb-3">20CM - 12 a 16 porciones</MudText>
+                <MudText Typo="Typo.body2" Class="mt-2">Base húmeda de brownie, dulce de leche, crema chantilly y merengue italiano!</MudText>
+
+                @* Dulce de leche y merengue italiano *@
+                <MudText Typo="Typo.h6" Class="fancy-title mt-4 mb-2" Style="color:#D28FD4;">DULCE DE LECHE Y MERENGUE ITALIANO</MudText>
+                <MudText Typo="Typo.h6" Class="font-weight-bold" Color="Color.Primary">$19.500 / $31.500</MudText>
+                <MudText Typo="Typo.caption" Class="mb-1">16CM - 6 a 8 porciones</MudText>
+                <MudText Typo="Typo.caption" Class="mb-3">20CM - 12 a 16 porciones</MudText>
+                <MudText Typo="Typo.body2" Class="mt-2">El clásico!</MudText>
+
+                @* Dulce de leche, crema y golosinas *@
+                <MudText Typo="Typo.h6" Class="fancy-title mt-4 mb-2" Style="color:#D28FD4;">DULCE DE LECHE, CREMA Y GOLOSINAS</MudText>
+                <MudText Typo="Typo.h6" Class="font-weight-bold" Color="Color.Primary">$31.000 / $56.000</MudText>
+                <MudText Typo="Typo.caption" Class="mb-1">16CM - 6 a 8 porciones</MudText>
+                <MudText Typo="Typo.caption" Class="mb-3">20CM - 12 a 16 porciones</MudText>
+                <MudText Typo="Typo.body2" Class="mt-2">Decorado con gran cantidad de golosinas como chocolates, gomitas y más.</MudText>
+            </MudCard>
+        </MudItem>
+
+        <MudItem md="12">
+            <MudCard Class="card-pop p-4 text-center" Style="border-radius: 24px; background-color: #FFF7F2;">
+                <MudStack Row="true" Justify="Justify.Center" Spacing="2">
+                    <MudAvatar Size="Size.Large" Src="images/torta1.jpg" Class="shadow-md" />
+                    <MudAvatar Size="Size.Large" Src="images/torta2.jpg" Class="shadow-md" />
+                </MudStack>
+
+                <MudText Typo="Typo.h6" Class="fancy-title mt-3">TORTAS BUTTERCREAM</MudText>
+
+                <MudText Typo="Typo.subtitle2" Class="mt-1">Bizcochuelos</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">Vainilla o chocolate</MudText>
+
+                <MudText Typo="Typo.subtitle2" Class="mt-2">Rellenos</MudText>
+                <MudText Typo="Typo.body2">
+                    Dulce de leche, crema oreo, ganache, frutas (si es temporada)...
+                </MudText>
+
+                <MudText Typo="Typo.caption" Class="mt-2" Color="Color.Error" Style="font-weight: bold;">
+                    Se cotizan según tamaño, relleno y diseño 💕
+                </MudText>
+            </MudCard>
+        </MudItem>
+        <MudItem md="12">
+            <MudCard Class="card-pop p-4 mx-2 my-4 text-center" Style="background-color: #FF6961; border-radius: 20px;">
+                <MudText Typo="Typo.h6" Class="text-white fancy-title">¿CÓMO HACER TU PEDIDO?</MudText>
+
+                <MudList Dense="true" Class="text-white mt-2">
+                    <MudListItem>🗓 Pedidos personalizados: 3 días antes</MudListItem>
+                    <MudListItem>⏰ Otras tortas: 48hs antes</MudListItem>
+                    <MudListItem>💳 Pagos: transferencia, mercado pago o efectivo</MudListItem>
+                    <MudListItem>🚫 No hay envíos, se retira en San Miguel</MudListItem>
+                </MudList>
+
+                <MudText Typo="Typo.caption" Class="text-white mt-3">¡Gracias por confiar! 💖</MudText>
+            </MudCard>
+
+        </MudItem>
+    </MudGrid>
+</MudContainer>

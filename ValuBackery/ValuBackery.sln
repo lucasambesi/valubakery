@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValuBakery.Bootstrap", "Val
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValuBakery.Percistence", "ValuBakery.Percistence\ValuBakery.Percistence.csproj", "{EE2D3A6B-5F2E-4B37-AF25-7FDAE108BC35}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValuBakery.Shared", "ValuBakery.Shared\ValuBakery.Shared.csproj", "{82D18340-D341-4CE1-872C-2EB835E4A266}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{EE2D3A6B-5F2E-4B37-AF25-7FDAE108BC35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE2D3A6B-5F2E-4B37-AF25-7FDAE108BC35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE2D3A6B-5F2E-4B37-AF25-7FDAE108BC35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82D18340-D341-4CE1-872C-2EB835E4A266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82D18340-D341-4CE1-872C-2EB835E4A266}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82D18340-D341-4CE1-872C-2EB835E4A266}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82D18340-D341-4CE1-872C-2EB835E4A266}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{E4195FB5-1A33-4E90-852A-260967733A66} = {B98B4C8A-7458-4C3E-9D9A-6FC5B9451C8F}
 		{A6915667-BA35-415C-B877-6CC427A5CDA7} = {E4195FB5-1A33-4E90-852A-260967733A66}
 		{EE2D3A6B-5F2E-4B37-AF25-7FDAE108BC35} = {E4195FB5-1A33-4E90-852A-260967733A66}
+		{82D18340-D341-4CE1-872C-2EB835E4A266} = {9A755D5C-BAF8-48E9-9F2C-4EC2E0329186}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C70DCD14-9338-4E22-B37F-502B2FB5A9D0}

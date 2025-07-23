@@ -11,6 +11,9 @@
 @using ValuBakery.Application.Services.Interfaces;
 @using ValuBakery.Web
 @using ValuBakery.Web.Shared
+@using Blazored.LocalStorage;
+
+@inject ILocalStorageService _localStorage
 @inject ISnackbar _snackbar
 @inject IDialogService _dialogService
 @inject IUserService _userService
@@ -23,4 +26,6 @@
 @inject IProductService _productService
 @inject IProductMaterialService _productMaterialService
 @inject IProductRecipeVariantService _productRecipeVariantService
+@inject IAuthenticationService _authService
 @inject NavigationManager _navigationManager
+@inject IJSRuntime _jsRuntime

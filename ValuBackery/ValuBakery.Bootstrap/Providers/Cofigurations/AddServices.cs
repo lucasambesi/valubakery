@@ -23,6 +23,8 @@ namespace ValuBakery.Bootstrap.Providers.Cofigurations
             services.AddScoped<IProductMaterialService, ProductMaterialService>();
             services.AddScoped<IProductRecipeVariantService, ProductRecipeVariantService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IClaimsService, ClaimsService>();
 
             // Dao
             services.AddScoped<IUserDao, UserDao>();
