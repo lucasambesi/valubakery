@@ -54,7 +54,7 @@ else
         </TitleContent>
 
         <DialogContent>
-            <MudStack Spacing="1" Style="padding:0px">
+            <MudStack Spacing="1" Style="padding:0px; margin-bottom:0.5rem;">
                 <MudText Typo="Typo.body2">@RecipeDto.Description</MudText>
                 <MudExpansionPanels Elevation="0" MultiExpansion="true" DisableBorders="true" Class="mt-1 full-height-panels">
                     <MudExpansionPanel IsInitiallyExpanded=@infoInitialExpanded Style="padding:0px!important">
@@ -80,25 +80,55 @@ else
 
                     <MudExpansionPanel IsInitiallyExpanded=@ingredientesInitialExpanded>
                         <TitleContent>
-                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
-                                <MudIcon Icon="@Icons.Material.Filled.Restaurant" Color="Color.Primary" Size="Size.Small" />
-                                <MudText Typo="Typo.subtitle2" Class="nested fw-bold">Ingredientes</MudText>
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                    <MudIcon Icon="@Icons.Material.Filled.Restaurant" Color="Color.Primary" />
+                                    <MudText Typo="Typo.subtitle2" Class="fw-bold">Ingredientes</MudText>
+                                </MudStack>
                             </MudStack>
                         </TitleContent>
                         <ChildContent>
-                            <RecipeIngredientsMobile Ingredients="@RecipeVariantDto.Ingredients" OnChanged="OnIngredientsChanged" />
+                            @if (RecipeVariantDto.Ingredients.Count > 0)
+                            {
+                                <RecipeIngredientsMobile Ingredients="@RecipeVariantDto.Ingredients" OnChanged="OnChanged"/>
+                            }
+                            else
+                            {
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="1">
+                                    <MudText Typo="Typo.caption">No hay ingredientes vinculadas.</MudText>
+                                </MudStack>
+                            }
+                            <MudStack Row="true" Justify="Justify.FlexEnd" AlignItems="AlignItems.Center" Spacing="2">
+                                <MudIconButton Icon="@Icons.Material.Outlined.RemoveCircleOutline" Color="Color.Default" Size="Size.Small" OnClick="DialogDelete"/>
+                                <MudIconButton Icon="@Icons.Material.Outlined.AddCircleOutline" Color="Color.Default" Size="Size.Small" OnClick="DialogAdd" />
+                            </MudStack>
                         </ChildContent>
                     </MudExpansionPanel>
 
                     <MudExpansionPanel IsInitiallyExpanded=@recipesInitialExpanded>
                         <TitleContent>
-                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
-                                <MudIcon Icon="@Icons.Material.Filled.MenuBook" Color="Color.Secondary" Size="Size.Small" />
-                                <MudText Typo="Typo.subtitle2" Class="nested fw-bold">Recetas</MudText>
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                    <MudIcon Icon="@Icons.Material.Filled.MenuBook" Color="Color.Secondary" Size="Size.Small" />
+                                    <MudText Typo="Typo.subtitle2" Class="nested fw-bold">Recetas</MudText>
+                                </MudStack>
                             </MudStack>
                         </TitleContent>
                         <ChildContent>
-                           <MudText Typo="Typo.caption" Color="Color.Dark" Class="pa-2">Próximamente</MudText>
+                            @if (RecipeVariantDto.Components.Count > 0)
+                            {
+                                <RecipeComponentsMobile Components="@RecipeVariantDto.Components" OnChanged="OnChanged" />
+                            }
+                            else
+                            {
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="1">
+                                    <MudText Typo="Typo.caption">No hay recetas vinculadas.</MudText>
+                                </MudStack>
+                            }
+                            <MudStack Row="true" Justify="Justify.FlexEnd" AlignItems="AlignItems.Center" Spacing="2">
+                                <MudIconButton Icon="@Icons.Material.Outlined.RemoveCircleOutline" Color="Color.Default" Size="Size.Small" />
+                                <MudIconButton Icon="@Icons.Material.Outlined.AddCircleOutline" Color="Color.Default" Size="Size.Small" />
+                            </MudStack>
                         </ChildContent>
                     </MudExpansionPanel>
                 </MudExpansionPanels>

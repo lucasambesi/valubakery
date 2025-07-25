@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using ValuBakery.Data.DTOs;
+using ValuBakery.Data.Entities;
+using ValuBakery.Data.Enums;
+using ValuBakery.Web.Data;
 
 namespace ValuBakery.Web.Pages.Recipes.Mobile
 {
@@ -61,7 +65,7 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
                 : text;
         }
 
-        private async Task OnIngredientsChanged()
+        private async Task OnChanged()
         {
             if (RecipeVariantDto != null)
             {
@@ -73,6 +77,152 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
                 ingredientesInitialExpanded = true;
 
                 StateHasChanged();
+            }
+        }
+
+        private void DialogAdd()
+        {
+            var parameters = new DialogParameters
+            {
+                { nameof(AddIngredientToRecipeMobile.RecipeDto), RecipeVariantDto },
+                { nameof(AddIngredientToRecipeMobile.OnCreateData),
+                    EventCallback.Factory.Create<Dictionary<int, RecipeComponentType>>(this, DialogAddEvent) }
+            };
+
+            var options = new DialogOptions
+            {
+                CloseButton = true,
+                CloseOnEscapeKey = true,
+                MaxWidth = MaxWidth.Small,
+                FullWidth = true
+            };
+
+            _dialogService.Show<AddIngredientToRecipeMobile>("AddIngredientToRecipeMobile", parameters, options);
+        }
+
+        private void DialogDelete()
+        {
+            var parameters = new DialogParameters
+            {
+                { nameof(DeleteIngredientToRecipeMobile.RecipeDto), RecipeVariantDto },
+                { nameof(DeleteIngredientToRecipeMobile.OnDeleteData),
+                    EventCallback.Factory.Create<Dictionary<int, RecipeComponentType>>(this, DialogDeleteEvent) }
+            };
+
+            var options = new DialogOptions
+            {
+                CloseButton = true,
+                CloseOnEscapeKey = true,
+                MaxWidth = MaxWidth.Small,
+                FullWidth = true
+            };
+
+            _dialogService.Show<DeleteIngredientToRecipeMobile>("DeleteIngredientToRecipeMobile", parameters, options);
+        }
+        public async Task DialogAddEvent(Dictionary<int, RecipeComponentType> ids)
+        {
+            try
+            {
+                List<RecipeComponentTable> recipeComponentDtos = new();
+
+                foreach (var entry in ids)
+                {
+                    int id = entry.Key;
+                    RecipeComponentType type = entry.Value;
+
+                    switch (type)
+                    {
+                        case RecipeComponentType.Ingredient:
+                            var newIngredient = await _recipeIngredientService.GetByIdAsync(id);
+                            if (newIngredient != null)
+                            {
+                                recipeComponentDtos.Add(new RecipeComponentTable
+                                {
+                                    Id = newIngredient.Id,
+                                    Name = newIngredient.Ingredient.Name,
+                                    Unit = newIngredient.Ingredient.Unit,
+                                    CostPerUnit = newIngredient.Ingredient.CostPerUnit,
+                                    Type = RecipeComponentType.Ingredient
+                                });
+
+                                RecipeVariantDto.Ingredients.Add(newIngredient);
+                            }
+                            break;
+
+                        case RecipeComponentType.Recipe:
+                            var recipeComponent = await _recipeComponentService.GetByIdAsync(id);
+                            if (recipeComponent != null)
+                            {
+                                recipeComponentDtos.Add(new RecipeComponentTable
+                                {
+                                    Id = recipeComponent.Id,
+                                    Name = recipeComponent.ChildRecipeName,
+                                    Unit = UnitEnum.Ud,
+                                    Quantity = recipeComponent.Quantity,
+                                    CostPerUnit = recipeComponent.ChildRecipeVariant.GetCost(),
+                                    Type = RecipeComponentType.Recipe
+                                });
+
+                                RecipeVariantDto.Components.Add(recipeComponent);
+
+                            }
+                            break;
+                    }
+                }
+
+                StateHasChanged();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task DialogDeleteEvent(Dictionary<int, RecipeComponentType> ids)
+        {
+            try
+            {
+                foreach (var entry in ids)
+                {
+                    int id = entry.Key;
+                    RecipeComponentType type = entry.Value;
+
+                    switch (type)
+                    {
+                        case RecipeComponentType.Ingredient:
+                            var ingredient = RecipeVariantDto.Ingredients.FirstOrDefault(x => x.Id == id);
+                            if (ingredient != null)
+                            {
+                                var success = await _recipeIngredientService.DeleteAsync(ingredient.Id);
+
+                                if (success)
+                                {
+                                    RecipeVariantDto.Ingredients.Remove(ingredient);
+                                }
+                            }
+                            break;
+                        case RecipeComponentType.Recipe:
+                            var recipeEntity = RecipeVariantDto.Components.FirstOrDefault(x => x.ChildRecipeVariantId == id);
+
+                            if (recipeEntity != null)
+                            {
+                                var success = await _recipeComponentService.DeleteAsync(RecipeDto.Id, id);
+
+                                if (success)
+                                {
+
+                                    RecipeVariantDto.Components.Remove(recipeEntity);
+                                }
+                            }
+                            break;
+                    }
+                }
+
+                StateHasChanged();
+            }
+            catch
+            {
+                throw;
             }
         }
     }

@@ -187,16 +187,6 @@ namespace ValuBakery.Web.Pages.Recipes
             finally { isLoading = false; }
         }
 
-        private string Truncate(string? text, int maxLength)
-        {
-            if (string.IsNullOrEmpty(text))
-                return string.Empty;
-
-            return text.Length > maxLength
-                ? text.Substring(0, maxLength) + "..."
-                : text;
-        }
-
         protected async Task EditDialogEvent(RecipeDto recipeDto)
         {
             try

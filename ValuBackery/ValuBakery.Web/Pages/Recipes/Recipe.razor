@@ -25,7 +25,7 @@ else
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Start" Justify="Justify.FlexStart" Style="padding:0">
                         <MudTooltip Text=@RecipeDto?.Name>
                             <MudText Typo="Typo.h6" Class="fancy-title">
-                                @(Truncate($"{RecipeDto?.Name}",  33) + $" {RecipeVariantDto?.Name}")
+                                @(StringHelper.Truncate($"{RecipeDto?.Name}",  33) + $" {RecipeVariantDto?.Name}")
                             </MudText>
                         </MudTooltip>
 

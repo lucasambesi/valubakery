@@ -35,5 +35,15 @@ namespace ValuBakery.Web.Helpers
 
             return sb.ToString().Normalize(NormalizationForm.FormC);
         }
+
+        public static string Truncate(string? text, int maxLength)
+        {
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
+
+            return text.Length > maxLength
+                ? text.Substring(0, maxLength) + "..."
+                : text;
+        }
     }
 }
