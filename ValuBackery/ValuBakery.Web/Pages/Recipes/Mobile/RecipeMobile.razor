@@ -18,7 +18,7 @@ else
             <MudStack Row="true" AlignItems="AlignItems.Start" Spacing="2" Class="pb-2">
                 <MudTooltip Text="@RecipeDto?.Name">
                     <MudAvatar Size="Size.Large"
-                           Image="images/brownie.jpg"
+                           Image="images/no_image.png"
                            Class="ma-1"
                            Alt="@RecipeDto?.Name" />
                 </MudTooltip>
@@ -126,8 +126,8 @@ else
                                 </MudStack>
                             }
                             <MudStack Row="true" Justify="Justify.FlexEnd" AlignItems="AlignItems.Center" Spacing="2">
-                                <MudIconButton Icon="@Icons.Material.Outlined.RemoveCircleOutline" Color="Color.Default" Size="Size.Small" />
-                                <MudIconButton Icon="@Icons.Material.Outlined.AddCircleOutline" Color="Color.Default" Size="Size.Small" />
+                                <MudIconButton Icon="@Icons.Material.Outlined.RemoveCircleOutline" Color="Color.Default" Size="Size.Small" OnClick="DialogRecipeDelete" />
+                                <MudIconButton Icon="@Icons.Material.Outlined.AddCircleOutline" Color="Color.Default" Size="Size.Small" OnClick="DialogRecipeAdd" />
                             </MudStack>
                         </ChildContent>
                     </MudExpansionPanel>

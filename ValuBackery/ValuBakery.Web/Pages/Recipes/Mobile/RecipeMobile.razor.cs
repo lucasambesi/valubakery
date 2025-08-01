@@ -100,6 +100,26 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
             _dialogService.Show<AddIngredientToRecipeMobile>("AddIngredientToRecipeMobile", parameters, options);
         }
 
+        private void DialogRecipeAdd()
+        {
+            var parameters = new DialogParameters
+            {
+                { nameof(AddRecipeToRecipeMobile.RecipeDto), RecipeVariantDto },
+                { nameof(AddRecipeToRecipeMobile.OnCreateData),
+                    EventCallback.Factory.Create<Dictionary<int, RecipeComponentType>>(this, DialogAddEvent) }
+            };
+
+            var options = new DialogOptions
+            {
+                CloseButton = true,
+                CloseOnEscapeKey = true,
+                MaxWidth = MaxWidth.Small,
+                FullWidth = true
+            };
+
+            _dialogService.Show<AddRecipeToRecipeMobile>("AddRecipeToRecipeMobile", parameters, options);
+        }
+
         private void DialogDelete()
         {
             var parameters = new DialogParameters
@@ -119,6 +139,27 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
 
             _dialogService.Show<DeleteIngredientToRecipeMobile>("DeleteIngredientToRecipeMobile", parameters, options);
         }
+
+        private void DialogRecipeDelete()
+        {
+            var parameters = new DialogParameters
+            {
+                { nameof(DeleteRecipeToRecipeMobile.RecipeDto), RecipeVariantDto },
+                { nameof(DeleteRecipeToRecipeMobile.OnDeleteData),
+                    EventCallback.Factory.Create<Dictionary<int, RecipeComponentType>>(this, DialogDeleteEvent) }
+            };
+
+            var options = new DialogOptions
+            {
+                CloseButton = true,
+                CloseOnEscapeKey = true,
+                MaxWidth = MaxWidth.Small,
+                FullWidth = true
+            };
+
+            _dialogService.Show<DeleteRecipeToRecipeMobile>("DeleteRecipeToRecipeMobile", parameters, options);
+        }
+
         public async Task DialogAddEvent(Dictionary<int, RecipeComponentType> ids)
         {
             try
@@ -147,6 +188,7 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
 
                                 RecipeVariantDto.Ingredients.Add(newIngredient);
                             }
+                            ingredientesInitialExpanded = true;
                             break;
 
                         case RecipeComponentType.Recipe:
@@ -166,10 +208,13 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
                                 RecipeVariantDto.Components.Add(recipeComponent);
 
                             }
+                            recipesInitialExpanded = true;
                             break;
                     }
                 }
 
+                RecipeVariantDto.SetCost();
+                dialogRenderKey = Guid.NewGuid();
                 StateHasChanged();
             }
             catch
@@ -190,34 +235,37 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
                     switch (type)
                     {
                         case RecipeComponentType.Ingredient:
-                            var ingredient = RecipeVariantDto.Ingredients.FirstOrDefault(x => x.Id == id);
-                            if (ingredient != null)
+                            var recipeIngredient = RecipeVariantDto.Ingredients.FirstOrDefault(x => x.IngredientId == id);
+                            if (recipeIngredient != null)
                             {
-                                var success = await _recipeIngredientService.DeleteAsync(ingredient.Id);
+                                var success = await _recipeIngredientService.DeleteAsync(recipeIngredient.Id);
 
                                 if (success)
                                 {
-                                    RecipeVariantDto.Ingredients.Remove(ingredient);
+                                    RecipeVariantDto.Ingredients.Remove(recipeIngredient);
                                 }
                             }
+                            ingredientesInitialExpanded= true;
                             break;
                         case RecipeComponentType.Recipe:
-                            var recipeEntity = RecipeVariantDto.Components.FirstOrDefault(x => x.ChildRecipeVariantId == id);
+                            var recipeComponent = RecipeVariantDto.Components.FirstOrDefault(x => x.ChildRecipeVariantId == id);
 
-                            if (recipeEntity != null)
+                            if (recipeComponent != null)
                             {
-                                var success = await _recipeComponentService.DeleteAsync(RecipeDto.Id, id);
+                                var success = await _recipeComponentService.DeleteAsync(recipeComponent.ParentRecipeVariantId, recipeComponent.ChildRecipeVariantId);
 
                                 if (success)
                                 {
-
-                                    RecipeVariantDto.Components.Remove(recipeEntity);
+                                    RecipeVariantDto.Components.Remove(recipeComponent);
                                 }
                             }
+                            recipesInitialExpanded= true;
                             break;
                     }
                 }
 
+                RecipeVariantDto.SetCost();
+                dialogRenderKey = Guid.NewGuid();
                 StateHasChanged();
             }
             catch

@@ -25,10 +25,10 @@ namespace ValuBakery.Percistence.Configurations
                    .HasForeignKey(pm => pm.ProductId);
 
             builder.Property(pm => pm.ApplyProfitToMaterials)
-                .HasColumnType("decimal(10,2)");
+                .HasColumnType("decimal(10,4)");
 
             builder.Property(pm => pm.ApplyProfitToRecipes)
-                .HasColumnType("decimal(10,2)");
+                .HasColumnType("decimal(10,4)");
 
             builder.Property(m => m.IsDeleted).HasDefaultValue(false);
         }

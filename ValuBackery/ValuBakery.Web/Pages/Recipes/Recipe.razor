@@ -14,7 +14,7 @@ else
         <TitleContent>
             <MudStack Row="true" AlignItems="AlignItems.Start" Spacing="4">
                 <MudTooltip Text=@RecipeDto?.Name>
-                    <MudImage Src="images/brownie.jpg"
+                    <MudImage Src="images/no_image.png"
                           ObjectFit="ObjectFit.Fill"
                           Width="150" Height="150"
                           Alt=@RecipeDto?.Name
@@ -82,15 +82,9 @@ else
             </MudStack>
         </TitleContent>
         <DialogContent>
-            <MudPaper Class="no-elevation pa-0" Style="background-color: transparent;">
-                <MudGrid>
-                    <MudItem xs="12">
-                        <CascadingValue Value="RecipeVariantDto" IsFixed="false">
-                            <RecipeIngredients @key="RecipeVariantDto?.Id" OnChanged="OnIngredientsChanged" />
-                        </CascadingValue>
-                    </MudItem>
-                </MudGrid>
-            </MudPaper>
+            <CascadingValue Value="RecipeVariantDto" IsFixed="false">
+                <RecipeIngredients @key="RecipeVariantDto?.Id" OnChanged="OnIngredientsChanged" />
+            </CascadingValue>
         </DialogContent>
     </MudDialog>
 }

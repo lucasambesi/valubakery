@@ -1,4 +1,5 @@
-﻿@using ValuBakery.Data.Enums;
+﻿@using ValuBakery.Data.DTOs;
+@using ValuBakery.Data.Enums;
 <MudDialog>
     <TitleContent>
         <MudText Typo="Typo.h6">
@@ -9,10 +10,25 @@
     <DialogContent>
         <MudGrid Spacing="3">
             <MudItem xs="12">
-                <MudTextField @bind-Value="@ProductDto.Name" Label="Nombre" Variant="Variant.Outlined" />
+                <MudSelect Variant="Variant.Outlined"
+                            T="RecipeVariantDto"
+                            Label="Receta"
+                            Clearable="true"
+                            ValueChanged="OnRecipeChanged">
+
+                    @foreach (var recipe in Recipes)
+                    {
+                        <MudSelectItem Value="@recipe">
+                            <MudText>@recipe.GetName()</MudText>
+                        </MudSelectItem>
+                    }
+                </MudSelect>
             </MudItem>
             <MudItem xs="12">
-                <MudTextField @bind-Value="@ProductDto.Description" Lines="3" Label="Descripción" Variant="Variant.Outlined" />
+                <MudTextField @bind-Value="@ProductDto.Name" Label="Nombre" Variant="Variant.Outlined" OnBlur="() => CapitalizeName()" MaxLength="250"/>
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="@ProductDto.Description" Lines="3" Label="Descripción" Variant="Variant.Outlined" MaxLength="500"/>
             </MudItem>
             <MudItem xs="6">
                 <MudNumericField @bind-Value="@ProductDto.ApplyProfitToRecipes" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Percent" Label="Ganancia de recetas" Min="0" Variant="Variant.Outlined" />
@@ -23,7 +39,6 @@
         </MudGrid>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Error" OnClick="@(() => Submit())">Crear</MudButton>
+        <MudButton Color="Color.Primary" OnClick="@(() => Submit())">Crear</MudButton>
     </DialogActions>
 </MudDialog>

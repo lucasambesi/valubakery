@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ValuBakery.Web/Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Database=ValuBakeryDb;User=sa;Password=Your_password123;TrustServerCertificate=True;
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: valubakery_sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=%6FB899TpX$f
+    volumes:
+      - sql_data:/var/opt/mssql
+
+volumes:
+  sql_data:

@@ -1,7 +1,7 @@
 ﻿@using ValuBakery.Web.Data;
 @inject ISnackbar Snackbar
 
-<MudPaper Elevation="0" Class="pa-0" Style="background-color: transparent;">
+<MudPaper Elevation="0" Class="pa-0" Style="background-color: transparent; max-height:400px; overflow-y:auto;">
     <MudTable T="ProductComponentTable"
               Items="@ProductComponentTables"
               Dense="true"
@@ -15,8 +15,6 @@
               CancelEditTooltip="Cancelar"
               RowEditPreview="BackupItem"
               RowEditCancel="ResetItemToOriginalValues"
-              Height="400px"
-              FixedHeader="true"
               RowEditCommit="ItemHasBeenCommitted"
               IsEditRowSwitchingBlocked="false"
               ApplyButtonPosition="@TableApplyButtonPosition.End"
@@ -64,11 +62,11 @@
             <MudTd>
                 <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Primary" Title="Ver" OnClick="@(() => ViewItem(context.Id, context.Type))" />
             </MudTd>
-            <MudTd><MudText Style="@GetBoldStyle(context.Type)">@context.Name</MudText></MudTd>
-            <MudTd><MudText Style="@GetBoldStyle(context.Type)">$@context.CostPerUnit.ToString("N2")</MudText></MudTd>
-            <MudTd><MudText Style="@GetBoldStyle(context.Type)">@context.Quantity.ToString(context.Quantity <= 1 ? "N2" : "N0")</MudText></MudTd>
-            <MudTd><MudText Style="@GetBoldStyle(context.Type)">@($"{context.Profit.ToString()}%")</MudText></MudTd>
-            <MudTd><MudText Style="@GetBoldStyle(context.Type)">@($"${context.Total.ToString("N2")}")</MudText></MudTd>
+            <MudTd><MudText Typo="Typo.body2" Style="@GetBoldStyle(context.Type)">@context.Name</MudText></MudTd>
+            <MudTd><MudText Typo="Typo.body2">$@context.CostPerUnit.ToString("N2")</MudText></MudTd>
+            <MudTd><MudText Typo="Typo.body2">@context.Quantity.ToString(context.Quantity <= 1 ? "N2" : "N0")</MudText></MudTd>
+            <MudTd><MudText Typo="Typo.body2">@($"{context.Profit.ToString()}%")</MudText></MudTd>
+                <MudTd><MudText Typo="Typo.body2">@($"${context.Total.ToString("N2")}")</MudText></MudTd>
         </RowTemplate>
 
         <RowEditingTemplate>
@@ -79,10 +77,6 @@
             <MudTd><MudTextField Value="@context.Profit.ToString()" ReadOnly="true" Disabled="true" /></MudTd>
             <MudTd><MudTextField Value="@($"${context.Total.ToString("N2")}")" ReadOnly="true" Disabled="true" /></MudTd>
         </RowEditingTemplate>
-
-        <PagerContent>
-            <MudTablePager />
-        </PagerContent>
 
         <EditButtonContent Context="button">
             <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled" />

@@ -15,9 +15,9 @@ namespace ValuBakery.Data.DTOs
 
         public decimal ApplyProfitToMaterials { get; set; }
 
-        public int RecipeVariantId { get; set; }
-
         public decimal Total { get; set; }
+
+        public bool IsDeleted { get; set; }
 
         public List<ProductRecipeVariantDto> ProductRecipeVariants { get; set; }
 

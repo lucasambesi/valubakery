@@ -91,6 +91,8 @@ namespace ValuBakery.Web.Pages.Recipes
 
             RecipeVariantDto = await _recipeVariantService.GetByIdAsync(variantDto.Id);
 
+            isLoading = false;
+
             if (RecipeVariantDto != null)
             {
                 ingredientsText = RecipeVariantDto.GetIngredients();
@@ -101,8 +103,6 @@ namespace ValuBakery.Web.Pages.Recipes
                 dialogRenderKey = Guid.NewGuid(); // fuerza redibujado del diálogo
                 await InvokeAsync(StateHasChanged); // asegura el render completo
             }
-
-            isLoading = false;
         }
 
         protected async void ChangeRecipe(RecipeDto recipeDto)

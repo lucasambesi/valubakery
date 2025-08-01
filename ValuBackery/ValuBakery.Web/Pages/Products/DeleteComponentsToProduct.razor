@@ -9,21 +9,7 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudTabs Elevation="0" ApplyEffectsToContainer="true" Centered="true">
-            <MudTabPanel Text="Materiales">
-                <MudTable T="ProductMaterialDto" Items="@MaterialDtos" SelectedItems=@SelectedMaterialDtos
-                          SelectedItemsChanged="OnSelectedItemsChanged"
-                          Hover="true" MultiSelection="@true" Height="400px" Elevation="0">
-                    <HeaderContent>
-                        <MudTh>Nombre</MudTh>
-                        <MudTh>Cantidad</MudTh>
-                    </HeaderContent>
-                    <RowTemplate>
-                        <MudTd DataLabel="Nombre">@context.Material.Name</MudTd>
-                        <MudTd DataLabel="Cantidad">@context.Quantity</MudTd>
-                    </RowTemplate>
-                </MudTable>
-            </MudTabPanel>
+        <MudTabs Elevation="0" ApplyEffectsToContainer="true" Centered="true">            
             <MudTabPanel Text="Recetas">
                 <MudTable T="ProductRecipeVariantDto" Items="@RecipeDtos" SelectedItems=@SelectedRecipeDtos
                           SelectedItemsChanged="OnSelectedItemsChanged"
@@ -36,9 +22,23 @@
                     </RowTemplate>
                 </MudTable>
             </MudTabPanel>
+            <MudTabPanel Text="Materiales">
+                <MudTable T="ProductMaterialDto" Items="@MaterialDtos" SelectedItems=@SelectedMaterialDtos
+                          SelectedItemsChanged="OnSelectedItemsChanged"
+                          Hover="true" MultiSelection="@true" Height="400px" Elevation="0">
+                    <HeaderContent>
+                        <MudTh>Nombre</MudTh>
+                        <MudTh>Cantidad</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Nombre">@context.Material.Name</MudTd>
+                        <MudTd DataLabel="Cantidad" Style="text-align:center">@context.Quantity</MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudTabPanel>
         </MudTabs>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Error" OnClick="Submit">Eliminar</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Eliminar</MudButton>
     </DialogActions>
 </MudDialog>

@@ -61,7 +61,7 @@ namespace ValuBakery.Web.Pages.Products
                         Name = component.Material.Name,
                         Quantity = component.Quantity,
                         CostPerUnit = cost,
-                        Total = (cost + (cost * ProductDto.ApplyProfitToRecipes / 100)) * component.Quantity,
+                        Total = (cost + (cost * ProductDto.ApplyProfitToMaterials / 100)) * component.Quantity,
                         Profit = ProductDto.ApplyProfitToMaterials,
                         Type = ProductComponentType.Material
                     };
@@ -361,7 +361,7 @@ namespace ValuBakery.Web.Pages.Products
             {
                 CloseButton = true,
                 CloseOnEscapeKey = true,
-                MaxWidth = MaxWidth.Medium,
+                MaxWidth = MaxWidth.Small,
                 FullWidth = true
             };
 

@@ -1,22 +1,29 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
+# Etapa 1: Build
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["ValuBakery.Web/ValuBakery.Web.csproj", "ValuBakery.Web/"]
-RUN dotnet restore "ValuBakery.Web/ValuBakery.Web.csproj"
+
+# Copiar los .csproj de todos los proyectos
+COPY ValuBakery.Web/*.csproj ValuBakery.Web/
+COPY ValuBakery.Bootstrap/*.csproj ValuBakery.Bootstrap/
+COPY ValuBakery.Data/*.csproj ValuBakery.Data/
+COPY ValuBakery.Percistence/*.csproj ValuBakery.Percistence/
+COPY ValuBakery.Services/*.csproj ValuBakery.Services/
+COPY ValuBakery.Shared/*.csproj ValuBakery.Shared/
+COPY ValuBackery.sln .
+
+# Restaurar dependencias
+RUN dotnet restore ./ValuBakery.Web/ValuBakery.Web.csproj
+
+# Copiar todo el código
 COPY . .
-WORKDIR "/src/ValuBakery.Web"
-RUN dotnet build "ValuBakery.Web.csproj" -c Release -o /app/build
 
-FROM build AS publish
-RUN dotnet publish "ValuBakery.Web.csproj" -c Release -o /app/publish /p:UseAppHost=false
+# Compilar en modo Release
+WORKDIR /src/ValuBakery.Web
+RUN dotnet publish ValuBakery.Web.csproj -c Release -o /app/publish
 
-FROM base AS final
+# Etapa 2: Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
+
 ENTRYPOINT ["dotnet", "ValuBakery.Web.dll"]

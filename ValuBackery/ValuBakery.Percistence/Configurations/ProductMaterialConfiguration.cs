@@ -18,7 +18,7 @@ namespace ValuBakery.Percistence.Configurations
                    .WithMany()
                    .HasForeignKey(pm => pm.MaterialId);
 
-            builder.Property(pm => pm.Quantity).HasColumnType("decimal(10,2)");
+            builder.Property(pm => pm.Quantity).HasColumnType("decimal(10,4)");
 
             builder.Property(m => m.IsDeleted).HasDefaultValue(false);
         }

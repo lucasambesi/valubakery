@@ -10,7 +10,7 @@ namespace ValuBakery.Percistence.Configurations
         {
             builder.HasKey(i => i.Id);
             builder.Property(i => i.Name).IsRequired().HasMaxLength(250);
-            builder.Property(i => i.CostPerUnit).HasColumnType("decimal(10,2)");
+            builder.Property(i => i.CostPerUnit).HasColumnType("decimal(10,4)");
             builder.Property(i => i.IsDeleted).IsRequired().HasDefaultValue(false);
         }
     }

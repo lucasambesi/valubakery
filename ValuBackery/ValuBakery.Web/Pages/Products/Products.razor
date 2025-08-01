@@ -2,47 +2,18 @@
 
 @using MudBlazor
 @using ValuBakery.Data.DTOs;
+@using ValuBakery.Web.Pages.Products.Desktop
+@using ValuBakery.Web.Pages.Products.Mobile
 @inject ISnackbar Snackbar
 
 <PageTitle>Productos</PageTitle>
 
-<MudTable Items="@ProductDtos" Dense="@false" Hover="@true" ReadOnly="@false" CanCancelEdit="@true"
-          @bind-SelectedItem="selectedItem" Filter="new Func<ProductDto,bool>(FilterFunc)"
-          SortLabel="Ordenar por" CommitEditTooltip="Confirmar" CancelEditTooltip="Cancelar"
-          RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" Height="100%"
-          RowEditCommit="ItemHasBeenCommitted" IsEditRowSwitchingBlocked="@false"
-          ApplyButtonPosition="@TableApplyButtonPosition.End" EditButtonPosition="@TableEditButtonPosition.End"
-          EditTrigger="@TableEditTrigger.RowClick">
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">Productos</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-    </ToolBarContent>
-    <ColGroup>
-        <col style="width:10%;" />
-        <col style="width:90%;" />
-    </ColGroup>
-    <HeaderContent>
-        <MudTh><MudIconButton Icon="@Icons.Material.Outlined.AddBox" Color="Color.Primary" Title="Crear" OnClick="DialogCreate" /></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<ProductDto, object>(x=>x.Name)">Nombre</MudTableSortLabel></MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Acciones">
-            <MudIconButton Title="Ver" Color="Color.Primary" Icon="@Icons.Material.Filled.Preview"
-                           OnClick="() => ViewProduct(context.Id)" />
-        </MudTd>
-        <MudTd DataLabel="Nombre">@context.Name</MudTd>
-    </RowTemplate>
-    <RowEditingTemplate>
-        <MudTd DataLabel="Acciones"></MudTd>
-        <MudTd DataLabel="Name">
-            <MudTextField @bind-Value="context.Name" Required />
-        </MudTd>
-    </RowEditingTemplate>
-    <PagerContent>
-        <MudTablePager />
-    </PagerContent>
-    <EditButtonContent Context="button">
-        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled" />
-    </EditButtonContent>
-</MudTable>
+<MudBreakpointProvider OnBreakpointChanged="OnBreakpointChanged">
+    
+    <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+        <ProductsDesktop />
+    </MudHidden>
+    <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+        <ProductsMobile />
+    </MudHidden>
+</MudBreakpointProvider>

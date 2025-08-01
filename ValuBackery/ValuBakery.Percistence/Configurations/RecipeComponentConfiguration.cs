@@ -20,7 +20,7 @@ namespace ValuBakery.Percistence.Configurations
                    .HasForeignKey(rc => rc.ChildRecipeVariantId)
                    .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Property(rc => rc.Quantity).HasColumnType("decimal(10,2)");
+            builder.Property(rc => rc.Quantity).HasColumnType("decimal(10,4)");
         }
     }
 }

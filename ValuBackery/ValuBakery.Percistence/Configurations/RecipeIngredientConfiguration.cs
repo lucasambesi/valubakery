@@ -18,7 +18,7 @@ namespace ValuBakery.Percistence.Configurations
                    .WithMany()
                    .HasForeignKey(ri => ri.IngredientId);
 
-            builder.Property(ri => ri.Quantity).HasColumnType("decimal(10,2)");
+            builder.Property(ri => ri.Quantity).HasColumnType("decimal(10,4)");
         }
     }
 }

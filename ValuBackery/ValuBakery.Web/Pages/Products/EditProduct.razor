@@ -1,0 +1,55 @@
+﻿<MudDialog Class="px-3 pb-1">
+    <TitleContent>
+        <MudStack Row="true" Justify="Justify.FlexStart" AlignItems="AlignItems.Center">
+            <MudText Typo="Typo.h6" Align="Align.Center" Class="fw-bold">
+                Editar producto
+            </MudText>
+        </MudStack>
+    </TitleContent>
+
+    <DialogContent>
+        <MudGrid Spacing="2">
+            <MudItem xs="12">
+                <MudTextField @bind-Value="@EditProductModel.Name"
+                              Label="Nombre"
+                              Variant="Variant.Outlined"
+                              Immediate="true"
+                              OnKeyDown="HandleEnterKey"
+                              MaxLength="100"
+                              OnBlur="() => CapitalizeName()" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudTextField Lines="3"
+                              @bind-Value="EditProductModel.Description"
+                              Label="Descripción"
+                              Variant="Variant.Outlined"
+                              OnKeyDown="HandleEnterKey"
+                              Immediate="true"
+                              MaxLength="150"
+                              OnBlur="() => EditProductModel.Description = EditProductModel.Description?.Trim()" />
+
+            </MudItem>
+
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="@EditProductModel.ApplyProfitToRecipes" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Percent" Label="Ganancia de recetas" Min="0" Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="@EditProductModel.ApplyProfitToMaterials" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Percent" Label="Ganancia de materiales" Min="0" Variant="Variant.Outlined" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudSwitch @bind-Value="(EditProductModel.IsActive)"
+                           ThumbIcon="@(EditProductModel.IsActive==true ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
+                           ThumbIconColor="@(EditProductModel.IsActive==true ? Color.Success : Color.Error)">
+                    Activo
+                </MudSwitch>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Submit">Editar</MudButton>
+    </DialogActions>
+
+</MudDialog>
