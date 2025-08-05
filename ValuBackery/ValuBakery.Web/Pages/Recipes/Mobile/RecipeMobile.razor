@@ -1,5 +1,6 @@
 ﻿@using MudBlazor
 @using ValuBakery.Data.DTOs
+@using ValuBakery.Web.Helpers;
 @using ValuBakery.Web.Pages.Common
 @inject IDialogService DialogService
 
@@ -26,7 +27,7 @@ else
                 <MudStack Spacing="0">
                     <MudTooltip Text="@RecipeDto?.Name">
                         <MudText Typo="Typo.subtitle1" Class="fancy-title fw-bold">
-                            @(Truncate($"{RecipeDto?.Name}", 25))
+                            @(StringHelper.Truncate($"{RecipeDto?.Name}", 25))
                         </MudText>
                     </MudTooltip>
                     <MudStack Row="true" Spacing="0" AlignItems="AlignItems.Start" Justify="Justify.FlexStart" Style="padding:0">
@@ -38,11 +39,11 @@ else
                                      Color="Color.Secondary" />
                             </ActivatorContent>
                             <ChildContent>
-                                <MudMenuItem>Agregar</MudMenuItem>
-                                <MudMenuItem>Editar</MudMenuItem>
+                                <MudMenuItem OnTouch="@DialogCreate">Agregar</MudMenuItem>
+                                <MudMenuItem OnTouch="@DialogEdit">Editar</MudMenuItem>
                                 @foreach (var variant in RecipeDto.Variants)
                                 {
-                                    <MudMenuItem>
+                                    <MudMenuItem OnTouch="@(() => ChangeVariant(variant))">
                                         @variant.Name
                                     </MudMenuItem>
                                 }

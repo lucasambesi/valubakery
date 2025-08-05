@@ -1,4 +1,5 @@
-﻿using ValuBakery.Application.Services.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using ValuBakery.Application.Services.Interfaces;
 using ValuBakery.Data.DTOs;
 using ValuBakery.Percistence.Percistence.Interfaces;
 
@@ -26,6 +27,11 @@ namespace ValuBakery.Application.Services
         public async Task<List<RecipeDto>> GetAllAsync()
         {
             return await _dao.GetAllAsync();
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await _dao.GetCountAsync();
         }
 
         public async Task<RecipeDto?> GetByIdAsync(int id)

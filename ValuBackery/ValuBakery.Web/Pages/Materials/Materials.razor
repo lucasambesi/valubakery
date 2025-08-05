@@ -1,16 +1,22 @@
 ﻿@page "/materials"
-
+@using ValuBakery.Web.Pages.Common
 @using ValuBakery.Web.Pages.Materials.Desktop
 @using ValuBakery.Web.Pages.Materials.Mobile
 
 <PageTitle>Materiales</PageTitle>
 
-<MudBreakpointProvider OnBreakpointChanged="OnBreakpointChanged">
-    
-    <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
-        <MaterialsDesktop />
-    </MudHidden>
-    <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+@if (!isInitialized)
+{
+    <Overlay />
+}
+else
+{
+    @if (isMobile)
+    {
         <MaterialsMobile />
-    </MudHidden>
-</MudBreakpointProvider>
+    }
+    else
+    {
+        <MaterialsDesktop />
+    }
+}

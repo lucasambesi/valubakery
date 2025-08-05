@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using MudBlazor;
 using MudBlazor.Services;
 using ValuBakery.Data.DTOs;
@@ -7,18 +8,20 @@ namespace ValuBakery.Web.Pages.Materials
 {
     public partial class Materials
     {
-        protected Breakpoint currentBreakpoint;
-        protected bool isMobile => currentBreakpoint <= Breakpoint.SmAndDown;
+        private bool isInitialized = false;
+        private bool isMobile = false;
 
-        protected async Task InitBreakpointAsync(IBreakpointService breakpointService)
-        {
-            currentBreakpoint = await breakpointService.GetBreakpoint();
-        }
+        [Inject] IJSRuntime JS { get; set; } = default!;
 
-        protected void OnBreakpointChanged(Breakpoint breakpoint)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            currentBreakpoint = breakpoint;
-            StateHasChanged();
+            if (firstRender)
+            {
+                int width = await JS.InvokeAsync<int>("eval", "window.innerWidth");
+                isMobile = width <= 960;
+                isInitialized = true;
+                StateHasChanged();
+            }
         }
     }
 }

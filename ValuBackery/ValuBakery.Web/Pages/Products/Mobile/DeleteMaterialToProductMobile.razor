@@ -1,0 +1,45 @@
+﻿@using ValuBakery.Web.Helpers;
+
+<MudDialog Class="rounded-lg dialog-receta">
+    <TitleContent>
+        <MudText Typo="Typo.subtitle1" Class="fw-bold">
+            Eliminar materiales
+        </MudText>
+    </TitleContent>
+
+    <DialogContent>
+        <MudPaper Elevation="0" Style="max-height:300px; overflow-y:auto; overflow-x:hidden; width:100%; padding-right:1rem">
+
+            @foreach (var ingredient in MaterialsDtos)
+            {
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart">
+                        <MudCheckBox Checked="@SelectedMaterialIds.Contains(ingredient.Id)"
+                                 CheckedChanged="@((bool value) => OnCheckedChanged(value, ingredient.Id))"
+                                 Style="width:30px;" />
+
+                        <MudTooltip Text="@ingredient.Name">
+                            <MudText Typo="Typo.caption" Class="fw-bold">
+                                @(StringHelper.Truncate(ingredient.Name, 20))
+                            </MudText>
+                        </MudTooltip>
+                    </MudStack>
+
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexEnd">
+                        <MudText Typo="Typo.caption">
+                            $@ingredient.CostPerUnit
+                        </MudText>
+
+                        <MudText Typo="Typo.caption">
+                            @ingredient.Unit
+                        </MudText>
+                    </MudStack>
+                </MudStack>
+            }
+        </MudPaper>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Color="Color.Secondary" OnClick="Submit">Eliminar</MudButton>
+    </DialogActions>
+</MudDialog>

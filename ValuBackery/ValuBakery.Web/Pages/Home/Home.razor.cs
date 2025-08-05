@@ -8,17 +8,19 @@ namespace ValuBakery.Web.Pages.Home
         private int TotalRecipes;
         private int TotalIngredients;
         private int TotalVariants;
-
+        private bool isLoading;
         private List<RecipeDto> UltimasRecetas = new();
 
         protected override async Task OnInitializedAsync()
         {
-            TotalRecipes = 10;// await RecipeService.CountAsync();
-            TotalIngredients = 40;// await IngredientService.CountAsync();
-            TotalVariants = 50;// await VariantService.CountActiveAsync();
+            isLoading = true;
+            TotalRecipes = await _recipeService.GetCountAsync();
+            TotalIngredients = await _ingredientService.GetCountAsync();
+            TotalVariants = await _recipeVariantService.GetCountAsync();
 
             var recipes = await _recipeService.GetAllAsync();
             UltimasRecetas = recipes.Take(5).ToList();
+            isLoading = false;
         }
     }
 }

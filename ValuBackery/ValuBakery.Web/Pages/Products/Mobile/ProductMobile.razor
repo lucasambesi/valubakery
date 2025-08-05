@@ -1,10 +1,135 @@
-﻿@using ValuBakery.Web.Pages.Common
+﻿@using ValuBakery.Web.Helpers;
+@using ValuBakery.Web.Pages.Common
+@using MudBlazor
+@using ValuBakery.Data.DTOs
+@inject IDialogService DialogService
 
 @if (isLoading)
 {
     <Overlay />
 }
+else if (ProductDto == null)
+{
+    <MudText Color="Color.Secondary" Class="pa-4">No se encontró la receta</MudText>
+}
 else
 {
+    <MudDialog Class="rounded-lg dialog-receta" @key="dialogRenderKey">
+        <TitleContent>
+            <MudStack Row="true" AlignItems="AlignItems.Start" Spacing="2" Class="pb-2">
+                <MudTooltip Text="@ProductDto?.Name">
+                    <MudAvatar Size="Size.Large"
+                           Image="images/no_image.png"
+                           Class="ma-1"
+                           Alt="@ProductDto?.Name" />
+                </MudTooltip>
 
+                <MudStack Spacing="0">
+                    <MudTooltip Text="@ProductDto?.Name">
+                        <MudText Typo="Typo.subtitle1" Class="fancy-title fw-bold">
+                            @(StringHelper.Truncate($"{ProductDto?.Name}", 25))
+                        </MudText>
+                    </MudTooltip>
+
+                    <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Start" Justify="Justify.FlexStart" Style="padding:0">
+                        <MudText Typo="Typo.subtitle2" Class="fw-bold" Color="Color.Secondary">$@(ProductDto?.Total.ToString("N2"))</MudText>
+                         <MudMenu Style="padding-left:0px!important">
+                            <ActivatorContent>
+                                <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown"
+                                     Size="Size.Small"
+                                     Color="Color.Secondary" />
+                            </ActivatorContent>
+                            <ChildContent>
+                                <MudMenuItem OnTouch="@DialogEdit">Editar</MudMenuItem>
+                            </ChildContent>
+                        </MudMenu>
+                    </MudStack>
+                </MudStack>
+            </MudStack>
+        </TitleContent>
+
+        <DialogContent>
+            <MudStack Spacing="1" Style="padding:0px; margin-bottom:0.5rem;">
+                <MudText Typo="Typo.body2">@ProductDto.Description</MudText>
+                <MudExpansionPanels Elevation="0" MultiExpansion="true" DisableBorders="true" Class="mt-1 full-height-panels">
+                    <MudExpansionPanel IsInitiallyExpanded=@infoInitialExpanded Style="padding:0px!important">
+                        <TitleContent>
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                <MudIcon Icon="@Icons.Material.Outlined.Info" Class="fw-bold" Color="Color.Info" Size="Size.Small" />
+                                <MudText Typo="Typo.subtitle2" Class="nested fw-bold">Información general</MudText>
+                            </MudStack>
+                        </TitleContent>
+                        <ChildContent>
+                            <MudStack Spacing="2">
+                                <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                                    <MudText Typo="Typo.body2" Class="fw-bold">Ganancia recetas:</MudText>
+                                    <MudText Typo="Typo.body2">@(ProductDto?.ApplyProfitToRecipes.ToString("N2"))%</MudText>
+                                </MudStack>
+                                <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                                    <MudText Typo="Typo.body2" Class="fw-bold">Ganancia materiales:</MudText>
+                                    <MudText Typo="Typo.body2">@(ProductDto?.ApplyProfitToMaterials.ToString("N2"))%</MudText>
+                                </MudStack>
+                            </MudStack>
+                        </ChildContent>
+                    </MudExpansionPanel>
+
+                    <MudExpansionPanel IsInitiallyExpanded=@materialsInitialExpanded>
+                        <TitleContent>
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                    <MudIcon Icon="@Icons.Material.Outlined.Redeem" Color="Color.Primary" />
+                                    <MudText Typo="Typo.subtitle2" Class="fw-bold">Materiales</MudText>
+                                </MudStack>
+                            </MudStack>
+                        </TitleContent>
+                        <ChildContent>
+                            @if (ProductDto.ProductMaterials.Count > 0)
+                            {
+                                <ProductMaterialsMobile ProductDto="@ProductDto" 
+                                    Materials="@ProductDto.ProductMaterials" OnChanged="OnChanged"/>
+                            }
+                            else
+                            {
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="1">
+                                    <MudText Typo="Typo.caption">No hay materiales vinculadas.</MudText>
+                                </MudStack>
+                            }
+                            <MudStack Row="true" Justify="Justify.FlexEnd" AlignItems="AlignItems.Center" Spacing="2">
+                                <MudIconButton Icon="@Icons.Material.Outlined.RemoveCircleOutline" Color="Color.Default" Size="Size.Small" OnClick="DialogDelete" />
+                                <MudIconButton Icon="@Icons.Material.Outlined.AddCircleOutline" Color="Color.Default" Size="Size.Small" OnClick="DialogAdd" />
+                            </MudStack>
+                        </ChildContent>
+                    </MudExpansionPanel>
+
+                    <MudExpansionPanel IsInitiallyExpanded=@recipesInitialExpanded>
+                        <TitleContent>
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                    <MudIcon Icon="@Icons.Material.Filled.MenuBook" Color="Color.Secondary" Size="Size.Small" />
+                                    <MudText Typo="Typo.subtitle2" Class="nested fw-bold">Recetas</MudText>
+                                </MudStack>
+                            </MudStack>
+                        </TitleContent>
+                        <ChildContent>
+                            @if (ProductDto.ProductRecipeVariants.Count > 0)
+                            {
+                                <ProductRecipesMobile ProductDto="@ProductDto" 
+                                    Components="@ProductDto.ProductRecipeVariants" OnChanged="OnChanged"/>                                
+                            }
+                            else
+                            {
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="1">
+                                    <MudText Typo="Typo.caption">No hay recetas vinculadas.</MudText>
+                                </MudStack>
+                            }
+                            <MudStack Row="true" Justify="Justify.FlexEnd" AlignItems="AlignItems.Center" Spacing="2">
+                                <MudIconButton Icon="@Icons.Material.Outlined.RemoveCircleOutline" Color="Color.Default" Size="Size.Small" OnClick="DialogRecipeDelete" />
+                                <MudIconButton Icon="@Icons.Material.Outlined.AddCircleOutline" Color="Color.Default" Size="Size.Small" OnClick="DialogRecipeAdd"/>
+                            </MudStack>
+                        </ChildContent>
+                    </MudExpansionPanel>
+                </MudExpansionPanels>
+            </MudStack>
+        </DialogContent>
+    </MudDialog>
 }

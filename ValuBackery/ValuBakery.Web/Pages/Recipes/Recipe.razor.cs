@@ -103,30 +103,13 @@ namespace ValuBakery.Web.Pages.Recipes
                 dialogRenderKey = Guid.NewGuid(); // fuerza redibujado del diálogo
                 await InvokeAsync(StateHasChanged); // asegura el render completo
             }
-        }
-
-        protected async void ChangeRecipe(RecipeDto recipeDto)
-        {
-            isLoading = true;
-
-            RecipeDto = await _recipeService.GetByIdAsync(recipeDto.Id);
-
-            if (RecipeDto != null)
-            {
-                ChangeVariant(RecipeVariantDto);
-
-                dialogRenderKey = Guid.NewGuid(); // fuerza redibujado del diálogo
-                await InvokeAsync(StateHasChanged); // asegura el render completo
-            }
-
-            isLoading = false;
-        }
+        }       
 
         protected void DialogCreate()
         {
             var parameters = new DialogParameters
             {
-                { nameof(CreateVariantRecipe.OnCreateData), EventCallback.Factory.Create<int>(this, EditDialogEvent) },
+                { nameof(CreateVariantRecipe.OnCreateData), EventCallback.Factory.Create<int>(this, CreateDialogEvent) },
                 { nameof(CreateVariantRecipe.RecipeDto), RecipeDto }
             };
 
@@ -160,7 +143,37 @@ namespace ValuBakery.Web.Pages.Recipes
             _dialogService.Show<EditRecipe>("EditRecipe", parameters, options);
         }
 
-        protected async Task EditDialogEvent(int id)
+        protected async Task EditDialogEvent(RecipeDto recipeDto)
+        {
+            try
+            {
+                ChangeRecipe(recipeDto);
+                await OnEditData.InvokeAsync(recipeDto);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        protected async void ChangeRecipe(RecipeDto recipeDto)
+        {
+            isLoading = true;
+
+            RecipeDto = await _recipeService.GetByIdAsync(recipeDto.Id);
+
+            if (RecipeDto != null)
+            {
+                ChangeVariant(RecipeVariantDto);
+
+                dialogRenderKey = Guid.NewGuid(); // fuerza redibujado del diálogo
+                await InvokeAsync(StateHasChanged); // asegura el render completo
+            }
+
+            isLoading = false;
+        }
+
+        protected async Task CreateDialogEvent(int id)
         {
             try
             {
@@ -185,19 +198,6 @@ namespace ValuBakery.Web.Pages.Recipes
                 throw;
             }
             finally { isLoading = false; }
-        }
-
-        protected async Task EditDialogEvent(RecipeDto recipeDto)
-        {
-            try
-            {
-                ChangeRecipe(recipeDto);
-                await OnEditData.InvokeAsync(recipeDto);
-            }
-            catch
-            {
-                throw;
-            }
-        }
+        }        
     }
 }

@@ -27,6 +27,13 @@ namespace ValuBakery.Percistence.Percistence
             return _mapper.Map<IngredientDto>(entity);
         }
 
+        public async Task<int> GetCountAsync()
+        {
+            return await _dbContext.Ingredients
+                .Where(r => !r.IsDeleted)
+                .CountAsync();
+        }
+
         public async Task<List<IngredientDto>> GetAllAsync()
         {
             var entities = await _dbContext.Ingredients

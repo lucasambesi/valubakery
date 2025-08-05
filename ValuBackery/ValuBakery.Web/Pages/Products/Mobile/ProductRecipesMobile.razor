@@ -1,0 +1,52 @@
+﻿@inject ISnackbar Snackbar
+
+@inject ISnackbar Snackbar
+
+<MudStack Spacing="1" Style="max-height:150px; overflow-y:auto;">
+    @foreach (var item in Components)
+    {
+        <MudPaper Class="rounded w-100"
+              Elevation="0"
+              Style="cursor: pointer;"
+              @onclick="@(() => StartEditing(item))">
+
+            <MudStack Spacing="1" Class="w-100">
+                <!-- Título + edición -->
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                    <MudText Typo="Typo.subtitle2" Class="nested fw-bold">@item.RecipeVariant.GetName()</MudText>
+                </MudStack>
+
+                <!-- Edición activa -->
+                @if (EditingItem == item)
+                {
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <MudNumericField @bind-Value="item.Quantity"
+                                 HideSpinButtons="true"
+                                 Immediate="true"
+                                 Variant="Variant.Outlined"
+                                 Class="w-25"
+                                 Style="height: 36px;" />
+
+                        <MudIconButton Icon="@Icons.Material.Filled.Check"
+                               Color="Color.Success"
+                               Size="Size.Small"
+                               OnClick="ConfirmEdit" />
+
+                        <MudIconButton Icon="@Icons.Material.Filled.Close"
+                               Color="Color.Error"
+                               Size="Size.Small"
+                               OnClick="CancelEdit" />
+                    </div>
+                }
+                else
+                {
+                    <MudText Typo="Typo.caption" Color="Color.Default">
+                        Cantidad: @item.Quantity @("u") •
+                        Costo: $@item.GetTotal(ProductDto.ApplyProfitToRecipes).ToString("N2")
+                    </MudText>
+                }
+
+            </MudStack>
+        </MudPaper>
+    }
+</MudStack>

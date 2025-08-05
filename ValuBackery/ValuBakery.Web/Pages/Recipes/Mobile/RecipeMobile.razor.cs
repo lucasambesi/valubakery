@@ -55,16 +55,6 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
             RecipeVariantDto?.SetCost();
         }
 
-        private string Truncate(string? text, int maxLength)
-        {
-            if (string.IsNullOrEmpty(text))
-                return string.Empty;
-
-            return text.Length > maxLength
-                ? text.Substring(0, maxLength) + "..."
-                : text;
-        }
-
         private async Task OnChanged()
         {
             if (RecipeVariantDto != null)
@@ -164,8 +154,6 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
         {
             try
             {
-                List<RecipeComponentTable> recipeComponentDtos = new();
-
                 foreach (var entry in ids)
                 {
                     int id = entry.Key;
@@ -177,15 +165,6 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
                             var newIngredient = await _recipeIngredientService.GetByIdAsync(id);
                             if (newIngredient != null)
                             {
-                                recipeComponentDtos.Add(new RecipeComponentTable
-                                {
-                                    Id = newIngredient.Id,
-                                    Name = newIngredient.Ingredient.Name,
-                                    Unit = newIngredient.Ingredient.Unit,
-                                    CostPerUnit = newIngredient.Ingredient.CostPerUnit,
-                                    Type = RecipeComponentType.Ingredient
-                                });
-
                                 RecipeVariantDto.Ingredients.Add(newIngredient);
                             }
                             ingredientesInitialExpanded = true;
@@ -195,16 +174,6 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
                             var recipeComponent = await _recipeComponentService.GetByIdAsync(id);
                             if (recipeComponent != null)
                             {
-                                recipeComponentDtos.Add(new RecipeComponentTable
-                                {
-                                    Id = recipeComponent.Id,
-                                    Name = recipeComponent.ChildRecipeName,
-                                    Unit = UnitEnum.Ud,
-                                    Quantity = recipeComponent.Quantity,
-                                    CostPerUnit = recipeComponent.ChildRecipeVariant.GetCost(),
-                                    Type = RecipeComponentType.Recipe
-                                });
-
                                 RecipeVariantDto.Components.Add(recipeComponent);
 
                             }
@@ -272,6 +241,122 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
             {
                 throw;
             }
+        }
+
+        protected void DialogEdit()
+        {
+            var parameters = new DialogParameters
+            {
+                { nameof(EditRecipe.OnCreateData), EventCallback.Factory.Create<RecipeDto>(this, EditDialogEvent) },
+                { nameof(EditRecipe.RecipeDto), RecipeDto }
+            };
+
+            var options = new DialogOptions
+            {
+                CloseButton = true,
+                CloseOnEscapeKey = true,
+                MaxWidth = MaxWidth.Small,
+                FullWidth = true
+            };
+
+            _dialogService.Show<EditRecipe>("EditRecipe", parameters, options);
+        }
+
+        protected async Task EditDialogEvent(RecipeDto recipeDto)
+        {
+            try
+            {
+                ChangeRecipe(recipeDto);
+                await OnEditData.InvokeAsync(recipeDto);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        protected async void ChangeRecipe(RecipeDto recipeDto)
+        {
+            isLoading = true;
+
+            RecipeDto = await _recipeService.GetByIdAsync(recipeDto.Id);
+
+            if (RecipeDto != null)
+            {
+                ChangeVariant(RecipeVariantDto);
+
+                dialogRenderKey = Guid.NewGuid(); // fuerza redibujado del diálogo
+                await InvokeAsync(StateHasChanged); // asegura el render completo
+            }
+
+            isLoading = false;
+        }
+
+        protected async void ChangeVariant(RecipeVariantDto variantDto)
+        {
+            isLoading = true;
+
+            RecipeVariantDto = await _recipeVariantService.GetByIdAsync(variantDto.Id);
+
+            isLoading = false;
+
+            if (RecipeVariantDto != null)
+            {
+                ingredientsText = RecipeVariantDto.GetIngredients();
+                componentsText = RecipeVariantDto.GetComponents();
+                RecipeVariantDto.SetCost();
+
+                dialogRenderKey = Guid.NewGuid(); // fuerza redibujado del diálogo
+                await InvokeAsync(StateHasChanged); // asegura el render completo
+
+                infoInitialExpanded = true;
+            }
+        }
+
+        protected void DialogCreate()
+        {
+            var parameters = new DialogParameters
+            {
+                { nameof(CreateVariantRecipe.OnCreateData), EventCallback.Factory.Create<int>(this, CreateDialogEvent) },
+                { nameof(CreateVariantRecipe.RecipeDto), RecipeDto }
+            };
+
+            var options = new DialogOptions
+            {
+                CloseButton = true,
+                CloseOnEscapeKey = true,
+                MaxWidth = MaxWidth.Small,
+                FullWidth = true
+            };
+
+            _dialogService.Show<CreateVariantRecipe>("CreateVariantRecipe", parameters, options);
+        }
+
+        protected async Task CreateDialogEvent(int id)
+        {
+            try
+            {
+                isLoading = true;
+
+                var entity = await _recipeVariantService.GetByIdAsync(id);
+
+                if (entity != null)
+                {
+                    var item = entity;
+
+                    if (item != null)
+                    {
+                        RecipeDto.Variants.Add(item);
+                    }
+
+                    StateHasChanged();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally { isLoading = false; }
         }
     }
 }

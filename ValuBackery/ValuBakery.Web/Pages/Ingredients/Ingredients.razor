@@ -1,16 +1,23 @@
 ﻿@page "/ingredients"
 
+@using ValuBakery.Web.Pages.Common
 @using ValuBakery.Web.Pages.Ingredients.Desktop
 @using ValuBakery.Web.Pages.Ingredients.Mobile
 
 <PageTitle>Ingredientes</PageTitle>
 
-<MudBreakpointProvider OnBreakpointChanged="OnBreakpointChanged">
-    
-    <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
-        <IngredientsDesktop />
-    </MudHidden>
-    <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+@if (!isInitialized)
+{
+    <Overlay />
+}
+else
+{
+    @if (isMobile)
+    {
         <IngredientsMobile />
-    </MudHidden>
-</MudBreakpointProvider>
+    }
+    else
+    {
+        <IngredientsDesktop />
+    }
+}

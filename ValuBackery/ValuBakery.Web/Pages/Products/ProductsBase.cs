@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 using ValuBakery.Application.Services.Interfaces;
 using ValuBakery.Data.DTOs;
@@ -14,9 +15,14 @@ namespace ValuBakery.Web.Pages.Products
         [Inject] protected IProductService _productService { get; set; }
         [Inject] protected IDialogService _dialogService { get; set; }
         [Inject] protected ISnackbar Snackbar { get; set; }
+
+        protected bool isLoading;
+
         protected override async Task OnInitializedAsync()
         {
+            isLoading = true;
             ProductDtos = await _productService.GetAllAsync();
+            isLoading = false;
         }
 
         #region Dialog
@@ -42,8 +48,8 @@ namespace ValuBakery.Web.Pages.Products
         {
             var parameters = new DialogParameters
             {
-                { isMobile ? nameof(Product.Id) : nameof(ProductMobile.Id), id },
-                { isMobile ? nameof(Product.OnEditData) : nameof(ProductMobile.OnEditData),
+                { isMobile ? nameof(ProductMobile.Id) : nameof(Product.Id), id },
+                { isMobile ? nameof(ProductMobile.OnEditData) : nameof(Product.OnEditData),
                 EventCallback.Factory.Create<ProductDto>(this, EditDialogEvent)  }
 
             };

@@ -1,0 +1,33 @@
+﻿@using ValuBakery.Web.Helpers;
+
+<MudDialog Class="rounded-lg dialog-receta">
+    <TitleContent>
+        <MudText Typo="Typo.subtitle1" Class="fw-bold">
+            Eliminar recetas
+        </MudText>
+    </TitleContent>
+
+    <DialogContent>
+        <MudPaper Elevation="0" Style="max-height:300px; overflow-y:auto; overflow-x:hidden; width:100%; padding-right:1rem">
+
+            @foreach (var recipe in RecipeDtos)
+            {
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart">
+                            <MudCheckBox Checked="@SelectedRecipeIds.Contains(recipe.Id)"
+                                 CheckedChanged="@((bool value) => OnCheckedChanged(value, recipe.Id))"
+                                 Style="width:30px;" />
+
+                            <MudText Typo="Typo.caption">
+                            @(recipe.GetName())
+                            </MudText>
+                        </MudStack>
+                    </MudStack>
+            }
+        </MudPaper>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Color="Color.Secondary" OnClick="Submit">Eliminar</MudButton>
+    </DialogActions>
+</MudDialog>

@@ -30,10 +30,10 @@
             <MudItem xs="12">
                 <MudTextField @bind-Value="@ProductDto.Description" Lines="3" Label="Descripción" Variant="Variant.Outlined" MaxLength="500"/>
             </MudItem>
-            <MudItem xs="6">
+            <MudItem xs="12" md="6">
                 <MudNumericField @bind-Value="@ProductDto.ApplyProfitToRecipes" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Percent" Label="Ganancia de recetas" Min="0" Variant="Variant.Outlined" />
             </MudItem>
-            <MudItem xs="6">
+            <MudItem xs="12" md="6">
                 <MudNumericField @bind-Value="@ProductDto.ApplyProfitToMaterials" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Percent" Label="Ganancia de materiales" Min="0" Variant="Variant.Outlined" />
             </MudItem>
         </MudGrid>

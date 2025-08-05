@@ -22,7 +22,10 @@ namespace ValuBakery.Application.Services
         {
             return await _dao.GetAllAsync();
         }
-
+        public async Task<int> GetCountAsync()
+        {
+            return await _dao.GetCountAsync();
+        }
         public async Task<List<RecipeVariantDto>> GetAllExpandedAsync()
         {
             return await _dao.GetAllExpandedAsync();

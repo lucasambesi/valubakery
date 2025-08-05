@@ -39,6 +39,13 @@ namespace ValuBakery.Percistence.Percistence
             return await BuildRecipeDtoRecursively(recipe, visited);
         }
 
+        public async Task<int> GetCountAsync()
+        {
+            return await _dbContext.RecipeVariant
+                .Where(r => !r.IsDeleted)
+                .CountAsync();
+        }
+
         private async Task<RecipeVariantDto> BuildRecipeDtoRecursively(RecipeVariant recipe, HashSet<int> visited)
         {
             if (visited.Contains(recipe.Id))

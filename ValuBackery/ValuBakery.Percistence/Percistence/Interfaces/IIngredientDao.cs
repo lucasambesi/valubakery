@@ -6,6 +6,7 @@ namespace ValuBakery.Percistence.Percistence.Interfaces
     {
         Task<IngredientDto?> GetByIdAsync(int id);
         Task<List<IngredientDto>> GetAllAsync();
+        Task<int> GetCountAsync();
         Task<int> AddAsync(IngredientDto dto);
         Task<bool> UpdateAsync(IngredientDto dto);
         Task DeleteAsync(int id);

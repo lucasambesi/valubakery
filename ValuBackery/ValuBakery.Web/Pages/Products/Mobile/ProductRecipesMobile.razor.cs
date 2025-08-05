@@ -3,20 +3,23 @@ using MudBlazor;
 using ValuBakery.Data.DTOs;
 using ValuBakery.Data.Enums;
 
-namespace ValuBakery.Web.Pages.Recipes.Mobile
+namespace ValuBakery.Web.Pages.Products.Mobile
 {
-    public partial class RecipeComponentsMobile
+    public partial class ProductRecipesMobile
     {
         [Parameter]
-        public List<RecipeComponentDto> Components { get; set; } = new();
+        public ProductDto ProductDto { get; set; } = new();
 
-        private RecipeComponentDto? EditingItem;
+        [Parameter]
+        public List<ProductRecipeVariantDto> Components { get; set; } = new();
+
+        private ProductRecipeVariantDto? EditingItem;
         private decimal originalQuantity;
 
         [Parameter]
         public EventCallback OnChanged { get; set; }
 
-        private void StartEditing(RecipeComponentDto item)
+        private void StartEditing(ProductRecipeVariantDto item)
         {
             EditingItem = item;
             originalQuantity = item.Quantity;
@@ -33,7 +36,7 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
 
             try
             {
-                var response = await _recipeComponentService.UpdateAsync(EditingItem);
+                var response = await _productRecipeVariantService.UpdateAsync(EditingItem);
 
             }
             catch (Exception ex)
@@ -54,5 +57,16 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
                 EditingItem = null;
             }
         }
+
+        private string GetUnitAbbr(UnitEnum unit) =>
+            unit switch
+            {
+                UnitEnum.Kg => "Kg",
+                UnitEnum.Grs => "g",
+                UnitEnum.Lt => "L",
+                UnitEnum.Mls => "ml",
+                UnitEnum.Ud => "u",
+                _ => ""
+            };
     }
 }
