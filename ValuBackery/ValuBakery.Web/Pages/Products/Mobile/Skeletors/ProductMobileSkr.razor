@@ -1,0 +1,38 @@
+﻿<MudDialog Class="rounded-lg dialog-receta">
+
+    <!-- Título: avatar + título + variante -->
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Class="pb-2">
+            <MudSkeleton SkeletonType="SkeletonType.Circle" Width="40px" Height="40px" Class="ma-1" />
+            <MudSkeleton SkeletonType="SkeletonType.Text" Width="60%" Height="20px" Class="mb-1" />
+        </MudStack>
+    </TitleContent>
+
+    <DialogContent>
+        <MudStack Spacing="1" Style="padding:0; margin-bottom:.5rem;">
+
+            <!-- Descripción corta -->
+            <MudSkeleton SkeletonType="SkeletonType.Text" Width="100%" Height="16px" />
+            <MudSkeleton SkeletonType="SkeletonType.Text" Width="100%" Height="16px" Class="mb-2" />
+
+
+            @for (int i = 0; i < 2; i++)
+            {
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Class="mt-3">
+                        <MudSkeleton SkeletonType="SkeletonType.Circle" Width="18px" Height="18px" />
+                        <MudSkeleton SkeletonType="SkeletonType.Text" Width="36%" Height="18px" />
+                        <MudSkeleton SkeletonType="SkeletonType.Circle" Width="16px" Height="16px" Class="ml-auto" />
+                    </MudStack>
+
+                @* 3 filas *@
+                @for (var j = 0; j < 2; j++)
+                {
+                            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="mt-1">
+                                <MudSkeleton SkeletonType="SkeletonType.Text" Width="58%" Height="16px" />
+                                <MudSkeleton SkeletonType="SkeletonType.Text" Width="24%" Height="16px" />
+                            </MudStack>
+                }
+            }
+        </MudStack>
+    </DialogContent>
+</MudDialog>

@@ -2,15 +2,16 @@
 @using ValuBakery.Web.Pages.Common
 @using MudBlazor
 @using ValuBakery.Data.DTOs
+@using ValuBakery.Web.Pages.Products.Mobile.Skeletors
 @inject IDialogService DialogService
 
 @if (isLoading)
 {
-    <Overlay />
+    <ProductMobileSkr />
 }
 else if (ProductDto == null)
 {
-    <MudText Color="Color.Secondary" Class="pa-4">No se encontró la receta</MudText>
+    <MudText Color="Color.Secondary" Class="pa-4">No se encontró el producto</MudText>
 }
 else
 {
