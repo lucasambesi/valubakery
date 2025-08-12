@@ -17,20 +17,6 @@ namespace ValuBakery.Web.Pages.Recipes
 
         private void Cancel() => MudDialog.Cancel();
 
-        private Dictionary<string, string> SizeOptions = new()
-        {
-            { "5x5", "5x5" },
-            { "16x16", "16x16" },
-            { "20x20", "20x20" }
-        };
-
-        private Dictionary<string, string> PortionOptions = new()
-        {
-            { "1", "1" },
-            { "8 a 12", "8 a 12" },
-            { "12 a 16", "12 a 16" }
-        };
-
         [Parameter]
         public EventCallback<int> OnCreateData { get; set; }
 

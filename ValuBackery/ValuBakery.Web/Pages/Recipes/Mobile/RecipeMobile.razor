@@ -2,11 +2,12 @@
 @using ValuBakery.Data.DTOs
 @using ValuBakery.Web.Helpers;
 @using ValuBakery.Web.Pages.Common
+@using ValuBakery.Web.Pages.Recipes.Mobile.Skeletors
 @inject IDialogService DialogService
 
 @if (isLoading)
 {
-    <Overlay />
+    <RecipeMobileSkr />
 }
 else if (RecipeDto == null || RecipeVariantDto == null)
 {

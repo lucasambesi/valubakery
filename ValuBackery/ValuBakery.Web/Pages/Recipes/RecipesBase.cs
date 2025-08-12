@@ -28,11 +28,11 @@ namespace ValuBakery.Web.Pages.Recipes
         }
 
         #region Dialog
-        protected void DialogCreate()
+        protected void DialogCreate(bool isMobile)
         {
             var parameters = new DialogParameters
             {
-                { nameof(CreateIngredient.OnCreateData), EventCallback.Factory.Create<int>(this, CreateDialogEvent) }
+                { nameof(CreateIngredient.OnCreateData), isMobile ? EventCallback.Factory.Create<int>(this, CreateDialogMobileEvent) : EventCallback.Factory.Create<int>(this, CreateDialogEvent)}
             };
 
             var options = new DialogOptions
@@ -71,12 +71,37 @@ namespace ValuBakery.Web.Pages.Recipes
             }
         }
 
+        protected async Task CreateDialogMobileEvent(int id)
+        {
+            try
+            {
+                var entity = await _recipeService.GetByIdAsync(id);
+
+                if (entity != null)
+                {
+                    var item = entity;
+
+                    if (item != null)
+                    {
+                        RecipeDtos.Insert(0, item);
+                        ViewRecipe(item.Id, true);
+                    }
+
+                    StateHasChanged();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         protected void ViewRecipe(int id, bool isMobile)
         {
             var parameters = new DialogParameters
             {
-                { isMobile ? nameof(Recipe.Id) : nameof(RecipeMobile.Id), id },
-                { isMobile ? nameof(Recipe.OnEditData) : nameof(RecipeMobile.OnEditData),
+                { isMobile ? nameof(RecipeMobile.Id) : nameof(Recipe.Id), id },
+                { isMobile ? nameof(RecipeMobile.OnEditData) : nameof(Recipe.OnEditData),
                 EventCallback.Factory.Create<RecipeDto>(this, EditDialogEvent)  }
 
             };

@@ -1,0 +1,61 @@
+﻿@using MudBlazor
+
+@code {
+    [Parameter] public int Rows { get; set; } = 15;
+    [Parameter]
+    public string Height { get; set; }
+        = "calc(100dvh - var(--mud-appbar-height, 64px) - 52px)"; // tu mismo alto
+}
+
+<MudTable Dense="false" Hover="false" ReadOnly="true"
+          Items="@Enumerable.Range(1, Rows)"
+          Height="@Height" FixedHeader="true" FixedFooter="true">
+
+    <ColGroup>
+        <col style="width:10%;" />
+        <col style="width:35%;" />
+        <col style="width:25%;" />
+        <col style="width:30%;" />
+    </ColGroup>
+
+    <HeaderContent>
+        <MudTh>
+            <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="24px" Height="24px" />
+        </MudTh>
+        <MudTh>
+            <MudSkeleton SkeletonType="SkeletonType.Text" Width="40%" Height="18px" />
+        </MudTh>
+        <MudTh style="text-align:center">
+            <MudSkeleton SkeletonType="SkeletonType.Text" Width="35%" Height="18px" />
+        </MudTh>
+        <MudTh>
+            <MudSkeleton SkeletonType="SkeletonType.Text" Width="45%" Height="18px" />
+        </MudTh>
+    </HeaderContent>
+
+    <RowTemplate>
+        <MudTd DataLabel="Acciones">
+            <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="28px" Height="28px" Style="border-radius:6px" />
+        </MudTd>
+        <MudTd DataLabel="Nombre">
+            <MudSkeleton SkeletonType="SkeletonType.Text" Width="70%" Height="16px" />
+        </MudTd>
+        <MudTd DataLabel="Variantes (cms)" Style="text-align:center">
+            <MudSkeleton SkeletonType="SkeletonType.Text" Width="60%" Height="16px" />
+        </MudTd>
+        <MudTd DataLabel="Descripción">
+            <MudSkeleton SkeletonType="SkeletonType.Text" Width="80%" Height="16px" />
+        </MudTd>
+    </RowTemplate>
+
+    <PagerContent>
+        <div style="height:52px; display:flex; align-items:center; padding:0 16px; width:100%">
+            <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="16px" Style="width:180px; border-radius:8px" />
+            <div style="margin-left:auto; display:flex; gap:8px;">
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="28px" Height="28px" Style="border-radius:6px" />
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="28px" Height="28px" Style="border-radius:6px" />
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="28px" Height="28px" Style="border-radius:6px" />
+            </div>
+        </div>
+    </PagerContent>
+</MudTable>

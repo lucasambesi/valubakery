@@ -10,6 +10,7 @@ namespace ValuBakery.Data.Enums
     {
         Pending, 
         Process,
+        Paid,
         Delivered, 
         Canceled
     }

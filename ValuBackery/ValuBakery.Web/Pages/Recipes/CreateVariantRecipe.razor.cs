@@ -22,29 +22,8 @@ namespace ValuBakery.Web.Pages.Recipes
         [Parameter]
         public EventCallback<int> OnCreateData { get; set; }
 
-        private Dictionary<string, string> SizeOptions = new()
-        {
-            { "5x5", "5x5" },
-            { "16x16", "16x16" },
-            { "20x20", "20x20" }
-        };
-
-        private Dictionary<string, string> PortionOptions = new()
-        {
-            { "1", "1" },
-            { "8 a 12", "8 a 12" },
-            { "12 a 16", "12 a 16" }
-        };
-
         protected override async Task OnInitializedAsync()
         {
-            if (RecipeDto?.Variants != null && SizeOptions != null)
-            {
-                var existingNames = RecipeDto.Variants.Select(v => v.Name).ToHashSet();
-                SizeOptions = SizeOptions
-                    .Where(option => !existingNames.Contains(option.Key))
-                    .ToDictionary(pair => pair.Key, pair => pair.Value);
-            }
         }
 
         private async Task Submit()

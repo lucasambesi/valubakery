@@ -1,0 +1,88 @@
+﻿<MudDialog Class="px-3 pb-1 scrollable-dialog-content">
+
+    <TitleContent>
+        <MudStack Row Spacing="2" AlignItems="AlignItems.Center">
+            <MudSkeleton SkeletonType="SkeletonType.Circle" Width="28px" Height="28px" />
+            <MudSkeleton SkeletonType="SkeletonType.Text" Width="45%" Height="28px" />
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid Spacing="1" Style="margin-bottom:1rem">
+
+            @* Porciones *@
+            <MudItem xs="12">
+                <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="30%" Height="20px" />
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="15%" Height="20px" />
+                </MudStack>
+            </MudItem>
+
+            @* Costo total *@
+            <MudItem xs="12">
+                <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="30%" Height="20px" />
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="25%" Height="20px" />
+                </MudStack>
+            </MudItem>
+
+            @* Separador + título Ingredientes *@
+            <MudItem xs="12" Class="mt-4">
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="100%" Height="1px" />
+                <MudStack Row AlignItems="AlignItems.Center" Spacing="2" Class="mt-4">
+                    <MudSkeleton SkeletonType="SkeletonType.Circle" Width="20px" Height="20px" />
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="35%" Height="20px" />
+                </MudStack>
+            </MudItem>
+
+            @* Filas “ingrediente – cantidad” (6 placeholders) *@
+            @for (var i = 0; i < 6; i++)
+            {
+                <MudItem xs="12">
+                    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                        <MudSkeleton SkeletonType="SkeletonType.Text" Width="58%" Height="18px" />
+                        <MudSkeleton SkeletonType="SkeletonType.Text" Width="22%" Height="18px" />
+                    </MudStack>
+                </MudItem>
+            }
+
+            @* Separador + título Contiene otras recetas *@
+            <MudItem xs="12" Class="mt-4">
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="100%" Height="1px" />
+                <MudStack Row AlignItems="AlignItems.Center" Spacing="2" Class="mt-4">
+                    <MudSkeleton SkeletonType="SkeletonType.Circle" Width="20px" Height="20px" />
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="42%" Height="20px" />
+                </MudStack>
+            </MudItem>
+
+            @for (var i = 0; i < 2; i++)
+            {
+                <MudItem xs="12">
+                    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                        <MudSkeleton SkeletonType="SkeletonType.Text" Width="60%" Height="18px" />
+                        <MudSkeleton SkeletonType="SkeletonType.Text" Width="16%" Height="18px" />
+                    </MudStack>
+                </MudItem>
+            }
+
+            @* Separador + título Usada en otras recetas *@
+            <MudItem xs="12" Class="mt-4">
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="100%" Height="1px" />
+                <MudStack Row AlignItems="AlignItems.Center" Spacing="2" Class="mt-4">
+                    <MudSkeleton SkeletonType="SkeletonType.Circle" Width="20px" Height="20px" />
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="46%" Height="20px" />
+                </MudStack>
+            </MudItem>
+
+            @for (var i = 0; i < 2; i++)
+            {
+                <MudItem xs="12">
+                    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                        <MudSkeleton SkeletonType="SkeletonType.Text" Width="60%" Height="18px" />
+                        <MudSkeleton SkeletonType="SkeletonType.Text" Width="16%" Height="18px" />
+                    </MudStack>
+                </MudItem>
+            }
+
+        </MudGrid>
+    </DialogContent>
+</MudDialog>

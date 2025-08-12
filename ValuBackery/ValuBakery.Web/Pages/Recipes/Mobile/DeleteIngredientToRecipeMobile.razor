@@ -1,4 +1,5 @@
 ﻿@using ValuBakery.Web.Helpers;
+@using ValuBakery.Web.Pages.Common.Skeletors.Mobile
 
 <MudDialog Class="rounded-lg dialog-receta">
     <TitleContent>
@@ -9,32 +10,38 @@
 
     <DialogContent>
         <MudPaper Elevation="0" Style="max-height:300px; overflow-y:auto; overflow-x:hidden; width:100%; padding-right:1rem">
-
-            @foreach (var ingredient in IngredientDtos)
+            @if (isLoading)
             {
-                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart">
-                        <MudCheckBox Checked="@SelectedIngredientIds.Contains(ingredient.Id)"
-                                 CheckedChanged="@((bool value) => OnCheckedChanged(value, ingredient.Id))"
-                                 Style="width:30px;" />
+                <AddComponentToComponentListSkr />
+            }
+            else
+            {                
+                @foreach (var ingredient in IngredientDtos)
+                {
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart">
+                            <MudCheckBox Checked="@SelectedIngredientIds.Contains(ingredient.Id)"
+                                     CheckedChanged="@((bool value) => OnCheckedChanged(value, ingredient.Id))"
+                                     Style="width:30px;" />
 
-                        <MudTooltip Text="@ingredient.Name">
-                            <MudText Typo="Typo.caption" Class="fw-bold">
-                                @(StringHelper.Truncate(ingredient.Name, 20))
+                            <MudTooltip Text="@ingredient.Name">
+                                <MudText Typo="Typo.caption" Class="fw-bold">
+                                    @(StringHelper.Truncate(ingredient.Name, 20))
+                                </MudText>
+                            </MudTooltip>
+                        </MudStack>
+
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexEnd">
+                            <MudText Typo="Typo.caption">
+                                $@ingredient.CostPerUnit
                             </MudText>
-                        </MudTooltip>
-                    </MudStack>
 
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexEnd">
-                        <MudText Typo="Typo.caption">
-                            $@ingredient.CostPerUnit
-                        </MudText>
-
-                        <MudText Typo="Typo.caption">
-                            @ingredient.Unit
-                        </MudText>
+                            <MudText Typo="Typo.caption">
+                                @ingredient.Unit
+                            </MudText>
+                        </MudStack>
                     </MudStack>
-                </MudStack>
+                }
             }
         </MudPaper>
     </DialogContent>

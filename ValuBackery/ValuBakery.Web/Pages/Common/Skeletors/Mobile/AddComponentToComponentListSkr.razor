@@ -1,0 +1,16 @@
+﻿<MudStack Spacing="2">
+    @for (var i = 0; i < 7; i++)
+    {
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="py-1">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="20px" Height="20px"
+                         Style="border-radius:4px" />
+                <MudSkeleton SkeletonType="SkeletonType.Text" Width="188px" Height="16px" />
+            </MudStack>
+
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                <MudSkeleton SkeletonType="SkeletonType.Text" Width="80px" Height="16px" />
+            </MudStack>
+        </MudStack>
+    }
+</MudStack>

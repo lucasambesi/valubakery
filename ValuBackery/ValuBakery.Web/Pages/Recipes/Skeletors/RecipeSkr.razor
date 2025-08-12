@@ -1,0 +1,60 @@
+﻿@using MudBlazor
+
+<MudDialog Class="fixed-dialog">
+
+    <!-- TITLE -->
+    <TitleContent>
+        <MudStack Row AlignItems="AlignItems.Start" Style="margin-right:1%" Spacing="4">
+            <!-- Imagen -->
+            <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="150px" Height="150px"
+                         Class="rounded-lg ma-2" />
+
+            <!-- Título + variantes + textos -->
+            <MudStack Spacing="2" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Start" Class="flex-1">
+                <MudStack Row Spacing="1" AlignItems="AlignItems.Start">
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="360px" Height="28px" />
+                </MudStack>
+
+                <MudSkeleton SkeletonType="SkeletonType.Text" Width="140px" Height="18px" />  @* Porciones *@
+                <MudSkeleton SkeletonType="SkeletonType.Text" Width="520px" Height="16px" />
+                <MudSkeleton SkeletonType="SkeletonType.Text" Width="420px" Height="16px" />
+            </MudStack>
+        </MudStack>
+    </TitleContent>
+
+    <!-- CONTENT -->
+    <DialogContent>
+        <MudStack Spacing="2">
+            <!-- Título de sección + buscador -->
+            <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                <MudSkeleton SkeletonType="SkeletonType.Text" Width="520px" Height="20px" />
+            </MudStack>
+
+            <!-- Tabla esquelética -->
+            <MudPaper Elevation="0" Class="pa-0" Style="max-height: 430px; overflow:hidden;">
+                <!-- Header -->
+                <MudStack Row AlignItems="AlignItems.Center" Class="px-4 py-2" Spacing="3">
+                    <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="24px" Height="24px" Style="border-radius:6px" />
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="60%" Height="16px" />
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="15%" Height="16px" />
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="15%" Height="16px" />
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="10%" Height="16px" />
+                </MudStack>
+                <MudDivider />
+
+                <!-- Filas -->
+                @for (var i = 0; i < 8; i++)
+                {
+                    <MudStack Row AlignItems="AlignItems.Center" Class="px-4 py-3" Spacing="3">
+                            <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="24px" Height="24px" Style="border-radius:6px" />
+                            <MudSkeleton SkeletonType="SkeletonType.Text" Width="60%" Height="16px" />
+                            <MudSkeleton SkeletonType="SkeletonType.Text" Width="15%" Height="16px" />
+                            <MudSkeleton SkeletonType="SkeletonType.Text" Width="15%" Height="16px" />
+                            <MudSkeleton SkeletonType="SkeletonType.Text" Width="10%" Height="16px" />
+                    </MudStack>
+                    <MudDivider />
+                }
+            </MudPaper>
+        </MudStack>
+    </DialogContent>
+</MudDialog>

@@ -27,13 +27,17 @@ namespace ValuBakery.Web.Pages.Recipes
 
         private HashSet<RecipeVariantDto> SelectedRecipeDtos = new();
 
+        protected bool isLoading;
+
         protected override async Task OnInitializedAsync()
         {
+            isLoading= true;
             IngredientDtos = await _recipeIngredientService.GetByRecipeIdAsync(RecipeDto.Id);
 
             var rcps = await _recipeVariantService.GetAllAsync();
             RecipeDtos = rcps.Where(x => x.Id != RecipeDto.Id &&
                 RecipeDto.Components.Select(t => t.ChildRecipeVariantId).Contains(x.Id)).ToList();
+            isLoading = false;
         }
 
         private void OnSelectedItemsChanged(HashSet<RecipeIngredientDto> elements)

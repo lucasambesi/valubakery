@@ -4,15 +4,11 @@
 <MudTable Items="@ProductDtos" Dense="@false" Hover="@true" ReadOnly="@false" CanCancelEdit="@true"
           @bind-SelectedItem="selectedItem" Filter="new Func<ProductDto,bool>(FilterFunc)"
           SortLabel="Ordenar por" CommitEditTooltip="Confirmar" CancelEditTooltip="Cancelar"
-          RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" Height="100%"
+          RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues"
           RowEditCommit="ItemHasBeenCommitted" IsEditRowSwitchingBlocked="@false"
+          Height="calc(100dvh - var(--mud-appbar-height, 64px) - 52px)" FixedHeader="true" FixedFooter="true"
           ApplyButtonPosition="@TableApplyButtonPosition.End" EditButtonPosition="@TableEditButtonPosition.End"
           EditTrigger="@TableEditTrigger.RowClick">
-    <ToolBarContent>
-        <MudText Class="fw-bold" Typo="Typo.h6">Productos</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-    </ToolBarContent>
     <ColGroup>
         <col style="width:5%;" />
         <col style="width:40%;" />
@@ -20,7 +16,7 @@
         <col style="width:35%;" />
     </ColGroup>
     <HeaderContent>
-        <MudTh><MudIconButton Icon="@Icons.Material.Outlined.AddBox" Color="Color.Primary" Title="Crear" OnClick="DialogCreate" /></MudTh>
+        <MudTh><MudIconButton Icon="@Icons.Material.Outlined.AddBox" Color="Color.Primary" Title="Crear" OnClick=@(() => DialogCreate(false)) /></MudTh>
         <MudTh>
             <MudIcon Icon="@Icons.Material.Filled.LocalDining" Class="me-1" Style="text-align:start" />
             <MudTableSortLabel T="ProductDto" InitialDirection="SortDirection.Ascending" SortBy="x => x.Name">Nombre</MudTableSortLabel>
@@ -37,7 +33,7 @@
     <RowTemplate>
         <MudTd DataLabel="Acciones">
             <MudIconButton Title="Ver" Color="Color.Primary" Icon="@Icons.Material.Filled.Preview"
-                           OnClick="() => ViewProduct(context.Id, false)" />
+                            OnClick="() => ViewProduct(context.Id, false)" />
         </MudTd>
         <MudTd DataLabel="Nombre">
             <MudText Typo="Typo.body2" Class="font-weight-bold">@context.Name</MudText>
@@ -57,16 +53,17 @@
             <MudTextField @bind-Value="context.Name" Required />
         </MudTd>
         <MudTd DataLabel="Ganancia">
-                <MudTextField Value=@($"R: {context.ApplyProfitToRecipes.ToString("N0")}% M: {context.ApplyProfitToMaterials.ToString("N0")}%") ReadOnly Disabled="true" />
-        </MudTd>    
+            <MudTextField Value=@($"R: {context.ApplyProfitToRecipes.ToString("N0")}% M: {context.ApplyProfitToMaterials.ToString("N0")}%") ReadOnly Disabled="true" />
+        </MudTd>
         <MudTd DataLabel="Descripción">
             <MudTextField @bind-Value="context.Description" />
         </MudTd>
     </RowEditingTemplate>
-    <PagerContent>
-        <MudTablePager />
-    </PagerContent>
     <EditButtonContent Context="button">
         <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled" />
     </EditButtonContent>
+
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
 </MudTable>

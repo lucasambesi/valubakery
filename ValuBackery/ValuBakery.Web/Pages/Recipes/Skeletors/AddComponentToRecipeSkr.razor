@@ -1,0 +1,51 @@
+﻿@using MudBlazor
+
+@code {
+    [Parameter] public int Rows { get; set; } = 13; // cuántas filas fantasma mostrar
+}
+
+<MudTabs Elevation="0" ApplyEffectsToContainer="true" Centered="true">
+    <!-- TAB: Ingredientes -->
+    <MudTabPanel Text="Ingredientes">
+        <MudPaper Elevation="0" Class="pa-0" Style="height:400px; overflow:auto; border-radius:0;">
+            <!-- Header -->
+            <MudStack Row AlignItems="AlignItems.Center" Class="px-4 py-2">
+                <MudSkeleton SkeletonType="SkeletonType.Text" Width="70%" Height="16px" />
+                <MudSkeleton SkeletonType="SkeletonType.Text" Width="20%" Height="16px" Class="ml-auto mr-6" />
+                <MudSkeleton SkeletonType="SkeletonType.Text" Width="10%" Height="16px" />
+            </MudStack>
+            <MudDivider />
+
+            <!-- Filas fantasma -->
+            @for (var i = 0; i < Rows; i++)
+            {
+                <MudStack Row AlignItems="AlignItems.Center" Class="px-4 py-3">
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="70%" Height="16px" />
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="20%" Height="16px" Class="ml-auto mr-6" />
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="10%" Height="16px" />
+                </MudStack>
+                <MudDivider />
+            }
+        </MudPaper>
+    </MudTabPanel>
+
+    <!-- TAB: Recetas -->
+    <MudTabPanel Text="Recetas">
+        <MudPaper Elevation="0" Class="pa-0" Style="height:400px; overflow:auto; border-radius:0;">
+            <!-- Header -->
+            <MudStack Row AlignItems="AlignItems.Center" Class="px-4 py-2">
+                <MudSkeleton SkeletonType="SkeletonType.Text" Width="30%" Height="16px" />
+            </MudStack>
+            <MudDivider />
+
+            <!-- Filas fantasma -->
+            @for (var i = 0; i < Rows; i++)
+            {
+                <MudStack Row AlignItems="AlignItems.Center" Class="px-4 py-3">
+                    <MudSkeleton SkeletonType="SkeletonType.Text" Width="100%" Height="16px" />
+                </MudStack>
+                <MudDivider />
+            }
+        </MudPaper>
+    </MudTabPanel>
+</MudTabs>

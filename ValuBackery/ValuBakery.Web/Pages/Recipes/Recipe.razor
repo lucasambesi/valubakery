@@ -2,12 +2,13 @@
 @using ValuBakery.Data.DTOs;
 @using ValuBakery.Web.Helpers;
 @using ValuBakery.Web.Pages.Common
+@using ValuBakery.Web.Pages.Recipes.Skeletors
 @inject ISnackbar Snackbar
 @inherits ValuBakery.Web.Pages.Recipes.RecipeBase
 
 @if (isLoading)
 {
-    <Overlay />
+    <RecipeSkr />
 }
 else
 {

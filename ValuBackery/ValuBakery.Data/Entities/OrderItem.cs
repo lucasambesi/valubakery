@@ -16,6 +16,8 @@ namespace ValuBakery.Data.Entities
 
         public int Quantity { get; set; }
 
+        public decimal UnitCost { get; set; }
+
         public decimal UnitPrice { get; set; }
     }
 }

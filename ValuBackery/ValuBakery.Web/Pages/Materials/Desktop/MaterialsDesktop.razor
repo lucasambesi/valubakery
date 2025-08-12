@@ -13,16 +13,16 @@ else
               SortLabel="Ordenar por" CommitEditTooltip="Confirmar" CancelEditTooltip="Cancelar"
               RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues"
               RowEditCommit="ItemHasBeenCommitted" IsEditRowSwitchingBlocked="@false"
-              Height="100" FixedHeader="true"
+              Height="calc(100dvh - var(--mud-appbar-height, 64px) - 52px)" FixedHeader="true" FixedFooter="true"
               ApplyButtonPosition="@TableApplyButtonPosition.End" EditButtonPosition="@TableEditButtonPosition.End"
               EditTrigger="@TableEditTrigger.RowClick">
-        <ToolBarContent>
+@*        <ToolBarContent>
             <MudText Class="fw-bold" Typo="Typo.h6">Materiales</MudText>
             <MudSpacer />
             <MudTextField @bind-Value="searchString" Clearable="true" Placeholder="Search"
                           Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"
                           IconSize="Size.Medium" Class="mt-0"></MudTextField>
-        </ToolBarContent>
+        </ToolBarContent>*@
         <ColGroup>
             <col style="width:10%;" />
             <col style="width:25%;" />

@@ -21,9 +21,11 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
 
         private List<RecipeVariantDto> RecipeDtos = new();
         private HashSet<int> SelectedRecipeIds = new();
+        protected bool isLoading;
 
         protected override async Task OnInitializedAsync()
         {
+            isLoading = true;
             var recipes = await _recipeVariantService.GetAllAsync();
 
             RecipeDtos = recipes
@@ -31,6 +33,7 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
                     .Select(t => t.ChildRecipeVariantId)
                     .Contains(x.Id))
                 .ToList();
+            isLoading = false;
         }
 
         private async Task Submit()

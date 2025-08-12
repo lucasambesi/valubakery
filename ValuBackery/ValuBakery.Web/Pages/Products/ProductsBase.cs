@@ -26,11 +26,13 @@ namespace ValuBakery.Web.Pages.Products
         }
 
         #region Dialog
-        protected void DialogCreate()
+        protected void DialogCreate(bool isMobile)
         {
             var parameters = new DialogParameters
             {
-                { nameof(CreateProduct.OnCreateData), EventCallback.Factory.Create<int>(this, CreateDialogEvent) }
+                { nameof(CreateProduct.OnCreateData), isMobile ? 
+                EventCallback.Factory.Create<int>(this, CreateDialogEventMobile) : 
+                EventCallback.Factory.Create<int>(this, CreateDialogEvent) }
             };
 
             var options = new DialogOptions
@@ -95,6 +97,31 @@ namespace ValuBakery.Web.Pages.Products
         }
 
         public async Task CreateDialogEvent(int id)
+        {
+            try
+            {
+                var entity = await _productService.GetByIdAsync(id);
+
+                if (entity != null)
+                {
+                    var item = entity;
+
+                    if (item != null)
+                    {
+                        ProductDtos.Insert(0, item);
+                        ViewProduct(item.Id, false);
+                    }
+
+                    StateHasChanged();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task CreateDialogEventMobile(int id)
         {
             try
             {

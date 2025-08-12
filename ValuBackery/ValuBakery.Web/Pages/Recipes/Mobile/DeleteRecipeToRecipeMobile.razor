@@ -1,4 +1,5 @@
 ﻿@using ValuBakery.Web.Helpers;
+@using ValuBakery.Web.Pages.Common.Skeletors.Mobile
 
 <MudDialog Class="rounded-lg dialog-receta">
     <TitleContent>
@@ -9,20 +10,26 @@
 
     <DialogContent>
         <MudPaper Elevation="0" Style="max-height:300px; overflow-y:auto; overflow-x:hidden; width:100%; padding-right:1rem">
-
-            @foreach (var recipe in RecipeDtos)
+            @if (isLoading)
             {
-                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart">
-                        <MudCheckBox Checked="@SelectedRecipeIds.Contains(recipe.Id)"
-                                 CheckedChanged="@((bool value) => OnCheckedChanged(value, recipe.Id))"
-                                 Style="width:30px;" />
+                <AddComponentToComponentListSkr />
+            }
+            else
+            {
+                @foreach (var recipe in RecipeDtos)
+                {
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart">
+                            <MudCheckBox Checked="@SelectedRecipeIds.Contains(recipe.Id)"
+                                     CheckedChanged="@((bool value) => OnCheckedChanged(value, recipe.Id))"
+                                     Style="width:30px;" />
 
-                        <MudText Typo="Typo.caption">
-                            @(recipe.GetName())
-                        </MudText>
+                            <MudText Typo="Typo.caption">
+                                @(recipe.GetName())
+                            </MudText>
+                        </MudStack>
                     </MudStack>
-                </MudStack>
+                }
             }
         </MudPaper>
     </DialogContent>

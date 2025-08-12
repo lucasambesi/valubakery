@@ -27,22 +27,22 @@
                                  Class="w-25"
                                  Style="height: 36px;" />
 
-                        <MudIconButton Icon="@Icons.Material.Filled.Check"
-                               Color="Color.Success"
-                               Size="Size.Small"
-                               OnClick="ConfirmEdit" />
-
                         <MudIconButton Icon="@Icons.Material.Filled.Close"
                                Color="Color.Error"
                                Size="Size.Small"
                                OnClick="CancelEdit" />
+
+                        <MudIconButton Icon="@Icons.Material.Filled.Check"
+                               Color="Color.Success"
+                               Size="Size.Small"
+                               OnClick="ConfirmEdit" />
                     </div>
                 }
                 else
                 {
                     <MudText Typo="Typo.caption" Color="Color.Default">
                         Cantidad: @item.Quantity @("u") •
-                        Costo: $@item.GetTotal(ProductDto.ApplyProfitToRecipes).ToString("N2")
+                        Total: $@item.GetTotal(ProductDto.ApplyProfitToRecipes).ToString("N2")
                     </MudText>
                 }
 

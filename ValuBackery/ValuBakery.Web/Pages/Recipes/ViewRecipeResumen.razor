@@ -1,24 +1,23 @@
 ﻿@using ValuBakery.Data.DTOs;
 @using ValuBakery.Data.Enums
 @using ValuBakery.Web.Pages.Common
+@using ValuBakery.Web.Pages.Recipes.Skeletors
 
 @if (isLoading)
 {
-    <Overlay />
+    <ViewRecipeResumenSkr />
 }
-else if (RecipeDto != null)
+else if (RecipeDto == null)
 {
-    <MudDialog Class="px-3 pb-1 scrollable-dialog-content" >
+    <MudText Color="Color.Secondary" Class="pa-4">No se encontró la receta</MudText>
+}
+else
+{
+    <MudDialog Class="px-3 pb-1 scrollable-dialog-content">
         <TitleContent>
             <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center" Justify="Justify.FlexStart">
-                <MudHidden Breakpoint="Breakpoint.SmAndDown">
-                    <MudIcon Icon="@Icons.Material.Filled.MenuBook" Color="Color.Primary" />
-                    <MudText Typo="Typo.h6" Class="fw-bold">@RecipeDto.GetName()</MudText>
-                </MudHidden>
-                <MudHidden Breakpoint="Breakpoint.MdAndUp">
-                    <MudIcon Size="Size.Medium" Icon="@Icons.Material.Filled.MenuBook"Color="Color.Primary" />
-                    <MudText Typo="Typo.body1" Class="fw-bold" >@RecipeDto.GetName()</MudText>
-                </MudHidden>
+                <MudIcon Size="Size.Medium" Icon="@Icons.Material.Filled.MenuBook" Color="Color.Primary" />
+                <MudText Typo="Typo.body1" Class="fw-bold">@RecipeDto.GetName()</MudText>
             </MudStack>
         </TitleContent>
 
@@ -67,13 +66,13 @@ else if (RecipeDto != null)
 
                 @if (RecipeDto.Ingredients?.Count > 0)
                 {
-                        @foreach (var ingredient in RecipeDto.Ingredients)
-                        {
-                            <MudItem xs="12">
-                                <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
-                                    <MudHidden Breakpoint="Breakpoint.SmAndDown">
-                                        <MudText>@ingredient.Ingredient.Name</MudText>
-                                        <MudText>@($"{ingredient.Quantity} {ingredient.GetConvertUnit()}")</MudText>
+                    @foreach (var ingredient in RecipeDto.Ingredients)
+                    {
+                        <MudItem xs="12">
+                            <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                                <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                                    <MudText>@ingredient.Ingredient.Name</MudText>
+                                    <MudText>@($"{ingredient.Quantity} {ingredient.GetConvertUnit()}")</MudText>
                                     </MudHidden>
                                     <MudHidden Breakpoint="Breakpoint.MdAndUp">
                                         <MudText Typo="Typo.caption">@ingredient.Ingredient.Name</MudText>
@@ -81,8 +80,8 @@ else if (RecipeDto != null)
                                     </MudHidden>
                                 </MudStack>
                             </MudItem>
-                        }
-                    
+                    }
+
                 }
                 else
                 {
@@ -115,13 +114,13 @@ else if (RecipeDto != null)
                                 <MudHidden Breakpoint="Breakpoint.SmAndDown">
                                     <MudText>@component.ChildRecipeVariant.GetName()</MudText>
                                     <MudText>@($"{component.Quantity} {UnitEnum.Ud}")</MudText>
-                                </MudHidden>
-                                <MudHidden Breakpoint="Breakpoint.MdAndUp">
-                                    <MudText Typo="Typo.caption">@component.ChildRecipeVariant.GetName()</MudText>
-                                    <MudText Typo="Typo.caption">@($"{component.Quantity} {UnitEnum.Ud}")</MudText>
-                                </MudHidden>
-                            </MudStack>
-                        </MudItem>
+                                    </MudHidden>
+                                    <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                                        <MudText Typo="Typo.caption">@component.ChildRecipeVariant.GetName()</MudText>
+                                        <MudText Typo="Typo.caption">@($"{component.Quantity} {UnitEnum.Ud}")</MudText>
+                                    </MudHidden>
+                                </MudStack>
+                            </MudItem>
                     }
                 }
 
@@ -149,13 +148,13 @@ else if (RecipeDto != null)
                                 <MudHidden Breakpoint="Breakpoint.SmAndDown">
                                     <MudText>@parent.ParentRecipeVariant.GetName()</MudText>
                                     <MudText>@($"{parent.Quantity} {UnitEnum.Ud}")</MudText>
-                                </MudHidden>
-                                <MudHidden Breakpoint="Breakpoint.MdAndUp">
-                                    <MudText Typo="Typo.caption">@parent.ParentRecipeVariant.GetName()</MudText>
-                                    <MudText Typo="Typo.caption">@($"{parent.Quantity} {UnitEnum.Ud}")</MudText>
-                                </MudHidden>
-                            </MudStack>
-                        </MudItem>
+                                    </MudHidden>
+                                    <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                                        <MudText Typo="Typo.caption">@parent.ParentRecipeVariant.GetName()</MudText>
+                                        <MudText Typo="Typo.caption">@($"{parent.Quantity} {UnitEnum.Ud}")</MudText>
+                                    </MudHidden>
+                                </MudStack>
+                            </MudItem>
                     }
                 }
 
@@ -163,9 +162,4 @@ else if (RecipeDto != null)
         </DialogContent>
 
     </MudDialog>
-}
-else{
-    <MudText>
-        No se encontro la receta
-    </MudText>
 }

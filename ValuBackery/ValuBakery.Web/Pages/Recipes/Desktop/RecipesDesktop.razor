@@ -3,24 +3,19 @@
 @using MudBlazor
 @using ValuBakery.Data.DTOs;
 @using ValuBakery.Web.Pages.Common
+@using ValuBakery.Web.Pages.Common.Skeletors.Desktop
 @inject NavigationManager _navigationManager
 
 @if (isLoading)
 {
-    <Overlay />
+      <TableDesktopSkr Rows="15" />
 }
 else
 {
     <MudTable Items="@RecipeDtos" Dense="false" Hover="true" ReadOnly="true"
               @bind-SelectedItem="selectedItem" Filter="FilterFunc" SortLabel="Ordenar por"
-              Height="100%" IsEditRowSwitchingBlocked="false" RowEditCommit="ItemHasBeenCommitted">
-
-        <ToolBarContent>
-            <MudText Class="fw-bold" Typo="Typo.h6">Recetas</MudText>
-            <MudSpacer />
-            <MudTextField @bind-Value="searchString" Placeholder="Buscar receta..." Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.Search" Class="mt-0 w-50" />
-        </ToolBarContent>
+              Height="calc(100dvh - var(--mud-appbar-height, 64px) - 52px)" FixedHeader="true" FixedFooter="true"
+              IsEditRowSwitchingBlocked="false" RowEditCommit="ItemHasBeenCommitted">
 
         <ColGroup>
             <col style="width:10%;" />
@@ -30,7 +25,7 @@ else
         </ColGroup>
 
         <HeaderContent>
-            <MudTh><MudIconButton Icon="@Icons.Material.Outlined.AddBox" Color="Color.Primary" Title="Crear" OnClick="DialogCreate" /></MudTh>
+            <MudTh><MudIconButton Icon="@Icons.Material.Outlined.AddBox" Color="Color.Primary" Title="Crear" OnClick=@(() => DialogCreate(false)) /></MudTh>
             <MudTh>
                 <MudIcon Icon="@Icons.Material.Filled.LocalDining" Class="me-1" Style="text-align:start" />
                 <MudTableSortLabel T="RecipeDto" InitialDirection="SortDirection.Ascending" SortBy="x => x.Name">Nombre</MudTableSortLabel>

@@ -21,15 +21,17 @@ namespace ValuBakery.Web.Pages.Recipes.Mobile
 
         private List<IngredientDto> IngredientDtos = new();
         private HashSet<int> SelectedIngredientIds = new();
-
+        protected bool isLoading;
         protected override async Task OnInitializedAsync()
         {
+            isLoading= true;
             var ings = await _ingredientService.GetAllAsync();
             IngredientDtos = ings
                 .Where(x => RecipeDto.Ingredients
                     .Select(t => t.IngredientId)
                     .Contains(x.Id))
                 .ToList();
+            isLoading = false;
         }
 
         private async Task Submit()

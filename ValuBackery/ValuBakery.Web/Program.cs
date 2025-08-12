@@ -17,6 +17,11 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 builder.Services.AddBlazoredLocalStorage();
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(10);
+});
+
 //Utils
 builder.Services.AddMapper();
 

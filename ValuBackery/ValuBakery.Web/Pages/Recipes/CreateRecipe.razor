@@ -31,32 +31,23 @@
             </MudItem>
 
             <MudItem xs="12" md="6">
-                <MudSelect T="string"
-                           @bind-Value="CreateRecipeModel.Size"
-                           Label="Tamaño"
-                           Variant="Variant.Outlined"
-                           Immediate="true"
-                           OnBlur="() => CreateRecipeModel.Size = CreateRecipeModel.Size?.Trim()">
-                    @foreach (var option in SizeOptions)
-                    {
-                        <MudSelectItem Value="@option.Key">@option.Value</MudSelectItem>
-                    }
-                </MudSelect>
+                <MudTextField @bind-Value="CreateRecipeModel.Size"
+                              Label="Tamaño"
+                              Variant="Variant.Outlined"
+                              OnKeyDown="HandleEnterKey"
+                              Immediate="true"
+                              MaxLength="200"
+                              OnBlur="() => CreateRecipeModel.Description = CreateRecipeModel.Description?.Trim()" />
             </MudItem>
 
             <MudItem xs="12" md="6">
-                <MudSelect T="string"
-                           @bind-Value="CreateRecipeModel.Portions"
-                           Label="Porciones"
-                           Variant="Variant.Outlined"
-                           Immediate="true"
-                           OnKeyDown="HandleEnterKey"
-                           OnBlur="() => CreateRecipeModel.Portions = CreateRecipeModel.Portions?.Trim()">
-                    @foreach (var option in PortionOptions)
-                    {
-                        <MudSelectItem Value="@option.Key">@option.Value</MudSelectItem>
-                    }
-                </MudSelect>
+                <MudTextField @bind-Value="CreateRecipeModel.Portions"
+                              Label="Porciones"
+                              Variant="Variant.Outlined"
+                              OnKeyDown="HandleEnterKey"
+                              Immediate="true"
+                              MaxLength="200"
+                              OnBlur="() => CreateRecipeModel.Portions = CreateRecipeModel.Portions?.Trim()" />
             </MudItem>
         </MudGrid>
     </DialogContent>
