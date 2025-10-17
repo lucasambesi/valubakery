@@ -28,18 +28,12 @@ namespace ValuBakery.Web.Pages.Recipes
 
         private async Task Submit()
         {
-            CreateRecipeModel.Size = CreateRecipeModel.Size?.Trim();
+            CreateRecipeModel.VarianteName = CreateRecipeModel.VarianteName?.Trim();
             CreateRecipeModel.Portions = CreateRecipeModel.Portions?.Trim();
 
-            if (string.IsNullOrWhiteSpace(CreateRecipeModel.Size))
+            if (string.IsNullOrWhiteSpace(CreateRecipeModel.VarianteName))
             {
-                _snackbar.Add("El tamaño es obligatorio", Severity.Warning);
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(CreateRecipeModel.Portions))
-            {
-                _snackbar.Add("Las porciones son obligatorias", Severity.Warning);
+                _snackbar.Add("El nombre es obligatorio", Severity.Warning);
                 return;
             }
 
@@ -48,7 +42,7 @@ namespace ValuBakery.Web.Pages.Recipes
                 var variant = new RecipeVariantDto
                 {
                     RecipeId = RecipeDto.Id,
-                    Name = CreateRecipeModel.Size,
+                    Name = CreateRecipeModel.VarianteName,
                     Portions = CreateRecipeModel.Portions
                 };
 

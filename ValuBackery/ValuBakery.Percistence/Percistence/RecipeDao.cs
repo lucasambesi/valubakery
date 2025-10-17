@@ -68,7 +68,11 @@ namespace ValuBakery.Percistence.Percistence
             var entity = await _dbContext.Recipe.FindAsync(dto.Id);
             if (entity is null) return false;
 
-            _mapper.Map(dto, entity);
+            //_mapper.Map(dto, entity);
+
+            entity.Name= dto.Name;
+            entity.Description= dto.Description;
+            entity.IsDeleted = dto.IsDeleted;
 
             _dbContext.Entry(entity).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();

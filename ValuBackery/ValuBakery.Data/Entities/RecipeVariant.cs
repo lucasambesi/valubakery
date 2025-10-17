@@ -8,7 +8,7 @@ namespace ValuBakery.Data.Entities
 
         public string Name { get; set; }
 
-        public string Portions { get; set; }
+        public string? Portions { get; set; }
 
         public int RecipeId { get; set; }
 

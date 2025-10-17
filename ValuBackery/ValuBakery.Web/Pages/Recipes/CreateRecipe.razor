@@ -24,16 +24,17 @@
                               @bind-Value="CreateRecipeModel.Description"
                               Label="Descripción"
                               Variant="Variant.Outlined"
+                              HelperText="Opcional"
                               OnKeyDown="HandleEnterKey"                              
                               Immediate="true"
-                              MaxLength="150"
-                              OnBlur="() => CreateRecipeModel.Description = CreateRecipeModel.Description?.Trim()" />
+                              MaxLength="150" />
             </MudItem>
 
             <MudItem xs="12" md="6">
-                <MudTextField @bind-Value="CreateRecipeModel.Size"
-                              Label="Tamaño"
+                <MudTextField @bind-Value="CreateRecipeModel.VarianteName"
+                              Label="Variante"
                               Variant="Variant.Outlined"
+                              HelperText="Opcional"
                               OnKeyDown="HandleEnterKey"
                               Immediate="true"
                               MaxLength="200"
@@ -44,6 +45,7 @@
                 <MudTextField @bind-Value="CreateRecipeModel.Portions"
                               Label="Porciones"
                               Variant="Variant.Outlined"
+                              HelperText="Opcional"
                               OnKeyDown="HandleEnterKey"
                               Immediate="true"
                               MaxLength="200"

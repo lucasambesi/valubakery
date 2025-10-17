@@ -25,24 +25,12 @@ namespace ValuBakery.Web.Pages.Recipes
             // Normalizar entradas
             CreateRecipeModel.Name = CreateRecipeModel.Name?.Trim();
             CreateRecipeModel.Description = CreateRecipeModel.Description?.Trim();
-            CreateRecipeModel.Size = CreateRecipeModel.Size?.Trim();
+            CreateRecipeModel.VarianteName = CreateRecipeModel.VarianteName?.Trim();
             CreateRecipeModel.Portions = CreateRecipeModel.Portions?.Trim();
 
             if (string.IsNullOrWhiteSpace(CreateRecipeModel.Name))
             {
                 _snackbar.Add("El nombre es obligatorio", Severity.Warning);
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(CreateRecipeModel.Size))
-            {
-                _snackbar.Add("El tamaño es obligatorio", Severity.Warning);
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(CreateRecipeModel.Portions))
-            {
-                _snackbar.Add("Las porciones son obligatorias", Severity.Warning);
                 return;
             }
 
@@ -56,7 +44,7 @@ namespace ValuBakery.Web.Pages.Recipes
                     {
                         new RecipeVariantDto
                         {
-                            Name = CreateRecipeModel.Size,
+                            Name = string.IsNullOrEmpty(CreateRecipeModel.VarianteName) ? "Defecto" : CreateRecipeModel.VarianteName,
                             Portions = CreateRecipeModel.Portions
                         }
                     }

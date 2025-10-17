@@ -1,0 +1,43 @@
+﻿/* Home.razor.css */
+.kpi {
+    min-height: 86px;
+}
+
+.kpi.success {
+    background: var(--mud-palette-success-lighten);
+}
+
+.kpi.warning {
+    background: var(--mud-palette-warning-lighten);
+}
+
+.tile {
+    text-align: center;
+    height: 92px;
+    cursor: pointer;
+}
+
+.tile:active {
+    transform: scale(.98);
+}
+
+.info-banner {
+    background: var(--mud-palette-info-lighten);
+}
+
+.bottom-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(8px);
+}
+
+.rounded-b-xl {
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.text-secondary {
+    opacity: .78;
+}

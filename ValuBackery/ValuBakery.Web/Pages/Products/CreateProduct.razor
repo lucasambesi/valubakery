@@ -9,7 +9,7 @@
     </TitleContent>
     <DialogContent>
         <MudGrid Spacing="3">
-            <MudItem xs="12">
+@*            <MudItem xs="12">
                 <MudSelect Variant="Variant.Outlined"
                             T="RecipeVariantDto"
                             Label="Receta"
@@ -23,7 +23,7 @@
                         </MudSelectItem>
                     }
                 </MudSelect>
-            </MudItem>
+            </MudItem>*@
             <MudItem xs="12">
                 <MudTextField @bind-Value="@ProductDto.Name" Label="Nombre" Variant="Variant.Outlined" OnBlur="() => CapitalizeName()" MaxLength="250"/>
             </MudItem>

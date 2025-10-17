@@ -1,0 +1,88 @@
+﻿/* AppBar según pedido */
+.mab {
+    --mab-pink: rgba(242,119,186,1);
+    --mab-h: 140px;
+    position: relative;
+    background: var(--mab-pink);
+    color: #fff;
+    height: var(--mab-h);
+    padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    z-index: 1; /* por debajo del card */
+    overflow: visible;
+}
+
+/* fila superior */
+.mab-row {
+    height: 100%;
+    position: relative;
+}
+
+/* bloque central */
+.mab-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.mab-title {
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: .2px;
+}
+
+.mab-mi {
+    color: red;
+    margin-right: 2px;
+}
+
+.mab-greeting {
+    font-size: 15px;
+    font-weight: 700;
+    opacity: .95;
+}
+
+/* icono menú y avatar */
+.mab-icon .mud-icon-root {
+    color: #fff;
+}
+
+.mab-avatar {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+    .mab-avatar .mud-avatar {
+        background: #C7C7C7;
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+.mab-badge {
+    position: absolute;
+    right: -3px;
+    bottom: -3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--mab-pink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 2px var(--mab-pink);
+    font-size: 12px;
+}

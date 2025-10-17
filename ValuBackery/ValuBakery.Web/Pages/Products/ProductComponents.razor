@@ -65,7 +65,7 @@
             <MudTd><MudText Typo="Typo.body2" Style="@GetBoldStyle(context.Type)">@context.Name</MudText></MudTd>
             <MudTd><MudText Typo="Typo.body2">$@context.CostPerUnit.ToString("N2")</MudText></MudTd>
             <MudTd><MudText Typo="Typo.body2">@context.Quantity.ToString(context.Quantity <= 1 ? "N2" : "N0")</MudText></MudTd>
-            <MudTd><MudText Typo="Typo.body2">@($"{context.Profit.ToString()}%")</MudText></MudTd>
+            <MudTd><MudText Typo="Typo.body2">@($"{context.Profit.ToString("N2")}%")</MudText></MudTd>
                 <MudTd><MudText Typo="Typo.body2">@($"${context.Total.ToString("N2")}")</MudText></MudTd>
         </RowTemplate>
 
@@ -74,7 +74,7 @@
             <MudTd><MudTextField Value="context.Name" ReadOnly="true" Disabled="true" /></MudTd>
             <MudTd><MudTextField Value="@(context.CostPerUnit.ToString("N2"))" ReadOnly="true" Disabled="true" /></MudTd>
             <MudTd><MudNumericField @bind-Value="context.Quantity" Required Min="0" /></MudTd>
-            <MudTd><MudTextField Value="@context.Profit.ToString()" ReadOnly="true" Disabled="true" /></MudTd>
+            <MudTd><MudTextField Value="@context.Profit.ToString("N2")" ReadOnly="true" Disabled="true" /></MudTd>
             <MudTd><MudTextField Value="@($"${context.Total.ToString("N2")}")" ReadOnly="true" Disabled="true" /></MudTd>
         </RowEditingTemplate>
 

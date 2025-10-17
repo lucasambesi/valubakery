@@ -10,13 +10,13 @@
     <DialogContent>
         <MudGrid Spacing="3">
             <MudItem xs="12" md="6">
-                <MudTextField @bind-Value="CreateRecipeModel.Size"
-                              Label="Tamaño"
+                <MudTextField @bind-Value="CreateRecipeModel.VarianteName"
+                              Label="Nombre"
                               Variant="Variant.Outlined"
                               OnKeyDown="HandleEnterKey"
                               Immediate="true"
                               MaxLength="200"
-                              OnBlur="() => CreateRecipeModel.Description = CreateRecipeModel.Description?.Trim()" />
+                              OnBlur="() => CreateRecipeModel.VarianteName = CreateRecipeModel.VarianteName?.Trim()" />
             </MudItem>
 
             <MudItem xs="12" md="6">

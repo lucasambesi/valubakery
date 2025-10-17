@@ -9,7 +9,7 @@ namespace ValuBakery.Data.DTOs
 
         public string Name { get; set; }
 
-        public string Portions { get; set; }
+        public string? Portions { get; set; }
 
         public decimal Cost { get; set; }
 

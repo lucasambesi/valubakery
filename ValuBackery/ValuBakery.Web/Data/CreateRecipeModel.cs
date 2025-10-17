@@ -8,7 +8,7 @@
 
         public string Portions { get; set; }
 
-        public string Size { get; set; }
+        public string VarianteName { get; set; }
 
         public bool IsActive { get; set; }
     }

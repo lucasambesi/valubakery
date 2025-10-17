@@ -70,7 +70,7 @@ else
                             <MudStack Spacing="2">
                                 <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
                                     <MudText Typo="Typo.body2" Class="fw-bold">Porciones:</MudText>
-                                    <MudText Typo="Typo.body2">@RecipeVariantDto?.Portions</MudText>
+                                    <MudText Typo="Typo.body2">@(string.IsNullOrEmpty(RecipeVariantDto?.Portions) ? "-" : (RecipeVariantDto?.Portions))</MudText>
                                 </MudStack>
                                 <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
                                     <MudText Typo="Typo.body2" Class="fw-bold">Costo:</MudText>

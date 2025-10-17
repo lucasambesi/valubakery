@@ -1,0 +1,29 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager Nav
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<div class="ml-wrapper">
+    <MobileAppBar TitlePrefix="valu"
+                  TitleSuffix="Bakery"
+                  Greeting="¡Hola Valu!"
+                  AvatarText="V" />
+    <DisponibleCard Monto="123456m" Variacion="▲ 27,5%" MovimientosUrl="/movimientos" />
+    <main class="ml-content">
+        @Body
+        <div class="ml-bottom-spacer"></div>
+    </main>
+
+    <!-- Footer fijo con barra de navegación -->
+    <footer class="ml-footer">
+        <MudStack Row="true" Justify="Justify.SpaceAround" AlignItems="AlignItems.Center" Class="ml-nav">
+            <MudIconButton Icon="@Icons.Material.Filled.Home" OnClick="@(()=>Nav.NavigateTo("/"))" />
+            <MudIconButton Icon="@Icons.Material.Filled.Search" OnClick="@(()=>Nav.NavigateTo("/buscar"))" />
+            <MudIconButton Icon="@Icons.Material.Filled.QrCodeScanner" OnClick="@(()=>Nav.NavigateTo("/qr"))" />
+            <MudIconButton Icon="@Icons.Material.Filled.ReceiptLong" OnClick="@(()=>Nav.NavigateTo("/registros"))" />
+            <MudIconButton Icon="@Icons.Material.Filled.Person" OnClick="@(()=>Nav.NavigateTo("/cuenta"))" />
+        </MudStack>
+    </footer>
+</div>

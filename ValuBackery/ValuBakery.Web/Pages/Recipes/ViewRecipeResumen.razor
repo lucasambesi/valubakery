@@ -27,11 +27,11 @@ else
                     <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
                         <MudHidden Breakpoint="Breakpoint.SmAndDown">
                             <MudText Typo="Typo.subtitle1"><strong>Porciones:</strong></MudText>
-                            <MudText Typo="Typo.subtitle1">@RecipeDto.Portions</MudText>
+                            <MudText Typo="Typo.subtitle1">@(!string.IsNullOrEmpty(RecipeDto.Portions) ? RecipeDto.Portions : "-")</MudText>
                         </MudHidden>
                         <MudHidden Breakpoint="Breakpoint.MdAndUp">
                             <MudText Typo="Typo.body2"><strong>Porciones:</strong></MudText>
-                            <MudText Typo="Typo.body2">@RecipeDto.Portions</MudText>
+                            <MudText Typo="Typo.body2">@(!string.IsNullOrEmpty(RecipeDto.Portions) ? RecipeDto.Portions : "-")</MudText>
                         </MudHidden>
                     </MudStack>
                 </MudItem>

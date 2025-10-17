@@ -2,45 +2,43 @@
 @using ValuBakery.Data.Enums
 @using MudBlazor
 
-<MudDialog Class="pa-4" MaxWidth="MaxWidth.Small">
+<MudDialog>
 
     <TitleContent>
         <MudText Typo="Typo.h6" Align="Align.Center" Class="fw-bold">Editar Ingrediente</MudText>
     </TitleContent>
 
     <DialogContent>
-        <MudForm @ref="form">
+        <MudGrid Spacing="3">
+            <MudItem xs="12">
+                <MudNumericField T="decimal"
+                         Label="Costo actual"
+                        Variant="Variant.Outlined"
+                         @bind-Value="IngredientDto.CostPerUnit"
+                         Required="true"
+                         ReadOnly="true"
+                         Min="0"
+                         For="@(() => IngredientDto.CostPerUnit)"
+                         Margin="Margin.Normal" />
+            </MudItem>
 
-            <MudTextField Label="Nombre"
-                          @bind-Value="IngredientDto.Name"
-                          Required="true"
-                          For="@(() => IngredientDto.Name)"
-                          Margin="Margin.Dense" />
-
-            <MudNumericField T="decimal"
-                             Label="Costo por unidad"
-                             @bind-Value="IngredientDto.CostPerUnit"
-                             Required="true"
-                             Min="0"
-                             For="@(() => IngredientDto.CostPerUnit)"
-                             Margin="Margin.Dense" />
-
-            <MudSelect T="UnitEnum"
-                       Label="Unidad"
-                       @bind-Value="IngredientDto.Unit"
-                       Margin="Margin.Dense"
-                       Required="true">
-                @foreach (var unit in Enum.GetValues<UnitEnum>())
-                {
-                    <MudSelectItem Value="@unit">@unit</MudSelectItem>
-                }
-            </MudSelect>
-
-        </MudForm>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="@NewCost"
+                              Label="Nuevo costo por unidad"
+                              Variant="Variant.Outlined"
+                              Adornment="Adornment.End"
+                              AdornmentAriaLabel="Calcular"
+                              AdornmentIcon="@Icons.Material.Outlined.Calculate"
+                              OnAdornmentClick="OpenCalculateDialog"
+                              Immediate="true"
+                              OnKeyDown="HandleEnterKey" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudStack Row="true" Justify="Justify.FlexEnd">
+                    <MudButton OnClick="Cancel" Variant="Variant.Text">Cancelar</MudButton>
+                    <MudButton OnClick="Submit" Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save">Guardar</MudButton>
+                </MudStack>
+            </MudItem>
+        </MudGrid>
     </DialogContent>
-
-    <DialogActions>
-        <MudButton OnClick="Save" Disabled="@isSaving" Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save">Guardar</MudButton>
-        <MudButton OnClick="Cancel" Variant="Variant.Text">Cancelar</MudButton>
-    </DialogActions>
 </MudDialog>

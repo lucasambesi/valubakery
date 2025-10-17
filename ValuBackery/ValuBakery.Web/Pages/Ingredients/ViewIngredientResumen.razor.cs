@@ -2,6 +2,7 @@
 using MudBlazor;
 using ValuBakery.Data.DTOs;
 using ValuBakery.Data.Enums;
+using ValuBakery.Web.Pages.Common;
 
 namespace ValuBakery.Web.Pages.Ingredients
 {
@@ -18,20 +19,27 @@ namespace ValuBakery.Web.Pages.Ingredients
 
         private void Cancel() => MudDialog.Cancel();
 
-        private void OpenEditDialog()
+        void EditIngredientCost(IngredientDto item)
         {
             var parameters = new DialogParameters
             {
-                { nameof(EditIngredient.IngredientDto), IngredientDto }
+                { nameof(EditIngredient.IngredientDto), IngredientDto },
+                { nameof(EditIngredient.OnChanged),
+                    EventCallback.Factory.Create<decimal>(this, DialogEditEvent) }
             };
 
-            var options = new DialogOptions { 
+            var options = new DialogOptions
+            {
                 CloseButton = false,
                 CloseOnEscapeKey = true,
-                FullWidth = true, 
-                MaxWidth = MaxWidth.Medium };
+                MaxWidth = MaxWidth.Small
+            };
 
             _dialogService.Show<EditIngredient>("Editar Ingrediente", parameters, options);
+        }
+
+        private void DialogEditEvent(decimal total)
+        {
         }
     }
 }

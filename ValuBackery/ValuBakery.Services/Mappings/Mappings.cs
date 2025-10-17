@@ -13,12 +13,15 @@ namespace ValuBakery.Application.Mappings
             CreateMap<IngredientDto, Ingredient>();
             CreateMap<MaterialDto, Material>();
             CreateMap<RecipeDto, Recipe>();
+            //.ForMember(d => d.Variants, o => o.Ignore())
             CreateMap<RecipeVariantDto, RecipeVariant>();
 
             CreateMap<RecipeComponentDto, RecipeComponent>();
             CreateMap<RecipeIngredientDto, RecipeIngredient>();
 
-            CreateMap<ProductDto, Product>();
+            CreateMap<ProductDto, Product>()
+                .ForMember(d => d.ProductMaterials, o => o.Ignore())
+                .ForMember(d => d.ProductRecipeVariants, o => o.Ignore());
             CreateMap<ProductMaterialDto, ProductMaterial>();
             CreateMap<ProductRecipeVariantDto, ProductRecipeVariant>();
             #endregion

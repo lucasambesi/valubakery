@@ -33,11 +33,16 @@ namespace ValuBakery.Web.Pages.Common
 
         private async Task Submit()
         {
-            decimal total = _nestedCost > 0 && _nestedQuantity > 0 ? _nestedCost / _nestedQuantity : 0;
+            decimal total = _nestedCost > 0 && _nestedQuantity > 0
+                ? _nestedCost / _nestedQuantity
+                : 0;
+
+            total = Math.Round(total, 4);
 
             await OnChanged.InvokeAsync(total);
 
             MudDialog.Close();
+
         }
     }
 }

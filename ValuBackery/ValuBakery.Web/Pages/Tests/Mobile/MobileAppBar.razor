@@ -1,0 +1,29 @@
+﻿@using MudBlazor
+
+<div class="mab">
+    <!-- fila superior: menú | bloque centrado (título + saludo) | avatar -->
+    <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="mab-row">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Class="mab-icon" OnClick="OnMenuClicked" />
+
+        <!-- Bloque central -->
+        <div class="mab-center">
+            <MudText Typo="Typo.subtitle1" Class="mab-title">
+                <span class="mab-mi">@TitlePrefix</span>@TitleSuffix
+            </MudText>
+            <MudText Class="mab-greeting">@Greeting</MudText>
+        </div>
+
+        <div class="mab-avatar">
+            <MudAvatar Size="Size.Medium">@AvatarText</MudAvatar>
+            <span class="mab-badge"><MudIcon Icon="@Icons.Material.Filled.Check" /></span>
+        </div>
+    </MudStack>
+</div>
+
+@code {
+    [Parameter] public string TitlePrefix { get; set; } = "valu";
+    [Parameter] public string TitleSuffix { get; set; } = "Bakery";
+    [Parameter] public string Greeting { get; set; } = "¡Hola Valu!";
+    [Parameter] public string AvatarText { get; set; } = "V";
+    [Parameter] public EventCallback OnMenuClicked { get; set; }
+}

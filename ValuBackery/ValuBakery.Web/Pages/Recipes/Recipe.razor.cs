@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 using ValuBakery.Data.DTOs;
-using ValuBakery.Percistence.Percistence;
-
-using ValuBakery.Web.Pages.Ingredients;
 
 namespace ValuBakery.Web.Pages.Recipes
 {
     public partial class Recipe
     {
+        [CascadingParameter]
+        MudDialogInstance? MudDialog { get; set; }
+
         [Parameter]
         public int Id { get; set; }
 
@@ -38,10 +37,14 @@ namespace ValuBakery.Web.Pages.Recipes
 
                 RecipeDto = await _recipeService.GetByIdAsync(Id);
 
-                if (RecipeDto != null)
+                if (RecipeDto != null && RecipeDto.Variants.Count > 0)
                 {
                     RecipeVariantDto = await _recipeVariantService.GetByIdAsync(RecipeDto.Variants.First().Id);
                     
+                }
+                else
+                {
+                    MudDialog.Close();
                 }
 
                 isLoading = false;

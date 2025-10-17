@@ -1,0 +1,79 @@
+﻿/* Superponer el card arriba del AppBar y corregir padding */
+.disp-card {
+    position: relative;
+    z-index: 2; /* por encima del appbar */
+    margin: 0 16px; /* márgenes laterales iguales a la maqueta */
+    transform: translateY(-28px); /* se sube y queda superpuesto */
+    border-radius: 16px;
+    background: #fff;
+    padding: 12px; /* padding interno correcto */
+    box-sizing: border-box;
+}
+
+
+/* Encabezado */
+.disp-head {
+    margin-bottom: 4px;
+}
+
+.disp-title {
+    font-weight: 700;
+    color: var(--mud-palette-text-primary);
+}
+
+.disp-link {
+    padding: 0;
+    min-width: 0;
+    text-transform: none;
+    font-weight: 700;
+    letter-spacing: .2px;
+}
+
+/* Monto */
+.disp-amount {
+    margin: 2px 0 6px 0;
+}
+
+.disp-money {
+    font-weight: 800;
+    letter-spacing: .2px;
+}
+
+/* Acciones (4 columnas) */
+.disp-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.disp-action {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.disp-circle {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #e7f0ff; /* celeste suave */
+    display: grid;
+    place-items: center;
+}
+
+    .disp-circle .mud-icon-root {
+        color: #5a8ae6; /* icono celeste */
+        font-size: 24px;
+    }
+
+.disp-label {
+    font-size: 12px;
+    color: var(--mud-palette-text-secondary);
+    line-height: 1.1;
+}

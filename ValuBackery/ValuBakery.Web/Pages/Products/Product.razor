@@ -51,7 +51,7 @@ else
                         </MudText>
                     }
                     <MudText Typo="Typo.body2">
-                        @((MarkupString)$"<strong>Ganancia recetas:</strong> {ProductDto?.ApplyProfitToRecipes}%, <strong>materiales:</strong> {ProductDto?.ApplyProfitToMaterials}%")
+                        @((MarkupString)$"<strong>Ganancia recetas:</strong> {ProductDto?.ApplyProfitToRecipes.ToString("N2")}%, <strong>materiales:</strong> {ProductDto?.ApplyProfitToMaterials.ToString("N2")}%")
                     </MudText>
                     @if (!string.IsNullOrEmpty(componentsText))
                     {

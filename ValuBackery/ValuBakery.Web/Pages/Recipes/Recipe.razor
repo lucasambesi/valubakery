@@ -27,7 +27,7 @@ else
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Start" Justify="Justify.FlexStart" Style="padding:0">
                         <MudTooltip Text=@RecipeDto?.Name>
                             <MudText Typo="Typo.h6" Class="fancy-title">
-                                @(StringHelper.Truncate($"{RecipeDto?.Name}",  33) + $" {RecipeVariantDto?.Name}")
+                                @(StringHelper.Truncate($"{RecipeDto?.Name}",  33) + $" ({RecipeVariantDto?.Name})")
                             </MudText>
                         </MudTooltip>
 
@@ -43,13 +43,16 @@ else
                                 @foreach (var variant in RecipeDto.Variants)
                                 {
                                     <MudMenuItem OnClick="@(() => ChangeVariant(variant))">
-                                        @variant.Name
+                                        @(variant.Name)
                                     </MudMenuItem>
                                 }
                             </ChildContent>
                         </MudMenu>
                     </MudStack>
-                    <MudText Typo="Typo.body2">@((MarkupString)$"<strong>Porciones:</strong> {RecipeVariantDto?.Portions}")</MudText>
+                    @if (!string.IsNullOrEmpty(RecipeVariantDto?.Portions))
+                    {                        
+                        <MudText Typo="Typo.body2">@((MarkupString)$"<strong>Porciones:</strong> {RecipeVariantDto?.Portions}")</MudText>
+                    }
                     @if (!string.IsNullOrEmpty(ingredientsText))
                     {
                         <MudText Typo="Typo.body2">
